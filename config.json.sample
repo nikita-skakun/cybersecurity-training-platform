@@ -1,11 +1,10 @@
 {
     "domains": {
-      "cn=users,dc=test-client-ad,dc=com": {
-        "url": "ldap://ip",
-        "bindDN": "cn=readonly-admin,cn=users,dc=test-client-ad,dc=com",
-        "bindPassword": "password",
-        "groupDN": "cn=phishingtest,cn=users,dc=test-client-ad,dc=com"
-      }
+        "cn=users,dc=test-client-ad,dc=com": {
+            "url": "ldap://ip",
+            "bindDN": "cn=readonly-admin,cn=users,dc=test-client-ad,dc=com",
+            "bindPassword": "password",
+            "groupDN": "cn=phishingtest,cn=users,dc=test-client-ad,dc=com"
+        }
     }
-  }
-  
+}
