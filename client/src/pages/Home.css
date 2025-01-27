@@ -1,0 +1,72 @@
+/* Home page specific styles */
+.home-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Header bar styles */
+.header-bar {
+	position: sticky;
+	top: 0;
+	width: 100%; /* Full width */
+	background-color: #242424;
+	color: white;
+	padding: 1rem 2rem;
+	font-size: 1.2rem;
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 10;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Logout button style */
+.logout-button {
+	background-color: #e74c3c;
+	color: white;
+	border: none;
+	padding: 0.6rem 1.2rem;
+	font-size: 1rem;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+	background-color: #c0392b;
+}
+
+.logout-button:focus {
+	outline: none;
+}
+
+/* Main content section */
+.main-content {
+	flex-grow: 1;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+	background-color: #f9f9f914;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 20px auto;
+	width: 80%;
+}
+
+h1 {
+	font-size: 3em;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+p {
+	font-size: 1.2em;
+	color: #555;
+}

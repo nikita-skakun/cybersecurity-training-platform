@@ -1,5 +1,7 @@
-import { Client } from "ldapts";
-import ldapEscape from "ldap-escape";
+import { Router } from "jsr:@oak/oak";
+import { Client } from "npm:ldapts";
+import ldapEscape from "npm:ldap-escape";
+import jwt from "npm:jsonwebtoken";
 import fs from "node:fs";
 import * as path from "node:path";
 
@@ -10,7 +12,7 @@ const loadDomainConfigs = (): Record<
 	const currentDir = path.dirname(
 		decodeURIComponent(new URL(import.meta.url).pathname)
 	);
-	const configPath = path.resolve(currentDir, '../../config.json');
+	const configPath = path.resolve(currentDir, "../config.json");
 	if (!fs.existsSync(configPath)) {
 		throw new Error("Configuration file not found.");
 	}
@@ -26,9 +28,6 @@ const loadDomainConfigs = (): Record<
 };
 
 const domainConfigs = loadDomainConfigs();
-
-const loginUser = "test-user1@test-client-ad.com";
-const loginPwd = "Password123";
 
 const persistentBindList: Record<string, Client> = {};
 
@@ -49,7 +48,7 @@ const getPersistentBind = async (domainKey: string): Promise<Client> => {
 		console.log(`Successfully bound client for domain key: ${domainKey}`);
 		persistentBindList[domainKey] = client;
 		return client;
-	} catch (err) {
+	} catch (_) {
 		throw new Error(`Failed to bind client for domain key: ${domainKey}`);
 	}
 };
@@ -72,7 +71,7 @@ const extractFromEmail = (
 	const username = ldapEscape.dn`${parts[0]}`;
 	const domain = parts[1];
 
-	let baseDN =
+	const baseDN =
 		"cn=users," +
 		domain
 			.split(".")
@@ -82,20 +81,17 @@ const extractFromEmail = (
 	return { username, baseDN };
 };
 
-const authenticateUser = async (
-	loginUser: string,
-	loginPwd: string
-): Promise<boolean> => {
+const authenticateUser = async (email: string, password: string) => {
 	try {
-		validateEmail(loginUser);
-		const { username, baseDN } = extractFromEmail(loginUser);
+		validateEmail(email);
+		const { username, baseDN } = extractFromEmail(email);
 
 		const client = await getPersistentBind(baseDN);
 
 		const { searchEntries: userEntries } = await client.search(baseDN, {
 			scope: "sub",
 			filter: `(samAccountName=${username})`,
-			attributes: ["dn"],
+			attributes: ["dn", "cn"],
 		});
 
 		if (userEntries.length === 0) {
@@ -108,9 +104,9 @@ const authenticateUser = async (
 		const userClient = new Client({ url: domainConfigs[baseDN].url });
 
 		try {
-			await userClient.bind(userDN, loginPwd);
+			await userClient.bind(userDN, password);
 			console.log(`Password verification successful for ${username}`);
-		} catch (err) {
+		} catch (_) {
 			throw new Error(`Password verification failed for ${username}`);
 		} finally {
 			await userClient.unbind();
@@ -130,18 +126,66 @@ const authenticateUser = async (
 			throw new Error(`${username} is not a member of PhishingTest`);
 		}
 
-		return true;
+		return {
+			name: userEntries[0].cn,
+			role: "user",
+		};
 	} catch (ex) {
-		console.error("Authentication error:", ex.message);
+		console.error("Authentication error:", ex);
 	}
 
 	return false;
 };
 
-// TODO: Wait for requests here
-const isAuthenticated = await authenticateUser(loginUser, loginPwd);
-console.log("Authenticated:", isAuthenticated);
+const loginRouter = new Router();
 
-for (const client of Object.values(persistentBindList)) {
-	client.unbind();
-}
+loginRouter.post("/api/login", async (context) => {
+	try {
+		const body = context.request.body;
+		const { email, password } = await body.json();
+
+		const loggedInUserInfo = await authenticateUser(email, password);
+
+		if (loggedInUserInfo != false) {
+			const { username, baseDN } = extractFromEmail(email);
+			const token = jwt.sign(
+				{
+					username: username,
+					name: loggedInUserInfo.name,
+					baseDN: baseDN,
+					role: loggedInUserInfo.role,
+				},
+				"secret",
+				{ expiresIn: "1d" }
+			);
+			context.response.headers.set(
+				"Set-Cookie",
+				`jwtCyberTraining=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`
+			);
+
+			context.response.status = 200;
+			context.response.body = {
+				success: true,
+				message: "Login successful!",
+			};
+		} else {
+			context.response.status = 401;
+			context.response.body = {
+				success: false,
+				message: "Invalid credentials.",
+			};
+		}
+	} catch (error) {
+		context.response.status = 500;
+		context.response.body = { success: false, message: "Server error." };
+		console.error(error);
+	}
+});
+
+loginRouter.post("/api/logout", (context) => {
+	context.cookies.delete("jwtCyberTraining");
+	context.response.status = 200;
+	context.response.body = { success: true, message: "Logged out successfully" };
+});
+
+export default loginRouter;

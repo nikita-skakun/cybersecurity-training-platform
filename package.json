@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "ldap-escape": "^2.0.6",
-    "ldapts": "^7.3.1"
-  },
-  "devDependencies": {
-    "@types/ldap-escape": "^2.0.2"
-  }
-}
