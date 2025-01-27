@@ -4,8 +4,11 @@ import "./Home.css";
 
 export default function Home() {
 	const [name, setName] = useState("");
+	const [expTime, setExpTime] = useState(null);
+	const [countdown, setCountdown] = useState("");
 	const navigate = useNavigate();
 
+	// Fetch user data on component mount
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -18,6 +21,7 @@ export default function Home() {
 
 				if (result.success) {
 					setName(result.user.name);
+					setExpTime(result.user.exp);
 				} else {
 					navigate("/login");
 					console.error("Error fetching data:", result.message);
@@ -30,6 +34,27 @@ export default function Home() {
 
 		fetchData();
 	}, [navigate]);
+
+	// Countdown timer for session expiration
+	useEffect(() => {
+		if (expTime) {
+			const interval = setInterval(() => {
+				const currentTime = Math.floor(Date.now() / 1000);
+				const remainingTime = expTime - currentTime;
+
+				if (remainingTime <= 0) {
+					clearInterval(interval);
+					navigate("/login");
+				} else {
+					const minutes = Math.floor(remainingTime / 60);
+					const seconds = remainingTime % 60;
+					setCountdown(`${minutes}m ${seconds}s`);
+				}
+			}, 1000);
+
+			return () => clearInterval(interval);
+		}
+	}, [expTime, navigate]);
 
 	const handleLogout = async () => {
 		try {
@@ -55,6 +80,7 @@ export default function Home() {
 			<main className="main-content">
 				<h1>Welcome Home!</h1>
 				{name && <p>Hello, {name}!</p>}
+				{countdown && <p>Session expires in: {countdown}</p>}
 			</main>
 		</div>
 	);
