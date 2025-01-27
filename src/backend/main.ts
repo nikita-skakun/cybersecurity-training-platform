@@ -10,7 +10,7 @@ const loadDomainConfigs = (): Record<
 	const currentDir = path.dirname(
 		decodeURIComponent(new URL(import.meta.url).pathname)
 	);
-	const configPath = path.resolve(currentDir, "config.json");
+	const configPath = path.resolve(currentDir, '../../config.json');
 	if (!fs.existsSync(configPath)) {
 		throw new Error("Configuration file not found.");
 	}
