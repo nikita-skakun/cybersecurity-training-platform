@@ -4,23 +4,25 @@ import fs from "node:fs";
 import * as path from "node:path";
 
 const loadDomainConfigs = (): Record<
-  string,
-  { url: string; bindDN: string; bindPassword: string; groupDN: string }
+	string,
+	{ url: string; bindDN: string; bindPassword: string; groupDN: string }
 > => {
-	const currentDir = path.dirname(decodeURIComponent(new URL(import.meta.url).pathname));
+	const currentDir = path.dirname(
+		decodeURIComponent(new URL(import.meta.url).pathname)
+	);
 	const configPath = path.resolve(currentDir, "config.json");
-  if (!fs.existsSync(configPath)) {
-    throw new Error("Configuration file not found.");
-  }
+	if (!fs.existsSync(configPath)) {
+		throw new Error("Configuration file not found.");
+	}
 
-  const rawConfig = fs.readFileSync(configPath, "utf-8");
-  const parsedConfig = JSON.parse(rawConfig);
+	const rawConfig = fs.readFileSync(configPath, "utf-8");
+	const parsedConfig = JSON.parse(rawConfig);
 
-  if (!parsedConfig.domains) {
-    throw new Error("Invalid configuration format: 'domains' key missing.");
-  }
+	if (!parsedConfig.domains) {
+		throw new Error("Invalid configuration format: 'domains' key missing.");
+	}
 
-  return parsedConfig.domains;
+	return parsedConfig.domains;
 };
 
 const domainConfigs = loadDomainConfigs();
