@@ -1,0 +1,32 @@
+{
+    "title": "Quiz Test",
+    "passingPercentage": 70,
+    "questions": [
+        {
+            "question": "What is the capital of France?",
+            "type": "single",
+            "options": [
+                "Paris",
+                "London",
+                "Berlin",
+                "Madrid"
+            ],
+            "answer": "Paris"
+        },
+        {
+            "question": "Which of the following are mammals?",
+            "type": "multiple",
+            "options": [
+                "Whale",
+                "Shark",
+                "Dolphin",
+                "Turtle",
+                "Crocodile"
+            ],
+            "answer": [
+                "Whale",
+                "Dolphin"
+            ]
+        }
+    ]
+}
