@@ -4,7 +4,8 @@ import ldapEscape from "npm:ldap-escape";
 import jwt from "npm:jsonwebtoken";
 import fs from "node:fs";
 import * as path from "node:path";
-import loadOrGenerateKey from "../util/loadOrGenerateKey.ts";
+import loadOrGenerateKey from "../util/load_or_generate_key.ts";
+import { User } from "@shared/types/user.ts";
 
 const signingKey = loadOrGenerateKey();
 
@@ -12,7 +13,7 @@ const loadDomainConfigs = (): Record<
 	string,
 	{ url: string; bindDN: string; bindPassword: string; groupDN: string }
 > => {
-	const configPath = path.resolve("./config.json");
+	const configPath = path.resolve("config.json");
 	if (!fs.existsSync(configPath)) {
 		throw new Error("Configuration file not found.");
 	}
@@ -49,6 +50,7 @@ const getPersistentBind = async (domainKey: string): Promise<Client> => {
 		persistentBindList[domainKey] = client;
 		return client;
 	} catch (_) {
+		await client.unbind();
 		throw new Error(`Failed to bind client for domain key: ${domainKey}`);
 	}
 };
@@ -56,7 +58,7 @@ const getPersistentBind = async (domainKey: string): Promise<Client> => {
 const validateEmail = (username: string): void => {
 	const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	if (!emailPattern.test(username)) {
-		throw new Error("Invalid username format. Must be a valid email address.");
+		throw new Error(`Invalid username format for ${username}.`);
 	}
 };
 
@@ -81,7 +83,10 @@ const extractFromEmail = (
 	return { username, baseDN };
 };
 
-const authenticateUser = async (email: string, password: string) => {
+const authenticateUser = async (
+	email: string,
+	password: string
+): Promise<User | null> => {
 	try {
 		validateEmail(email);
 		const { username, baseDN } = extractFromEmail(email);
@@ -127,37 +132,50 @@ const authenticateUser = async (email: string, password: string) => {
 		}
 
 		return {
-			name: userEntries[0].cn,
+			username: username,
+			name: userEntries[0].cn as string,
+			baseDN: baseDN,
 			role: "user",
 		};
 	} catch (ex) {
 		console.error("Authentication error:", ex);
 	}
 
-	return false;
+	return null;
 };
 
 const loginRouter = new Router();
 
 loginRouter.post("/api/login", async (context) => {
 	try {
-		const body = context.request.body;
-		const { email, password } = await body.json();
+		if (!context.request.hasBody) {
+			context.response.status = 400;
+			context.response.body = {
+				success: false,
+				message: "Request body is missing.",
+			};
+			return;
+		}
+
+		const { email, password } = await context.request.body.json();
+
+		if (typeof email !== "string" || typeof password !== "string") {
+			context.response.status = 400;
+			context.response.body = {
+				success: false,
+				message: "Invalid request body format.",
+			};
+			return;
+		}
 
 		const loggedInUserInfo = await authenticateUser(email, password);
 
-		if (loggedInUserInfo != false) {
-			const { username, baseDN } = extractFromEmail(email);
-			const token = jwt.sign(
-				{
-					username: username,
-					name: loggedInUserInfo.name,
-					baseDN: baseDN,
-					role: loggedInUserInfo.role,
-				},
-				signingKey,
-				{ algorithm: "HS256", expiresIn: "1d" }
-			);
+		if (loggedInUserInfo) {
+			const token = jwt.sign(loggedInUserInfo, signingKey, {
+				algorithm: "HS256",
+				expiresIn: "1d",
+			});
+
 			context.response.headers.set(
 				"Set-Cookie",
 				`jwtCyberTraining=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`

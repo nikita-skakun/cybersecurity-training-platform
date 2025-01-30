@@ -1,6 +1,6 @@
 import { Router } from "jsr:@oak/oak";
 import jwt from "jsonwebtoken";
-import loadOrGenerateKey from "../util/loadOrGenerateKey.ts";
+import loadOrGenerateKey from "../util/load_or_generate_key.ts";
 
 const signingKey = loadOrGenerateKey();
 

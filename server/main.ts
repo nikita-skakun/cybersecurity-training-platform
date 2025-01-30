@@ -1,6 +1,6 @@
 import { Application } from "jsr:@oak/oak";
 import { oakCors } from "@tajpouria/cors";
-import routeStaticFilesFrom from "./util/routeStaticFilesFrom.ts";
+import routeStaticFilesFrom from "./util/route_static_files_from.ts";
 import loginRouter from "./routes/login.ts";
 import homeRouter from "./routes/home.ts";
 
