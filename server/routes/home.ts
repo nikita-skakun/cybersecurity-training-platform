@@ -1,5 +1,8 @@
 import { Router } from "jsr:@oak/oak";
 import jwt from "jsonwebtoken";
+import loadOrGenerateKey from "../util/loadOrGenerateKey.ts";
+
+const signingKey = loadOrGenerateKey();
 
 const homeRouter = new Router();
 
@@ -17,7 +20,7 @@ homeRouter.get("/api/home", async (context) => {
 	}
 
 	try {
-		const payload = await jwt.verify(token, "secret");
+		const payload = await jwt.verify(token, signingKey);
 		context.response.status = 200;
 		context.response.body = {
 			success: true,

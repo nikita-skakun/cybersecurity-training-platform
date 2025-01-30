@@ -4,15 +4,15 @@ import ldapEscape from "npm:ldap-escape";
 import jwt from "npm:jsonwebtoken";
 import fs from "node:fs";
 import * as path from "node:path";
+import loadOrGenerateKey from "../util/loadOrGenerateKey.ts";
+
+const signingKey = loadOrGenerateKey();
 
 const loadDomainConfigs = (): Record<
 	string,
 	{ url: string; bindDN: string; bindPassword: string; groupDN: string }
 > => {
-	const currentDir = path.dirname(
-		decodeURIComponent(new URL(import.meta.url).pathname)
-	);
-	const configPath = path.resolve(currentDir, "../config.json");
+	const configPath = path.resolve("./config.json");
 	if (!fs.existsSync(configPath)) {
 		throw new Error("Configuration file not found.");
 	}
@@ -155,8 +155,8 @@ loginRouter.post("/api/login", async (context) => {
 					baseDN: baseDN,
 					role: loggedInUserInfo.role,
 				},
-				"secret",
-				{ expiresIn: "1d" }
+				signingKey,
+				{ algorithm: "HS256", expiresIn: "1d" }
 			);
 			context.response.headers.set(
 				"Set-Cookie",

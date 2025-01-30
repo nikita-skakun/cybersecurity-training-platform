@@ -26,4 +26,5 @@ deno.lock
 
 client/.vite
 
-server/config.json
+config.json
+jwt_key.pem
