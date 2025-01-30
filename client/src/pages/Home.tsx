@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 export default function Home() {
-	const [name, setName] = useState("");
+	const [name, setName] = useState(undefined);
 	const [expTime, setExpTime] = useState(null);
 	const [countdown, setCountdown] = useState("");
 	const navigate = useNavigate();
@@ -56,6 +56,10 @@ export default function Home() {
 		}
 	}, [expTime, navigate]);
 
+	const gotoUser = () => {
+		navigate("/user");
+	};
+
 	const handleLogout = async () => {
 		try {
 			await fetch("/api/logout", {
@@ -72,14 +76,22 @@ export default function Home() {
 		<div className="home-container">
 			<header className="header-bar">
 				<span>Cybersecurity Training Platform</span>
-				<button onClick={handleLogout} className="logout-button">
-					Logout
-				</button>
+				<div className="button-group">
+					<button onClick={gotoUser} className="header-button">
+						<img src="/icons/profile_icon.svg" className="profile-icon" />
+						{name ?? "???"}
+					</button>
+					<button
+						onClick={handleLogout}
+						className="header-button logout-button"
+					>
+						Logout
+					</button>
+				</div>
 			</header>
 
 			<main className="main-content">
 				<h1>Welcome Home!</h1>
-				{name && <p>Hello, {name}!</p>}
 				{countdown && <p>Session expires in: {countdown}</p>}
 			</main>
 		</div>
