@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "@shared/types/user.ts";
 import "./Home.css";
 
 export default function Home() {
@@ -20,8 +21,9 @@ export default function Home() {
 				const result = await response.json();
 
 				if (result.success) {
-					setName(result.user.name);
-					setExpTime(result.user.exp);
+					const userData: User = result.user;
+					setName(userData.name);
+					setExpTime(userData.exp);
 				} else {
 					navigate("/login");
 					console.error("Error fetching data:", result.message);
