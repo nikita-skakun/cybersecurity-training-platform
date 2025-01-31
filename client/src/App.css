@@ -1,49 +1,101 @@
 /* Global Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: Inter, Arial, sans-serif;
-  background-color: #f4f4f9;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  height: 100vh;
+	font-family: Inter, Arial, sans-serif;
+	background-color: #e8e8eb;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	height: 100vh;
 }
 
 /* Flexbox container for centering */
 .flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+}
+
+.page-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Main content section */
+.fullsize-content {
+	flex-grow: 1;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 20px auto;
+	width: 80%;
+}
+
+.shrunk-container {
+	max-width: 600px;
+	width: 100%;
+	margin: 40px auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: left;
 }
 
 /* Shared button styles */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.8rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  background-color: #6c63ff;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+	background-color: #0081d7;
+	color: white;
+	border: none;
+	padding: 0.6rem 1.2rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #5a54e8;
+	background-color: #005f9e;
+}
+
+button:disabled {
+  background-color: #dcdcdc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Red button style */
+.red-button {
+	background-color: #ea3d29 !important;
+}
+
+.red-button:hover {
+	background-color: #9e2a1d !important;
 }
 
 /* Error message styling */
 .error-message {
-  color: #ff5252;
-  font-size: 0.9rem;
-  margin-top: 1rem;
+	color: #ff5252;
+	font-size: 0.9rem;
+	margin-top: 1rem;
 }

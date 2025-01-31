@@ -13,12 +13,12 @@
 }
 
 /* Header Section */
-.header {
+.login-header {
 	margin-bottom: 2rem;
 	text-align: center;
 }
 
-.header h1 {
+.login-header h1 {
 	font-size: 2rem;
 	color: #ffffff;
 	font-weight: 600;

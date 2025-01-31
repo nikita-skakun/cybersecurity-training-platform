@@ -75,12 +75,12 @@ export default function Home() {
 	};
 
 	return (
-		<div className="home-container">
+		<div className="page-container">
 			<header className="header-bar">
 				<span>Cybersecurity Training Platform</span>
 				<div className="button-group">
 					<div className="tooltip-container">
-						<button onClick={gotoUser} className="header-button">
+						<button onClick={gotoUser}>
 							<img src="/icons/profile_icon.svg" className="profile-icon" />
 							{name ?? "???"}
 						</button>
@@ -88,16 +88,13 @@ export default function Home() {
 							Session expires in: {countdown ?? "???"}
 						</span>
 					</div>
-					<button
-						onClick={handleLogout}
-						className="header-button logout-button"
-					>
+					<button onClick={handleLogout} className="red-button">
 						Logout
 					</button>
 				</div>
 			</header>
 
-			<main className="main-content">
+			<main className="fullsize-content">
 				<h1>Welcome Home!</h1>
 			</main>
 		</div>

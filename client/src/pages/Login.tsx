@@ -29,7 +29,7 @@ export default function Login() {
 	return (
 		<div className="flex-center">
 			<main className="login-container">
-				<div className="header">
+				<div className="login-header">
 					<h1>Cybersecurity Training Platform</h1>
 				</div>
 				<div className="login-card">
@@ -55,7 +55,11 @@ export default function Login() {
 								required
 							/>
 						</div>
-						<button type="submit" className="login-button">
+						<button
+							type="submit"
+							className="login-button"
+							disabled={!email || !password}
+						>
 							Login
 						</button>
 						{error && <p className="error-message">{error}</p>}

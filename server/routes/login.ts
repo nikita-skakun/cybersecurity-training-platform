@@ -135,6 +135,7 @@ const authenticateUser = async (
 			username: username,
 			name: userEntries[0].cn as string,
 			baseDN: baseDN,
+			domain: email.split("@")[1],
 			role: "user",
 		};
 	} catch (ex) {
