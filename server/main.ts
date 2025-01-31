@@ -1,16 +1,16 @@
 import { Application } from "jsr:@oak/oak";
 import { oakCors } from "@tajpouria/cors";
-import routeStaticFilesFrom from "./util/route_static_files_from.ts";
+import routeStaticFilesFrom from "./util/static_utils.ts";
 import loginRouter from "./routes/login.ts";
-import homeRouter from "./routes/home.ts";
+import userRouter from "./routes/user.ts";
 
 const app = new Application();
 
 app.use(oakCors());
 app.use(loginRouter.routes());
 app.use(loginRouter.allowedMethods());
-app.use(homeRouter.routes());
-app.use(homeRouter.allowedMethods());
+app.use(userRouter.routes());
+app.use(userRouter.allowedMethods());
 app.use(
 	routeStaticFilesFrom([
 		`${Deno.cwd()}/client/dist`,

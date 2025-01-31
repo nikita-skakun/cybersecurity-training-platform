@@ -4,7 +4,7 @@ import ldapEscape from "npm:ldap-escape";
 import jwt from "npm:jsonwebtoken";
 import fs from "node:fs";
 import * as path from "node:path";
-import loadOrGenerateKey from "../util/load_or_generate_key.ts";
+import loadOrGenerateKey from "../util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
 
 const signingKey = loadOrGenerateKey();

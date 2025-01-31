@@ -1,12 +1,12 @@
 import { Router } from "jsr:@oak/oak";
 import jwt from "jsonwebtoken";
-import loadOrGenerateKey from "../util/load_or_generate_key.ts";
+import loadOrGenerateKey from "../util/jwt_utils.ts";
 
 const signingKey = loadOrGenerateKey();
 
-const homeRouter = new Router();
+const userRouter = new Router();
 
-homeRouter.get("/api/home", async (context) => {
+userRouter.get("/api/userData", async (context) => {
 	const cookies = context.cookies;
 	const token = await cookies.get("jwtCyberTraining");
 
@@ -33,4 +33,4 @@ homeRouter.get("/api/home", async (context) => {
 	}
 });
 
-export default homeRouter;
+export default userRouter;

@@ -13,7 +13,7 @@ export default function Home() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch("/api/home", {
+				const response = await fetch("/api/userData", {
 					method: "GET",
 					credentials: "include",
 				});
@@ -25,8 +25,7 @@ export default function Home() {
 					setName(userData.name);
 					setExpTime(userData.exp);
 				} else {
-					navigate("/login");
-					console.error("Error fetching data:", result.message);
+					throw new Error(result.message);
 				}
 			} catch (error) {
 				console.error("Error fetching data:", error);
