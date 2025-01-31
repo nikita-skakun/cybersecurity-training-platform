@@ -47,9 +47,10 @@ export default function Home() {
 					clearInterval(interval);
 					navigate("/login");
 				} else {
-					const minutes = Math.floor(remainingTime / 60);
+					const hours = Math.floor(remainingTime / 3600);
+					const minutes = Math.floor(remainingTime / 60) % 60;
 					const seconds = remainingTime % 60;
-					setCountdown(`${minutes}m ${seconds}s`);
+					setCountdown(`${hours}h ${minutes}m ${seconds}s`);
 				}
 			}, 1000);
 
@@ -78,10 +79,15 @@ export default function Home() {
 			<header className="header-bar">
 				<span>Cybersecurity Training Platform</span>
 				<div className="button-group">
-					<button onClick={gotoUser} className="header-button">
-						<img src="/icons/profile_icon.svg" className="profile-icon" />
-						{name ?? "???"}
-					</button>
+					<div className="tooltip-container">
+						<button onClick={gotoUser} className="header-button">
+							<img src="/icons/profile_icon.svg" className="profile-icon" />
+							{name ?? "???"}
+						</button>
+						<span className="tooltip-text">
+							Session expires in: {countdown ?? "???"}
+						</span>
+					</div>
 					<button
 						onClick={handleLogout}
 						className="header-button logout-button"
@@ -93,7 +99,6 @@ export default function Home() {
 
 			<main className="main-content">
 				<h1>Welcome Home!</h1>
-				{countdown && <p>Session expires in: {countdown}</p>}
 			</main>
 		</div>
 	);

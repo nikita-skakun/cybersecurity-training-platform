@@ -90,3 +90,30 @@ p {
 	font-size: 1.2em;
 	color: #555;
 }
+
+.tooltip-container {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip-text {
+	visibility: hidden;
+	background-color: rgba(0, 0, 0, 0.85);
+	color: #fff;
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 5px;
+	position: absolute;
+	top: 120%;
+	left: 50%;
+	transform: translateX(-50%);
+	white-space: nowrap;
+	font-size: 12px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+}
