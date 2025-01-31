@@ -37,6 +37,12 @@
 	text-align: left;
 }
 
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .login-form label {
 	display: block;
 	margin-bottom: 0.5rem;
