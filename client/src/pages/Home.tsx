@@ -1,47 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "@shared/types/user.ts";
+import { useUserData } from "../util/api_utils.ts";
 import "./Home.css";
 
 export default function Home() {
-	const [name, setName] = useState(undefined);
-	const [expTime, setExpTime] = useState(null);
 	const [countdown, setCountdown] = useState("");
 	const navigate = useNavigate();
-
-	// Fetch user data on component mount
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch("/api/userData", {
-					method: "GET",
-					credentials: "include",
-				});
-
-				const result = await response.json();
-
-				if (result.success) {
-					const userData: User = result.user;
-					setName(userData.name);
-					setExpTime(userData.exp);
-				} else {
-					throw new Error(result.message);
-				}
-			} catch (error) {
-				console.error("Error fetching data:", error);
-				navigate("/login");
-			}
-		};
-
-		fetchData();
-	}, [navigate]);
+	const user = useUserData();
 
 	// Countdown timer for session expiration
 	useEffect(() => {
-		if (expTime) {
+		if (user?.exp) {
 			const interval = setInterval(() => {
 				const currentTime = Math.floor(Date.now() / 1000);
-				const remainingTime = expTime - currentTime;
+				const remainingTime = user.exp - currentTime;
 
 				if (remainingTime <= 0) {
 					clearInterval(interval);
@@ -56,11 +28,7 @@ export default function Home() {
 
 			return () => clearInterval(interval);
 		}
-	}, [expTime, navigate]);
-
-	const gotoUser = () => {
-		navigate("/user");
-	};
+	}, [user, navigate]);
 
 	const handleLogout = async () => {
 		try {
@@ -80,9 +48,9 @@ export default function Home() {
 				<span>Cybersecurity Training Platform</span>
 				<div className="button-group">
 					<div className="tooltip-container">
-						<button onClick={gotoUser}>
+						<button onClick={() => navigate("/user")}>
 							<img src="/icons/profile_icon.svg" className="profile-icon" />
-							{name ?? "???"}
+							{user?.name ?? "???"}
 						</button>
 						<span className="tooltip-text">
 							Session expires in: {countdown ?? "???"}

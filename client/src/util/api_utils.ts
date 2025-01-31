@@ -1,22 +1,27 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { User } from "@shared/types/user.ts";
 
-export async function fetchUserData(): Promise<User | null> {
-	try {
-		const response = await fetch("/api/home", {
-			method: "GET",
-			credentials: "include",
-		});
+export function useUserData() {
+	const [user, setUser] = useState<User | null>(null);
+	const navigate = useNavigate();
 
-		const result = await response.json();
+	useEffect(() => {
+		(async () => {
+			try {
+				const response = await fetch("/api/userData", {
+					method: "GET",
+					credentials: "include",
+				});
+				const result = await response.json();
+				if (!response.ok) throw new Error(result.message);
+				setUser(result.user);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+				navigate("/login");
+			}
+		})();
+	}, [navigate]);
 
-		if (result.success) {
-			return result.user;
-		} else {
-			console.error("Error fetching data:", result.message);
-			return null;
-		}
-	} catch (error) {
-		console.error("Error fetching data:", error);
-		return null;
-	}
+	return user;
 }
