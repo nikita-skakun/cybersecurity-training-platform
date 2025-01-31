@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useUserData } from "../util/api_utils.ts";
-import "./User.css";
+import { TitleBar } from "../util/screen_utils.tsx";
 
 export default function UserPage() {
 	const navigate = useNavigate();
@@ -8,6 +8,7 @@ export default function UserPage() {
 
 	return (
 		<div className="page-container">
+			<TitleBar user={user} />
 			<main className="shrunk-container">
 				<h1>User Profile</h1>
 
