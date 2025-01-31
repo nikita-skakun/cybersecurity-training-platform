@@ -93,6 +93,11 @@ button:disabled {
 	background-color: #9e2a1d !important;
 }
 
+.icon {
+	width: 18px;
+	height: 18px;
+}
+
 /* Error message styling */
 .error-message {
 	color: #ff5252;

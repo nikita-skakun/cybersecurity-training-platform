@@ -31,7 +31,10 @@ export default function UserPage() {
 				) : (
 					<p>No user data available.</p>
 				)}
-				<button onClick={() => navigate("/")}>← Home</button>
+				<button onClick={() => navigate("/")}>
+					<img src="/icons/back_icon.svg" className="icon" />
+					Home
+				</button>
 			</main>
 		</div>
 	);

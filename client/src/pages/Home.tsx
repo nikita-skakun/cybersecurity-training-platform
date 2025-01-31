@@ -49,7 +49,7 @@ export default function Home() {
 				<div className="button-group">
 					<div className="tooltip-container">
 						<button onClick={() => navigate("/user")}>
-							<img src="/icons/profile_icon.svg" className="profile-icon" />
+							<img src="/icons/profile_icon.svg" className="icon" />
 							{user?.name ?? "???"}
 						</button>
 						<span className="tooltip-text">

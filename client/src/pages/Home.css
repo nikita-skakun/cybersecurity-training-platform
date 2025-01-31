@@ -21,13 +21,6 @@
 	gap: 0.5rem;
 }
 
-.profile-icon {
-	width: 18px;
-	height: 18px;
-	stroke: white;
-	stroke-width: 4;
-}
-
 h1 {
 	font-size: 3em;
 	color: #333;
