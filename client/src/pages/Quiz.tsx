@@ -15,7 +15,7 @@ export default function QuizPage() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch(`/api/quizzes/${id}`)
+		fetch(`/api/quiz/${id}`)
 			.then((res) => res.json())
 			.then((data) => setQuiz(data.quiz))
 			.catch((err) => console.error("Failed to load quiz:", err));
@@ -36,7 +36,7 @@ export default function QuizPage() {
 	};
 
 	const handleSubmit = () => {
-		fetch(`/api/quizzes/${id}/mark`, {
+		fetch(`/api/quiz/${id}/mark`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(answers),

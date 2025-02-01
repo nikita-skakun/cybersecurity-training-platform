@@ -72,7 +72,7 @@ function checkAnswers(quiz: Quiz, userAnswers: UserAnswers): number {
 	return Math.round((totalPointsEarned / totalPossiblePoints) * 100);
 }
 
-quizRouter.get("/api/quizzes/:id", async (context) => {
+quizRouter.get("/api/quiz/:id", async (context) => {
 	const { id } = context.params;
 
 	try {
@@ -97,7 +97,7 @@ quizRouter.get("/api/quizzes/:id", async (context) => {
 	}
 });
 
-quizRouter.post("/api/quizzes/:id/mark", async (context) => {
+quizRouter.post("/api/quiz/:id/mark", async (context) => {
 	const { id } = context.params;
 
 	try {
