@@ -2,20 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUserData } from "../util/api_utils.ts";
 import { TitleBar } from "../util/screen_utils.tsx";
+import { Quiz } from "@shared/types/quiz.ts";
 import "./Quiz.css";
 
-interface Question {
-	question: string;
-	type: "single" | "multiple";
-	options: string[];
-}
-
-interface Quiz {
-	title: string;
-	questions: Question[];
-}
-
-export default function Quiz() {
+export default function QuizPage() {
 	const { id } = useParams<{ id: string }>();
 	const user = useUserData();
 	const [quiz, setQuiz] = useState<Quiz | null>(null);

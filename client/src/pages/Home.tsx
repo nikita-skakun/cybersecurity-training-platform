@@ -1,7 +1,7 @@
 import { useUserData } from "../util/api_utils.ts";
 import { TitleBar } from "../util/screen_utils.tsx";
 
-export default function Home() {
+export default function HomePage() {
 	const user = useUserData();
 
 	return (

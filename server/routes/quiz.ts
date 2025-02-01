@@ -1,4 +1,5 @@
 import { Router } from "jsr:@oak/oak";
+import { Quiz, UserAnswers } from "@shared/types/quiz.ts";
 
 const quizCache: Record<string, Quiz> = {};
 
@@ -7,22 +8,6 @@ async function getJson(filePath: string) {
 }
 
 const quizRouter = new Router();
-
-interface Question {
-	question: string;
-	type: "single" | "multiple";
-	options: string[];
-	answer?: string | string[];
-}
-
-interface Quiz {
-	title: string;
-	questions: Question[];
-}
-
-interface UserAnswers {
-	[key: number]: string | string[];
-}
 
 async function fetchQuiz(id: string) {
 	let quiz: Quiz;
