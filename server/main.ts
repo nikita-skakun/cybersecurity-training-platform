@@ -3,6 +3,7 @@ import { oakCors } from "@tajpouria/cors";
 import routeStaticFilesFrom from "./util/static_utils.ts";
 import loginRouter from "./routes/login.ts";
 import userRouter from "./routes/user.ts";
+import quizRouter from "./routes/quiz.ts";
 
 const app = new Application();
 
@@ -11,6 +12,8 @@ app.use(loginRouter.routes());
 app.use(loginRouter.allowedMethods());
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
+app.use(quizRouter.routes());
+app.use(quizRouter.allowedMethods());
 app.use(
 	routeStaticFilesFrom([
 		`${Deno.cwd()}/client/dist`,

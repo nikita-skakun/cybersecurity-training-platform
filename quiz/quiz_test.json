@@ -1,6 +1,5 @@
 {
     "title": "Quiz Test",
-    "passingPercentage": 70,
     "questions": [
         {
             "question": "What is the capital of France?",
