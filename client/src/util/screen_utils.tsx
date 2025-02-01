@@ -43,7 +43,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 
 	return (
 		<header className="header-bar">
-			<span>Cybersecurity Training Platform</span>
+			<span onClick={() => navigate("/")}>Cybersecurity Training Platform</span>
 			<div className="button-group">
 				<div className="tooltip-container">
 					<button onClick={() => navigate("/user")}>

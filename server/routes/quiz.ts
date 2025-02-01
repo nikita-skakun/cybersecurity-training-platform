@@ -1,6 +1,7 @@
 import { Router } from "jsr:@oak/oak";
-import { Quiz, UserAnswers } from "@shared/types/quiz.ts";
+import { Quiz, QuizInfo, UserAnswers } from "@shared/types/quiz.ts";
 
+const quizInfoCache: Record<string, QuizInfo> = {};
 const quizCache: Record<string, Quiz> = {};
 
 async function getJson(filePath: string) {
@@ -9,7 +10,7 @@ async function getJson(filePath: string) {
 
 const quizRouter = new Router();
 
-async function fetchQuiz(id: string) {
+async function fetchQuiz(id: string): Promise<Quiz> {
 	let quiz: Quiz;
 	if (quizCache[id]) {
 		quiz = quizCache[id];
@@ -20,6 +21,24 @@ async function fetchQuiz(id: string) {
 		quizCache[id] = quiz;
 	}
 	return quiz;
+}
+
+async function fetchQuizList(): Promise<Record<string, QuizInfo>> {
+	if (Object.keys(quizInfoCache).length === 0) {
+		for await (const entry of Deno.readDir("./quiz")) {
+			if (entry.isFile && entry.name.endsWith(".json")) {
+				const id = entry.name.replace(".json", "");
+				const quiz = await fetchQuiz(id);
+				const quizInfo: QuizInfo = {
+					title: quiz.title,
+					description: quiz.description,
+					questionCount: quiz.questions.length,
+				};
+				quizInfoCache[id] = quizInfo;
+			}
+		}
+	}
+	return quizInfoCache;
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -115,6 +134,21 @@ quizRouter.post("/api/quiz/:id/mark", async (context) => {
 		console.error("Error loading quiz file:", error);
 		context.response.status = 404;
 		context.response.body = { success: false, message: "Quiz not found" };
+	}
+});
+
+quizRouter.get("/api/quiz", async (context) => {
+	try {
+		const quizList = await fetchQuizList();
+		context.response.status = 200;
+		context.response.body = { success: true, quizList };
+	} catch (error) {
+		console.error("Error listing quizzes:", error);
+		context.response.status = 500;
+		context.response.body = {
+			success: false,
+			message: "Failed to list quizzes",
+		};
 	}
 });
 

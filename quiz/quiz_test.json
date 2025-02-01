@@ -1,5 +1,6 @@
 {
     "title": "Quiz Test",
+    "description": "This is a description of the quiz test",
     "questions": [
         {
             "question": "What is the capital of France?",
