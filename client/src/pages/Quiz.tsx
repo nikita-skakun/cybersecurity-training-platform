@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useUserData } from "../util/api_utils.ts";
 import { TitleBar } from "../util/screen_utils.tsx";
-import { useNavigate } from "react-router-dom";
+import "./Quiz.css";
 
 interface Question {
 	question: string;
-	type: "single";
+	type: "single" | "multiple";
 	options: string[];
 }
 
@@ -36,18 +36,24 @@ export default function Quiz() {
 	const currentQuestion = quiz.questions[currentQuestionIndex];
 
 	const handleNext = () => {
-		if (currentQuestionIndex < quiz.questions.length - 1) {
+		if (currentQuestionIndex < quiz.questions.length - 1)
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
-		} else {
-			fetch(`/api/quizzes/${id}/mark`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(answers),
-			})
-				.then((res) => res.json())
-				.then((data) => setScore(data.score))
-				.catch((err) => console.error("Failed to submit answers:", err));
-		}
+	};
+
+	const handleBack = () => {
+		if (currentQuestionIndex > 0)
+			setCurrentQuestionIndex(currentQuestionIndex - 1);
+	};
+
+	const handleSubmit = () => {
+		fetch(`/api/quizzes/${id}/mark`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(answers),
+		})
+			.then((res) => res.json())
+			.then((data) => setScore(data.score))
+			.catch((err) => console.error("Failed to submit answers:", err));
 	};
 
 	const handleAnswerChange = (option: string) => {
@@ -66,23 +72,29 @@ export default function Quiz() {
 		});
 	};
 
+	let isAnswerSelected = answers[currentQuestionIndex] !== undefined;
+	if (isAnswerSelected && Array.isArray(answers[currentQuestionIndex]))
+		isAnswerSelected = (answers[currentQuestionIndex] as string[]).length > 0;
+
 	if (score !== null) {
 		return (
 			<div className="page-container">
 				<TitleBar user={user} />
-				<main className="fullsize-content">
+				<main className="shrunk-container">
 					<h2>{quiz.title}</h2>
 					<h3>Quiz Completed!</h3>
 					<p>
 						Your Score: <strong>{score}%</strong>
 					</p>
-					<button onClick={() => globalThis.location.reload()}>
-						Try Again
-					</button>
-					<button onClick={() => navigate("/")}>
-						<img src="/icons/back_icon.svg" className="icon" />
-						Home
-					</button>{" "}
+					<div className="button-group center margins-all-but-down">
+						<button onClick={() => globalThis.location.reload()}>
+							Try Again
+						</button>
+						<button onClick={() => navigate("/")}>
+							<img src="/icons/back_icon.svg" className="icon" />
+							Home
+						</button>
+					</div>
 				</main>
 			</div>
 		);
@@ -91,7 +103,7 @@ export default function Quiz() {
 	return (
 		<div className="page-container">
 			<TitleBar user={user} />
-			<main className="fullsize-content">
+			<main className="shrunk-container">
 				<h2>{quiz.title}</h2>
 				<h3>{currentQuestion.question}</h3>
 				<div className="options-container">
@@ -114,9 +126,29 @@ export default function Quiz() {
 						</label>
 					))}
 				</div>
-				<button onClick={handleNext}>
-					{currentQuestionIndex < quiz.questions.length - 1 ? "Next" : "Submit"}
-				</button>
+				<div className="button-group center margins-all-but-down">
+					<button onClick={handleBack} disabled={currentQuestionIndex === 0}>
+						&lt;
+					</button>
+					<button
+						onClick={handleNext}
+						disabled={
+							!isAnswerSelected ||
+							currentQuestionIndex === quiz.questions.length - 1
+						}
+					>
+						&gt;
+					</button>
+					<button
+						onClick={handleSubmit}
+						disabled={
+							!isAnswerSelected ||
+							currentQuestionIndex !== quiz.questions.length - 1
+						}
+					>
+						Submit
+					</button>
+				</div>
 			</main>
 		</div>
 	);
