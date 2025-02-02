@@ -3,7 +3,7 @@
     "dev": "deno run -A --node-modules-dir=auto npm:vite & deno run server:start",
     "build": "deno run -A --node-modules-dir=auto npm:vite build",
     "server:start": "deno run -A --node-modules-dir --watch ./server/main.ts",
-    "serve": "deno task build && deno task server:start"
+    "serve": "deno task build && deno run -A --node-modules-dir=auto npm:vite & deno task server:start"
   },
   "imports": {
     "@shared/": "./shared/",
