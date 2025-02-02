@@ -9,6 +9,8 @@ export default defineConfig({
 	root: "./client",
 	server: {
 		port: 3000,
+		host: true,
+		allowedHosts: ["echo-shield.com"],
 		proxy: {
 			"/api": {
 				target: "http://localhost:8000",
