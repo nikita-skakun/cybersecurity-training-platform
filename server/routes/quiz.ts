@@ -88,6 +88,7 @@ function checkAnswers(quiz: Quiz, userAnswers: UserAnswers): number {
 		}
 	});
 
+	if (totalPossiblePoints === 0) return 0;
 	return Math.round((totalPointsEarned / totalPossiblePoints) * 100);
 }
 
