@@ -132,14 +132,15 @@ const authenticateUser = async (
 			throw new Error(`${username} is not a member of PhishingTest`);
 		}
 
-		const id = findOrCreateUser(baseDN, username);
+		const domain = email.split("@")[1];
+		const id = findOrCreateUser(domain, username);
 		console.log(`User ${id} authenticated successfully.`);
 
 		return {
 			username,
 			name: userEntries[0].cn as string,
 			baseDN,
-			domain: email.split("@")[1],
+			domain,
 			role: "user",
 			id,
 		};
