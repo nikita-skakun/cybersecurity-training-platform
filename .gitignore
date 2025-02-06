@@ -28,3 +28,4 @@ client/.vite
 
 config.json
 jwt_key.pem
+database.db

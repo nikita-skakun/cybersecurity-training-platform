@@ -1,62 +1,61 @@
-import Database from "better-sqlite3";
+import { DB } from "https://deno.land/x/sqlite/mod.ts";
 
-const db = loadOrCreateDatabase();
-console.log("Database loaded successfully.");
+export function loadOrCreateDatabase(): DB {
+	const db = new DB("database.db");
 
-export function loadOrCreateDatabase(): Database {
-	const db = new Database("database.db");
-	db.pragma("journal_mode = WAL");
-	db.pragma("foreign_keys = ON");
+	// Create the users table if it doesn't exist
+	db.execute(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      domain TEXT NOT NULL,
+      username TEXT NOT NULL,
+      UNIQUE(domain, username)
+    );
+  `);
 
-	// Create the user table if it don't exist
-	db.exec(`
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            domain TEXT NOT NULL,
-            username TEXT NOT NULL,
-            UNIQUE(domain, username)
-        );
-    `);
+	// Create the completed requirements table if it doesn't exist
+	db.execute(`
+    CREATE TABLE IF NOT EXISTS completed (
+      user_id INTEGER NOT NULL,
+      requirement TEXT NOT NULL,
+      first_at TEXT NOT NULL,
+      last_at TEXT NOT NULL,
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+  `);
 
-	// Create the completed requirements table if it don't exist
-	db.exec(`
-        CREATE TABLE IF NOT EXISTS completed (
-            user_id INTEGER NOT NULL,
-            requirement TEXT NOT NULL,
-            first_at TEXT NOT NULL,
-            last_at TEXT NOT NULL,
-            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-        );
-    `);
-
-	// Create the quiz results table if it don't exist
-	db.exec(`
-        CREATE TABLE IF NOT EXISTS results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            quiz_id TEXT NOT NULL,
-            score INTEGER NOT NULL,
-            completed_at TEXT NOT NULL,
-            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-        );
-    `);
+	// Create the quiz results table if it doesn't exist
+	db.execute(`
+    CREATE TABLE IF NOT EXISTS results (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      quiz_id TEXT NOT NULL,
+      score INTEGER NOT NULL,
+      completed_at TEXT NOT NULL,
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+  `);
 
 	return db;
 }
 
-// Find or add user to the database
-export function findOrCreateUser(domain: string, username: string): number {
-	const user = db
-		.prepare("SELECT id FROM users WHERE domain = ? AND username = ?")
-		.get(domain, username);
-	if (user) {
-		return user.id;
+const db = loadOrCreateDatabase();
+
+export function findOrCreateUserId(domain: string, username: string): number {
+	const rows = [
+		...db.query("SELECT id FROM users WHERE domain = ? AND username = ?", [
+			domain,
+			username,
+		]),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
 	} else {
-		const stmt = db.prepare(
-			"INSERT INTO users (domain, username) VALUES (?, ?)"
-		);
-		const result = stmt.run(domain, username);
-		return result.lastInsertRowid;
+		db.query("INSERT INTO users (domain, username) VALUES (?, ?)", [
+			domain,
+			username,
+		]);
+		return db.lastInsertRowId as number;
 	}
 }
 

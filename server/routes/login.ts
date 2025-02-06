@@ -6,7 +6,7 @@ import fs from "node:fs";
 import * as path from "node:path";
 import loadOrGenerateKey from "../util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
-import { findOrCreateUser } from "../util/db_utils.ts";
+import { findOrCreateUserId } from "../util/db_utils.ts";
 
 const signingKey = loadOrGenerateKey();
 
@@ -133,7 +133,7 @@ const authenticateUser = async (
 		}
 
 		const domain = email.split("@")[1];
-		const id = findOrCreateUser(domain, username);
+		const id = findOrCreateUserId(domain, username);
 		console.log(`User ${id} authenticated successfully.`);
 
 		return {
