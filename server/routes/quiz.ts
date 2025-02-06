@@ -32,6 +32,7 @@ async function fetchQuizList(): Promise<Record<string, QuizInfo>> {
 				const quizInfo: QuizInfo = {
 					title: quiz.title,
 					description: quiz.description,
+					requirements: quiz.requirements,
 					questionCount: quiz.questions.length,
 				};
 				quizInfoCache[id] = quizInfo;

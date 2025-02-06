@@ -1,6 +1,9 @@
 {
-    "title": "Quiz Test",
-    "description": "This is a description of the quiz test",
+    "title": "Test Quiz",
+    "description": "This is a description of the test quiz",
+    "requirements": [
+        "module_test"
+    ],
     "questions": [
         {
             "question": "What is the capital of France?",

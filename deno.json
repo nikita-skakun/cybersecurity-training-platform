@@ -17,14 +17,16 @@
     "@types/react-dom": "npm:@types/react-dom@^19.0.3",
     "@types/react": "npm:@types/react@^19.0.8",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.3.4",
+    "better-sqlite3": "npm:better-sqlite3@^11.8.1",
     "jsonwebtoken": "npm:jsonwebtoken@^9.0.2",
     "ldap-escape": "npm:ldap-escape@^2.0.6",
     "ldapts": "npm:ldapts@^7.3.1",
     "react-dom": "npm:react-dom@^19.0.0",
     "react-router-dom": "npm:react-router-dom@^7.1.5",
     "react": "npm:react@^19.0.0",
-    "vite": "npm:vite@^6.0.11"
+    "vite": "npm:vite@^6.1.0"
   },
+  "nodeModulesDir": "auto",
   "compilerOptions": {
     "types": [
       "react",

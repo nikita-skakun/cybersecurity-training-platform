@@ -6,6 +6,7 @@ import fs from "node:fs";
 import * as path from "node:path";
 import loadOrGenerateKey from "../util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
+import { findOrCreateUser } from "../util/db_utils.ts";
 
 const signingKey = loadOrGenerateKey();
 
@@ -131,12 +132,16 @@ const authenticateUser = async (
 			throw new Error(`${username} is not a member of PhishingTest`);
 		}
 
+		const id = findOrCreateUser(baseDN, username);
+		console.log(`User ${id} authenticated successfully.`);
+
 		return {
-			username: username,
+			username,
 			name: userEntries[0].cn as string,
-			baseDN: baseDN,
+			baseDN,
 			domain: email.split("@")[1],
 			role: "user",
+			id,
 		};
 	} catch (ex) {
 		console.error("Authentication error:", ex);

@@ -1,0 +1,31 @@
+{
+    "title": "Test Module",
+    "description": "This is a description of the test module",
+    "pages": [
+        {
+            "title": "Page 1",
+            "type": "cover",
+            "content": "This is the content of page 1",
+            "images": [
+                "module_test/image1.jpg",
+                "module_test/image2.jpg"
+            ]
+        },
+        {
+            "title": "Page 2",
+            "type": "media_text",
+            "content": "This is the content of page 2",
+            "images": [
+                "module_test/image3.jpg",
+                "module_test/image4.jpg"
+            ]
+        },
+        {
+            "title": "Page 3",
+            "type": "media",
+            "videos": [
+                "module_test/video1.mp4"
+            ]
+        }
+    ]
+}

@@ -4,6 +4,7 @@ export interface User {
 	baseDN: string;
 	domain: string;
 	role: string;
+	id: number;
 
 	// JWT claims
 	exp?: number;

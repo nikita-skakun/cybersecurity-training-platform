@@ -8,12 +8,14 @@ export interface Question {
 export interface Quiz {
 	title: string;
 	description: string;
+	requirements: string[];
 	questions: Question[];
 }
 
 export interface QuizInfo {
 	title: string;
 	description: string;
+	requirements: string[];
 	questionCount: number;
 }
 
