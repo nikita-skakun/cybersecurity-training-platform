@@ -9,6 +9,9 @@ export default function HomePage() {
 	const user = useUserData();
 	const navigate = useNavigate();
 	const [quizList, setQuizList] = useState<Record<string, QuizInfo>>({});
+	const [compQuizList, setCompQuizList] = useState<Record<string, QuizInfo>>(
+		{}
+	);
 
 	useEffect(() => {
 		async function fetchQuizzes() {
@@ -17,6 +20,7 @@ export default function HomePage() {
 				const data = await response.json();
 				if (data.success) {
 					setQuizList(data.quizList as Record<string, QuizInfo>);
+					setCompQuizList(data.compQuizList as Record<string, QuizInfo>);
 				} else {
 					console.error("Failed to fetch quizzes:", data.message);
 				}
@@ -32,22 +36,44 @@ export default function HomePage() {
 			<TitleBar user={user} />
 			<main className="fullsize-content">
 				<h1>Welcome Home!</h1>
-				<div className="quiz-cards-container">
-					{Object.entries(quizList).map(([quizId, quiz]) => {
-						const quizData = quiz as QuizInfo;
-						return (
-							<div
-								className="quiz-card"
-								key={quizId}
-								onClick={() => navigate(`/quiz/${quizId}`)}
-							>
-								<h2>{quizData.title}</h2>
-								<p>{quizData.description}</p>
-								<p>Questions: {quizData.questionCount}</p>
-							</div>
-						);
-					})}
-				</div>
+				{Object.keys(quizList).length > 0 && (
+					<>
+						<h2>Unlocked Quizzes</h2>
+						<div className="quiz-cards-container">
+							{Object.entries(quizList).map(([quizId, quiz]) => {
+								const quizData = quiz as QuizInfo;
+								return (
+									<div
+										className="quiz-card"
+										key={quizId}
+										onClick={() => navigate(`/quiz/${quizId}`)}
+									>
+										<h2>{quizData.title}</h2>
+										<p>{quizData.description}</p>
+										<p>Questions: {quizData.questionCount}</p>
+									</div>
+								);
+							})}
+						</div>
+					</>
+				)}
+				{Object.keys(compQuizList).length > 0 && (
+					<>
+						<h2>Completed Quizzes</h2>
+						<div className="quiz-cards-container completed">
+							{Object.entries(compQuizList).map(([quizId, quiz]) => {
+								const quizData = quiz as QuizInfo;
+								return (
+									<div className="quiz-card completed" key={quizId}>
+										<h2>{quizData.title}</h2>
+										<p>{quizData.description}</p>
+										<p>Questions: {quizData.questionCount}</p>
+									</div>
+								);
+							})}
+						</div>
+					</>
+				)}
 			</main>
 		</div>
 	);

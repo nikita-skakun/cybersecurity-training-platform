@@ -18,6 +18,7 @@ export function loadOrCreateDatabase(): DB {
     CREATE TABLE IF NOT EXISTS completed (
       user_id INTEGER NOT NULL,
       requirement TEXT NOT NULL,
+      type TEXT NOT NULL,
       first_at TEXT NOT NULL,
       last_at TEXT NOT NULL,
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -57,6 +58,70 @@ export function findOrCreateUserId(domain: string, username: string): number {
 		]);
 		return db.lastInsertRowId as number;
 	}
+}
+
+// List all completed requirements for a user
+export function listCompletedRequirements(userId: number): string[] {
+	return [
+		...db.query("SELECT requirement FROM completed WHERE user_id = ?", [
+			userId,
+		]),
+	].map((row) => row[0] as string);
+}
+
+// List all completed requirements by type for a user
+export function listCompletedRequirementsByType(
+	userId: number,
+	type: string
+): string[] {
+	return [
+		...db.query(
+			"SELECT requirement FROM completed WHERE user_id = ? AND type = ?",
+			[userId, type]
+		),
+	].map((row) => row[0] as string);
+}
+
+// Mark a requirement as completed for a user
+export function markRequirementCompleted(
+	userId: number,
+	requirement: string,
+	type: string
+): void {
+	const now = new Date().toISOString();
+
+	const rows = [
+		...db.query(
+			"SELECT first_at FROM completed WHERE user_id = ? AND requirement = ? AND type = ?",
+			[userId, requirement, type]
+		),
+	];
+	if (rows.length > 0) {
+		db.query(
+			"UPDATE completed SET last_at = ? WHERE user_id = ? AND requirement = ? AND type = ?",
+			[now, userId, requirement, type]
+		);
+		return;
+	}
+
+	db.query(
+		"INSERT INTO completed (user_id, requirement, type, first_at, last_at) VALUES (?, ?, ?, ?, ?)",
+		[userId, requirement, type, now, now]
+	);
+}
+
+// Store a quiz result for a user
+export function storeQuizResult(
+	userId: number,
+	quizId: string,
+	score: number
+): void {
+	const now = new Date().toISOString();
+
+	db.query(
+		"INSERT INTO results (user_id, quiz_id, score, completed_at) VALUES (?, ?, ?, ?)",
+		[userId, quizId, score, now]
+	);
 }
 
 export function closeDatabase(): void {

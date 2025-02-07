@@ -1,14 +1,11 @@
 import { Router } from "jsr:@oak/oak";
 import { Client } from "npm:ldapts";
 import ldapEscape from "npm:ldap-escape";
-import jwt from "npm:jsonwebtoken";
 import fs from "node:fs";
 import * as path from "node:path";
-import loadOrGenerateKey from "../util/jwt_utils.ts";
+import { generateToken } from "../util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
 import { findOrCreateUserId } from "../util/db_utils.ts";
-
-const signingKey = loadOrGenerateKey();
 
 const loadDomainConfigs = (): Record<
 	string,
@@ -178,10 +175,7 @@ loginRouter.post("/api/login", async (context) => {
 		const loggedInUserInfo = await authenticateUser(email, password);
 
 		if (loggedInUserInfo) {
-			const token = jwt.sign(loggedInUserInfo, signingKey, {
-				algorithm: "HS256",
-				expiresIn: "1d",
-			});
+			const token = generateToken(loggedInUserInfo);
 
 			context.response.headers.set(
 				"Set-Cookie",

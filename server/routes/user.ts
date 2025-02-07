@@ -1,33 +1,21 @@
 import { Router } from "jsr:@oak/oak";
-import jwt from "jsonwebtoken";
-import loadOrGenerateKey from "../util/jwt_utils.ts";
-
-const signingKey = loadOrGenerateKey();
+import { verifyToken } from "../util/jwt_utils.ts";
+import { User } from "@shared/types/user.ts";
 
 const userRouter = new Router();
 
 userRouter.get("/api/userData", async (context) => {
-	const cookies = context.cookies;
-	const token = await cookies.get("jwtCyberTraining");
+	const token = await context.cookies.get("jwtCyberTraining");
 
-	if (!token) {
-		context.response.status = 401;
-		context.response.body = {
-			success: false,
-			message: "Unauthorized, no token provided",
-		};
-		return;
-	}
-
-	try {
-		const payload = await jwt.verify(token, signingKey);
+	const payload = verifyToken<User>(token);
+	if (payload) {
 		context.response.status = 200;
 		context.response.body = {
 			success: true,
 			message: "Protected content",
 			user: payload,
 		};
-	} catch (_) {
+	} else {
 		context.response.status = 403;
 		context.response.body = { success: false, message: "Invalid token" };
 	}

@@ -1,8 +1,17 @@
 import { Router } from "jsr:@oak/oak";
 import { Quiz, QuizInfo, UserAnswers } from "@shared/types/quiz.ts";
+import { verifyToken } from "../util/jwt_utils.ts";
+import { User } from "@shared/types/user.ts";
+import {
+	listCompletedRequirementsByType,
+	markRequirementCompleted,
+	storeQuizResult,
+} from "../util/db_utils.ts";
 
 const quizInfoCache: Record<string, QuizInfo> = {};
 const quizCache: Record<string, Quiz> = {};
+
+const PASSING_SCORE = 70;
 
 async function getJson(filePath: string) {
 	return JSON.parse(await Deno.readTextFile(filePath));
@@ -119,6 +128,16 @@ quizRouter.get("/api/quiz/:id", async (context) => {
 });
 
 quizRouter.post("/api/quiz/:id/mark", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
+	const userId = payload.id;
 	const { id } = context.params;
 
 	try {
@@ -127,10 +146,16 @@ quizRouter.post("/api/quiz/:id/mark", async (context) => {
 		const userAnswers: UserAnswers = await context.request.body.json();
 		const score = checkAnswers(quiz, userAnswers);
 
+		if (score >= PASSING_SCORE) {
+			markRequirementCompleted(userId, id, "quiz");
+			storeQuizResult(userId, id, score);
+		}
+
 		context.response.status = 200;
 		context.response.body = {
 			success: true,
 			score,
+			pass: score >= PASSING_SCORE,
 		};
 	} catch (error) {
 		console.error("Error loading quiz file:", error);
@@ -140,10 +165,33 @@ quizRouter.post("/api/quiz/:id/mark", async (context) => {
 });
 
 quizRouter.get("/api/quiz", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+
+	const payload = verifyToken<User>(token);
+
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
 	try {
 		const quizList = await fetchQuizList();
+		const compQuizIdList = listCompletedRequirementsByType(
+			payload.id,
+			"quiz"
+		);
+
+		const compQuizList: Record<string, QuizInfo> = {};
+		for (const quizId of compQuizIdList) {
+			if (quizList[quizId]) {
+				compQuizList[quizId] = quizList[quizId];
+				delete quizList[quizId];
+			}
+		}
+
 		context.response.status = 200;
-		context.response.body = { success: true, quizList };
+		context.response.body = { success: true, quizList, compQuizList };
 	} catch (error) {
 		console.error("Error listing quizzes:", error);
 		context.response.status = 500;
