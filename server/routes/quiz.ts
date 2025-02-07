@@ -146,9 +146,9 @@ quizRouter.post("/api/quiz/:id/mark", async (context) => {
 		const userAnswers: UserAnswers = await context.request.body.json();
 		const score = checkAnswers(quiz, userAnswers);
 
+		storeQuizResult(userId, id, score);
 		if (score >= PASSING_SCORE) {
 			markRequirementCompleted(userId, id, "quiz");
-			storeQuizResult(userId, id, score);
 		}
 
 		context.response.status = 200;
@@ -177,10 +177,7 @@ quizRouter.get("/api/quiz", async (context) => {
 
 	try {
 		const quizList = await fetchQuizList();
-		const compQuizIdList = listCompletedRequirementsByType(
-			payload.id,
-			"quiz"
-		);
+		const compQuizIdList = listCompletedRequirementsByType(payload.id, "quiz");
 
 		const compQuizList: Record<string, QuizInfo> = {};
 		for (const quizId of compQuizIdList) {

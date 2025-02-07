@@ -60,11 +60,15 @@ export default function HomePage() {
 				{Object.keys(compQuizList).length > 0 && (
 					<>
 						<h2>Completed Quizzes</h2>
-						<div className="quiz-cards-container completed">
+						<div className="quiz-cards-container">
 							{Object.entries(compQuizList).map(([quizId, quiz]) => {
 								const quizData = quiz as QuizInfo;
 								return (
-									<div className="quiz-card completed" key={quizId}>
+									<div
+										className="quiz-card"
+										key={quizId}
+										onClick={() => navigate(`/quiz/${quizId}`)}
+									>
 										<h2>{quizData.title}</h2>
 										<p>{quizData.description}</p>
 										<p>Questions: {quizData.questionCount}</p>
