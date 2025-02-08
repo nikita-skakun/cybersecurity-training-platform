@@ -1,3 +1,5 @@
+import { ItemInfo } from "@shared/types/item.ts";
+
 export interface Question {
 	question: string;
 	type: "single" | "multiple";
@@ -5,15 +7,8 @@ export interface Question {
 	answer?: string | string[];
 }
 
-export interface QuizInfo {
-	title: string;
-	description: string;
-	requirements: string[];
-	questionCount: number;
-}
-
 export interface Quiz {
-	quizInfo: QuizInfo;
+	info: ItemInfo;
 	questions: Question[];
 }
 

@@ -1,11 +1,11 @@
 {
-    "quizInfo": {
+    "info": {
         "title": "Test Quiz",
         "description": "This is a description of the test quiz",
         "requirements": [
             "module_test"
         ],
-        "questionCount": 2
+        "itemCount": 2
     },
     "questions": [
         {

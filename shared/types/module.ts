@@ -1,3 +1,5 @@
+import { ItemInfo } from "@shared/types/item.ts";
+
 export interface Page {
 	title: string;
 	content?: string;
@@ -5,14 +7,7 @@ export interface Page {
 	videos?: string[];
 }
 
-export interface ModuleInfo {
-	title: string;
-	description: string;
-	requirements: string[];
-	pageCount: number;
-}
-
 export interface Module {
-	moduleInfo: ModuleInfo;
+	info: ItemInfo;
 	pages: Page[];
 }

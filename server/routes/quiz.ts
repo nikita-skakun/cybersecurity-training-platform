@@ -1,15 +1,16 @@
 import { Router } from "jsr:@oak/oak";
-import { Quiz, QuizInfo, UserAnswers } from "@shared/types/quiz.ts";
-import { verifyToken } from "../util/jwt_utils.ts";
+import { Quiz, UserAnswers } from "@shared/types/quiz.ts";
+import { ItemInfo } from "@shared/types/item.ts";
 import { User } from "@shared/types/user.ts";
+import { verifyToken } from "../util/jwt_utils.ts";
+import { getJson } from "../util/fs_utils.ts";
 import {
 	listCompletedRequirementsByType,
 	markRequirementCompleted,
 	storeQuizResult,
 } from "../util/db_utils.ts";
-import { getJson } from "../util/fs_utils.ts";
 
-const quizInfoCache: Record<string, QuizInfo> = {};
+const quizInfoCache: Record<string, ItemInfo> = {};
 const quizCache: Record<string, Quiz> = {};
 
 const PASSING_SCORE = 70;
@@ -29,13 +30,13 @@ async function fetchQuiz(id: string): Promise<Quiz> {
 	return quiz;
 }
 
-async function fetchQuizList(): Promise<Record<string, QuizInfo>> {
+async function fetchQuizList(): Promise<Record<string, ItemInfo>> {
 	if (Object.keys(quizInfoCache).length === 0) {
 		for await (const entry of Deno.readDir("./quiz")) {
 			if (entry.isFile && entry.name.endsWith(".json")) {
 				const id = entry.name.replace(".json", "");
 				const quiz = await fetchQuiz(id);
-				const quizInfo: QuizInfo = quiz.quizInfo;
+				const quizInfo: ItemInfo = quiz.info;
 				quizInfoCache[id] = quizInfo;
 			}
 		}
@@ -171,7 +172,7 @@ quizRouter.get("/api/quiz", async (context) => {
 		const quizInfoList = await fetchQuizList();
 		const compQuizIdList = listCompletedRequirementsByType(payload.id, "quiz");
 
-		const compQuizInfoList: Record<string, QuizInfo> = {};
+		const compQuizInfoList: Record<string, ItemInfo> = {};
 		for (const quizId of compQuizIdList) {
 			if (quizInfoList[quizId]) {
 				compQuizInfoList[quizId] = quizInfoList[quizId];

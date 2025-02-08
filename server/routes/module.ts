@@ -1,14 +1,15 @@
 import { Router } from "jsr:@oak/oak";
-import { Module, ModuleInfo } from "@shared/types/module.ts";
-import { verifyToken } from "../util/jwt_utils.ts";
+import { Module } from "@shared/types/module.ts";
+import { ItemInfo } from "@shared/types/item.ts";
 import { User } from "@shared/types/user.ts";
+import { verifyToken } from "../util/jwt_utils.ts";
+import { getJson } from "../util/fs_utils.ts";
 import {
 	listCompletedRequirementsByType,
 	markRequirementCompleted,
 } from "../util/db_utils.ts";
-import { getJson } from "../util/fs_utils.ts";
 
-const moduleInfoCache: Record<string, ModuleInfo> = {};
+const moduleInfoCache: Record<string, ItemInfo> = {};
 const moduleCache: Record<string, Module> = {};
 
 // Load a module from file (or from cache if already loaded)
@@ -25,13 +26,13 @@ async function fetchModule(id: string): Promise<Module> {
 }
 
 // Build a cache of all available modules
-async function fetchModuleInfoList(): Promise<Record<string, ModuleInfo>> {
+async function fetchModuleInfoList(): Promise<Record<string, ItemInfo>> {
 	if (Object.keys(moduleInfoCache).length === 0) {
 		for await (const entry of Deno.readDir("./training_module")) {
 			if (entry.isFile && entry.name.endsWith(".json")) {
 				const id = entry.name.replace(".json", "");
 				const moduleData = await fetchModule(id);
-				const moduleInfo: ModuleInfo = moduleData.moduleInfo;
+				const moduleInfo: ItemInfo = moduleData.info;
 				moduleInfoCache[id] = moduleInfo;
 			}
 		}
@@ -101,7 +102,7 @@ moduleRouter.get("/api/modules", async (context) => {
 			payload.id,
 			"module"
 		);
-		const compModuleList: Record<string, ModuleInfo> = {};
+		const compModuleList: Record<string, ItemInfo> = {};
 
 		for (const moduleId of compModuleIdList) {
 			if (moduleList[moduleId]) {

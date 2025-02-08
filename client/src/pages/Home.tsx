@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserData } from "../util/api_utils.ts";
 import { TitleBar } from "../util/screen_utils.tsx";
-import { QuizInfo } from "@shared/types/quiz.ts";
+import { ItemInfo } from "@shared/types/item.ts";
 import "./Home.css";
 
 export default function HomePage() {
 	const user = useUserData();
 	const navigate = useNavigate();
-	const [quizList, setQuizList] = useState<Record<string, QuizInfo>>({});
-	const [compQuizList, setCompQuizList] = useState<Record<string, QuizInfo>>(
+	const [quizList, setQuizList] = useState<Record<string, ItemInfo>>({});
+	const [compQuizList, setCompQuizList] = useState<Record<string, ItemInfo>>(
 		{}
 	);
 
@@ -19,8 +19,8 @@ export default function HomePage() {
 				const response = await fetch("/api/quiz");
 				const data = await response.json();
 				if (data.success) {
-					setQuizList(data.quizInfoList as Record<string, QuizInfo>);
-					setCompQuizList(data.compQuizInfoList as Record<string, QuizInfo>);
+					setQuizList(data.quizInfoList as Record<string, ItemInfo>);
+					setCompQuizList(data.compQuizInfoList as Record<string, ItemInfo>);
 				} else {
 					console.error("Failed to fetch quizzes:", data.message);
 				}
@@ -41,7 +41,7 @@ export default function HomePage() {
 						<h2>Unlocked Quizzes</h2>
 						<div className="quiz-cards-container">
 							{Object.entries(quizList).map(([quizId, quiz]) => {
-								const quizData = quiz as QuizInfo;
+								const quizData = quiz as ItemInfo;
 								return (
 									<div
 										className="quiz-card"
@@ -50,7 +50,7 @@ export default function HomePage() {
 									>
 										<h2>{quizData.title}</h2>
 										<p>{quizData.description}</p>
-										<p>Questions: {quizData.questionCount}</p>
+										<p>Questions: {quizData.itemCount}</p>
 									</div>
 								);
 							})}
@@ -62,7 +62,7 @@ export default function HomePage() {
 						<h2>Completed Quizzes</h2>
 						<div className="quiz-cards-container">
 							{Object.entries(compQuizList).map(([quizId, quiz]) => {
-								const quizData = quiz as QuizInfo;
+								const quizData = quiz as ItemInfo;
 								return (
 									<div
 										className="quiz-card"
@@ -71,7 +71,7 @@ export default function HomePage() {
 									>
 										<h2>{quizData.title}</h2>
 										<p>{quizData.description}</p>
-										<p>Questions: {quizData.questionCount}</p>
+										<p>Questions: {quizData.itemCount}</p>
 									</div>
 								);
 							})}

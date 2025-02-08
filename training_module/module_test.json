@@ -1,9 +1,9 @@
 {
-    "moduleInfo": {
+    "info": {
         "title": "Test Module",
         "description": "This is a description of the test module",
         "requirements": [],
-        "pageCount": 3
+        "itemCount": 3
     },
     "pages": [
         {
