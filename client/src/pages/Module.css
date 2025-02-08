@@ -1,0 +1,25 @@
+.image-group {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}
+
+.module-image {
+	width: 30%;
+	border-radius: 16px;
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.module-image:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+}
+
+.module-image {
+    transition: transform 0.2s ease-in-out;
+}
+
+.module-text {
+    width: 70%;
+    white-space: pre-line;
+}

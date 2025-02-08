@@ -8,27 +8,19 @@
     "pages": [
         {
             "title": "Page 1",
-            "type": "cover",
-            "content": "This is the content of page 1",
-            "images": [
-                "module_test/image1.jpg",
-                "module_test/image2.jpg"
-            ]
+            "content": "This is the content of page 1 in a form of a long paragraph.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, vestibulum mi id, ultricies metus. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada."
         },
         {
             "title": "Page 2",
-            "type": "media_text",
-            "content": "This is the content of page 2",
+            "content": "This is the content of page 2 in form of short paragraph.",
             "images": [
-                "module_test/image3.jpg",
-                "module_test/image4.jpg"
+                "/module_test/image1.jpg"
             ]
         },
         {
             "title": "Page 3",
-            "type": "media",
             "videos": [
-                "module_test/video1.mp4"
+                "/module_test/video1.mp4"
             ]
         }
     ]

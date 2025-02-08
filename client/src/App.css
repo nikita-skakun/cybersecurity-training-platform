@@ -87,14 +87,14 @@ button:disabled {
 	padding: 0;
 }
 
-.fullsize-content {
+.fullsize-container {
 	flex-grow: 1;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	padding: 20px;
 	background: #fff;
-	border-radius: 8px;
+	border-radius: 16px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	margin: 20px auto;
 	width: 80%;
@@ -106,7 +106,7 @@ button:disabled {
 	margin: 20px auto;
 	padding: 20px;
 	background: #fff;
-	border-radius: 10px;
+	border-radius: 16px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	text-align: left;
 }
@@ -181,4 +181,20 @@ button:disabled {
 
 .user-info {
 	line-height: 1.6;
+}
+
+.progress-bar-container {
+	width: calc(100% + 40px);
+	height: 8px;
+	background-color: #c8c8c8;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	overflow: hidden;
+	margin: -20px -20px 20px -20px;
+}
+
+.progress-bar {
+	height: 100%;
+	background-color: #0081d7;
+	transition: width 0.3s ease;
 }

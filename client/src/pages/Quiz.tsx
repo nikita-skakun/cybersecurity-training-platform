@@ -66,79 +66,88 @@ export default function QuizPage() {
 	if (isAnswerSelected && Array.isArray(answers[currentQuestionIndex]))
 		isAnswerSelected = (answers[currentQuestionIndex] as string[]).length > 0;
 
-	if (score !== null) {
-		return (
-			<div className="page-container">
-				<TitleBar user={user} />
-				<main className="shrunk-container">
-					<h2>{quiz.title}</h2>
-					<h3>Quiz Completed!</h3>
-					<p>
-						Your Score: <strong>{score}%</strong>
-					</p>
-					<div className="button-group center margins-all-but-down">
-						<button onClick={() => globalThis.location.reload()}>
-							Try Again
-						</button>
-						<button onClick={() => navigate("/")}>
-							<img src="/icons/back_icon.svg" className="icon" />
-							Home
-						</button>
-					</div>
-				</main>
-			</div>
-		);
-	}
+	let progress = (currentQuestionIndex / quiz.questions.length) * 100;
+	if (score !== null) progress = 100;
 
 	return (
 		<div className="page-container">
 			<TitleBar user={user} />
 			<main className="shrunk-container">
+				<div className="progress-bar-container">
+					<div className="progress-bar" style={{ width: `${progress}%` }}></div>
+				</div>
 				<h2>{quiz.title}</h2>
-				<h3>{currentQuestion.question}</h3>
-				<div className="options-container">
-					{currentQuestion.options.map((option: string) => (
-						<label key={option}>
-							<input
-								type={currentQuestion.type === "single" ? "radio" : "checkbox"}
-								name={`question-${currentQuestionIndex}`}
-								value={option}
-								checked={
-									currentQuestion.type === "single"
-										? answers[currentQuestionIndex] === option
-										: (answers[currentQuestionIndex] as string[])?.includes(
-												option
-										  )
+
+				{score !== null ? (
+					<>
+						<h3>Quiz Completed!</h3>
+						<p>
+							Your Score: <strong>{score}%</strong>
+						</p>
+						<div className="button-group center margins-all-but-down">
+							<button onClick={() => globalThis.location.reload()}>
+								<img src="/icons/reload_icon.svg" className="icon" />
+								Try Again
+							</button>
+							<button onClick={() => navigate("/")}>
+								<img src="/icons/back_icon.svg" className="icon" />
+								Home
+							</button>
+						</div>
+					</>
+				) : (
+					<>
+						<h3>{currentQuestion.question}</h3>
+						<div className="options-container">
+							{currentQuestion.options.map((option: string) => (
+								<label key={option}>
+									<input
+										type={
+											currentQuestion.type === "single" ? "radio" : "checkbox"
+										}
+										name={`question-${currentQuestionIndex}`}
+										value={option}
+										checked={
+											currentQuestion.type === "single"
+												? answers[currentQuestionIndex] === option
+												: (answers[currentQuestionIndex] as string[])?.includes(
+														option
+												  )
+										}
+										onChange={() => handleAnswerChange(option)}
+									/>
+									{option}
+								</label>
+							))}
+						</div>
+						<div className="button-group center margins-all-but-down">
+							<button
+								onClick={handleBack}
+								disabled={currentQuestionIndex === 0}
+							>
+								&lt;
+							</button>
+							<button
+								onClick={handleNext}
+								disabled={
+									!isAnswerSelected ||
+									currentQuestionIndex === quiz.questions.length - 1
 								}
-								onChange={() => handleAnswerChange(option)}
-							/>
-							{option}
-						</label>
-					))}
-				</div>
-				<div className="button-group center margins-all-but-down">
-					<button onClick={handleBack} disabled={currentQuestionIndex === 0}>
-						&lt;
-					</button>
-					<button
-						onClick={handleNext}
-						disabled={
-							!isAnswerSelected ||
-							currentQuestionIndex === quiz.questions.length - 1
-						}
-					>
-						&gt;
-					</button>
-					<button
-						onClick={handleSubmit}
-						disabled={
-							!isAnswerSelected ||
-							currentQuestionIndex !== quiz.questions.length - 1
-						}
-					>
-						Submit
-					</button>
-				</div>
+							>
+								&gt;
+							</button>
+							<button
+								onClick={handleSubmit}
+								disabled={
+									!isAnswerSelected ||
+									currentQuestionIndex !== quiz.questions.length - 1
+								}
+							>
+								Submit
+							</button>
+						</div>
+					</>
+				)}
 			</main>
 		</div>
 	);

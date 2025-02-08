@@ -7,15 +7,12 @@ import {
 	markRequirementCompleted,
 	storeQuizResult,
 } from "../util/db_utils.ts";
+import { getJson } from "../util/fs_utils.ts";
 
 const quizInfoCache: Record<string, QuizInfo> = {};
 const quizCache: Record<string, Quiz> = {};
 
 const PASSING_SCORE = 70;
-
-async function getJson(filePath: string) {
-	return JSON.parse(await Deno.readTextFile(filePath));
-}
 
 const quizRouter = new Router();
 

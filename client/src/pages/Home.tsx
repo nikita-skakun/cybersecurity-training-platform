@@ -34,7 +34,7 @@ export default function HomePage() {
 	return (
 		<div className="page-container">
 			<TitleBar user={user} />
-			<main className="fullsize-content">
+			<main className="fullsize-container">
 				<h1>Welcome Home!</h1>
 				{Object.keys(quizList).length > 0 && (
 					<>
