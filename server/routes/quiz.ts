@@ -35,12 +35,7 @@ async function fetchQuizList(): Promise<Record<string, QuizInfo>> {
 			if (entry.isFile && entry.name.endsWith(".json")) {
 				const id = entry.name.replace(".json", "");
 				const quiz = await fetchQuiz(id);
-				const quizInfo: QuizInfo = {
-					title: quiz.title,
-					description: quiz.description,
-					requirements: quiz.requirements,
-					questionCount: quiz.questions.length,
-				};
+				const quizInfo: QuizInfo = quiz.quizInfo;
 				quizInfoCache[id] = quizInfo;
 			}
 		}
@@ -173,19 +168,19 @@ quizRouter.get("/api/quiz", async (context) => {
 	}
 
 	try {
-		const quizList = await fetchQuizList();
+		const quizInfoList = await fetchQuizList();
 		const compQuizIdList = listCompletedRequirementsByType(payload.id, "quiz");
 
-		const compQuizList: Record<string, QuizInfo> = {};
+		const compQuizInfoList: Record<string, QuizInfo> = {};
 		for (const quizId of compQuizIdList) {
-			if (quizList[quizId]) {
-				compQuizList[quizId] = quizList[quizId];
-				delete quizList[quizId];
+			if (quizInfoList[quizId]) {
+				compQuizInfoList[quizId] = quizInfoList[quizId];
+				delete quizInfoList[quizId];
 			}
 		}
 
 		context.response.status = 200;
-		context.response.body = { success: true, quizList, compQuizList };
+		context.response.body = { success: true, quizInfoList, compQuizInfoList };
 	} catch (error) {
 		console.error("Error listing quizzes:", error);
 		context.response.status = 500;

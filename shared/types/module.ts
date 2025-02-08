@@ -1,6 +1,5 @@
 export interface Page {
 	title: string;
-	type: "cover" | "media_text" | "text" | "media";
 	content?: string;
 	images?: string[];
 	videos?: string[];

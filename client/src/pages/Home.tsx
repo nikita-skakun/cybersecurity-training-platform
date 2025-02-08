@@ -19,8 +19,8 @@ export default function HomePage() {
 				const response = await fetch("/api/quiz");
 				const data = await response.json();
 				if (data.success) {
-					setQuizList(data.quizList as Record<string, QuizInfo>);
-					setCompQuizList(data.compQuizList as Record<string, QuizInfo>);
+					setQuizList(data.quizInfoList as Record<string, QuizInfo>);
+					setCompQuizList(data.compQuizInfoList as Record<string, QuizInfo>);
 				} else {
 					console.error("Failed to fetch quizzes:", data.message);
 				}

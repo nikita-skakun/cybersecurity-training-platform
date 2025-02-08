@@ -5,18 +5,16 @@ export interface Question {
 	answer?: string | string[];
 }
 
-export interface Quiz {
-	title: string;
-	description: string;
-	requirements: string[];
-	questions: Question[];
-}
-
 export interface QuizInfo {
 	title: string;
 	description: string;
 	requirements: string[];
 	questionCount: number;
+}
+
+export interface Quiz {
+	quizInfo: QuizInfo;
+	questions: Question[];
 }
 
 export interface UserAnswers {

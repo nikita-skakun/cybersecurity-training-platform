@@ -1,9 +1,12 @@
 {
-    "title": "Test Quiz",
-    "description": "This is a description of the test quiz",
-    "requirements": [
-        "module_test"
-    ],
+    "quizInfo": {
+        "title": "Test Quiz",
+        "description": "This is a description of the test quiz",
+        "requirements": [
+            "module_test"
+        ],
+        "questionCount": 2
+    },
     "questions": [
         {
             "question": "What is the capital of France?",
