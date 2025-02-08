@@ -1,4 +1,5 @@
 import { DB } from "https://deno.land/x/sqlite/mod.ts";
+import { ItemInfo } from "@shared/types/item.ts";
 
 export function loadOrCreateDatabase(): DB {
 	const db = new DB("database.db");
@@ -82,6 +83,20 @@ export function listCompletedRequirementsByType(
 	].map((row) => row[0] as string);
 }
 
+// Filter all elements that have all requirements completed for a user
+export function filterUnlockedItems(
+	userId: number,
+	items: Record<string, ItemInfo>
+): Record<string, ItemInfo> {
+	const completedRequirements = new Set(listCompletedRequirements(userId));
+
+	return Object.fromEntries(
+		Object.entries(items).filter(([_, item]) =>
+			item.requirements.every((req) => completedRequirements.has(req))
+		)
+	);
+}
+
 // Mark a requirement as completed for a user
 export function markRequirementCompleted(
 	userId: number,
@@ -132,3 +147,17 @@ export function closeDatabase(): void {
 		console.error("Error closing database:", error);
 	}
 }
+
+// export function listAvailableItemsByType(userId: number, type: string): string[] {
+// 	const completedRequirements = listCompletedRequirementsByType(userId, type);
+
+// 	const availableItems = [
+// 		...db.query("SELECT DISTINCT requirement FROM completed WHERE type = ?", [
+// 			type,
+// 		]),
+// 	].map((row) => row[0] as string);
+
+// 	return availableItems.filter(
+// 		(requirement) => !completedRequirements.includes(requirement)
+// 	);
+// }

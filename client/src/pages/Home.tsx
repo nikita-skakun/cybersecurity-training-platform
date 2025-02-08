@@ -15,58 +15,53 @@ export default function HomePage() {
 	const [compModules, setCompModules] = useState<Record<string, ItemInfo>>({});
 
 	useEffect(() => {
-		async function fetchQuizzes() {
+		async function fetchData() {
 			try {
-				const response = await fetch("/api/quiz");
-				const data = await response.json();
-				if (data.success) {
-					setAvlQuizzes(data.avlQuizzes as Record<string, ItemInfo>);
-					setCompQuizzes(data.compQuizzes as Record<string, ItemInfo>);
+				const [quizResponse, moduleResponse] = await Promise.all([
+					fetch("/api/quiz"),
+					fetch("/api/modules"),
+				]);
+
+				const quizData = await quizResponse.json();
+				const moduleData = await moduleResponse.json();
+
+				if (quizData.success) {
+					setAvlQuizzes(quizData.avlQuizzes as Record<string, ItemInfo>);
+					setCompQuizzes(quizData.compQuizzes as Record<string, ItemInfo>);
 				} else {
-					console.error("Failed to fetch quizzes:", data.message);
+					console.error("Failed to fetch quizzes:", quizData.message);
+				}
+
+				if (moduleData.success) {
+					setAvlModules(moduleData.avlModules as Record<string, ItemInfo>);
+					setCompModules(moduleData.compModules as Record<string, ItemInfo>);
+				} else {
+					console.error("Failed to fetch modules:", moduleData.message);
 				}
 			} catch (error) {
-				console.error("Error fetching quizzes:", error);
+				console.error("Error fetching data:", error);
 			}
 		}
-		async function fetchModules() {
-			try {
-				const response = await fetch("/api/modules");
-				const data = await response.json();
-				if (data.success) {
-					setAvlModules(data.avlModules as Record<string, ItemInfo>);
-					setCompModules(data.compModules as Record<string, ItemInfo>);
-				} else {
-					console.error("Failed to fetch modules:", data.message);
-				}
-			} catch (error) {
-				console.error("Error fetching modules:", error);
-			}
-		}
-		fetchQuizzes();
-		fetchModules();
+		fetchData();
 	}, []);
 
-	if (!avlQuizzes || !compQuizzes || !avlModules || !compModules)
-		return <div>Loading...</div>;
-	
-	// Combine available items and completed items with an added type property.
-	const availableItems = [
-		...(Object.entries(avlQuizzes) as [string, ItemInfo][]).map(
-			([id, item]) => ({ ...item, id, itemType: "quiz" })
-		),
-		...(Object.entries(avlModules) as [string, ItemInfo][]).map(
-			([id, item]) => ({ ...item, id, itemType: "module" })
-		),
-	];
+	const mapItems = (
+		items: Record<string, ItemInfo>,
+		itemType: "quiz" | "module"
+	) =>
+		(Object.entries(items) as [string, ItemInfo][]).map(([id, item]) => ({
+			...item,
+			id,
+			itemType,
+		}));
 
+	const availableItems = [
+		...mapItems(avlQuizzes, "quiz"),
+		...mapItems(avlModules, "module"),
+	];
 	const completedItems = [
-		...(Object.entries(compQuizzes) as [string, ItemInfo][]).map(
-			([id, item]) => ({ ...item, id, itemType: "quiz" })
-		),
-		...(Object.entries(compModules) as [string, ItemInfo][]).map(
-			([id, item]) => ({ ...item, id, itemType: "module" })
-		),
+		...mapItems(compQuizzes, "quiz"),
+		...mapItems(compModules, "module"),
 	];
 
 	return (

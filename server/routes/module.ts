@@ -5,6 +5,7 @@ import { User } from "@shared/types/user.ts";
 import { verifyToken } from "../util/jwt_utils.ts";
 import { getJson } from "../util/fs_utils.ts";
 import {
+	filterUnlockedItems,
 	listCompletedRequirementsByType,
 	markRequirementCompleted,
 } from "../util/db_utils.ts";
@@ -97,19 +98,18 @@ moduleRouter.get("/api/modules", async (context) => {
 	}
 
 	try {
-		const avlModules = await fetchModuleInfoList();
-		const compModuleIdList = listCompletedRequirementsByType(
-			payload.id,
-			"module"
-		);
-		const compModules: Record<string, ItemInfo> = {};
+		const allModules = await fetchModuleInfoList();
+		const compModuleIds = listCompletedRequirementsByType(payload.id, "module");
 
-		for (const moduleId of compModuleIdList) {
-			if (avlModules[moduleId]) {
-				compModules[moduleId] = avlModules[moduleId];
-				delete avlModules[moduleId];
+		const compModules: Record<string, ItemInfo> = {};
+		for (const moduleId of compModuleIds) {
+			if (allModules[moduleId]) {
+				compModules[moduleId] = allModules[moduleId];
+				delete allModules[moduleId];
 			}
 		}
+
+		const avlModules = filterUnlockedItems(payload.id, allModules);
 
 		context.response.status = 200;
 		context.response.body = { success: true, avlModules, compModules };

@@ -5,6 +5,7 @@ import { User } from "@shared/types/user.ts";
 import { verifyToken } from "../util/jwt_utils.ts";
 import { getJson } from "../util/fs_utils.ts";
 import {
+	filterUnlockedItems,
 	listCompletedRequirementsByType,
 	markRequirementCompleted,
 	storeQuizResult,
@@ -169,16 +170,18 @@ quizRouter.get("/api/quiz", async (context) => {
 	}
 
 	try {
-		const avlQuizzes = await fetchQuizList();
-		const compQuizIdList = listCompletedRequirementsByType(payload.id, "quiz");
+		const allQuizzes = await fetchQuizList();
+		const compQuizIds = listCompletedRequirementsByType(payload.id, "quiz");
 
 		const compQuizzes: Record<string, ItemInfo> = {};
-		for (const quizId of compQuizIdList) {
-			if (avlQuizzes[quizId]) {
-				compQuizzes[quizId] = avlQuizzes[quizId];
-				delete avlQuizzes[quizId];
+		for (const quizId of compQuizIds) {
+			if (allQuizzes[quizId]) {
+				compQuizzes[quizId] = allQuizzes[quizId];
+				delete allQuizzes[quizId];
 			}
 		}
+
+		const avlQuizzes = filterUnlockedItems(payload.id, allQuizzes);
 
 		context.response.status = 200;
 		context.response.body = { success: true, avlQuizzes, compQuizzes };
