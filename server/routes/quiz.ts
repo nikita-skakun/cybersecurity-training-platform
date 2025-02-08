@@ -169,19 +169,19 @@ quizRouter.get("/api/quiz", async (context) => {
 	}
 
 	try {
-		const quizInfoList = await fetchQuizList();
+		const avlQuizzes = await fetchQuizList();
 		const compQuizIdList = listCompletedRequirementsByType(payload.id, "quiz");
 
-		const compQuizInfoList: Record<string, ItemInfo> = {};
+		const compQuizzes: Record<string, ItemInfo> = {};
 		for (const quizId of compQuizIdList) {
-			if (quizInfoList[quizId]) {
-				compQuizInfoList[quizId] = quizInfoList[quizId];
-				delete quizInfoList[quizId];
+			if (avlQuizzes[quizId]) {
+				compQuizzes[quizId] = avlQuizzes[quizId];
+				delete avlQuizzes[quizId];
 			}
 		}
 
 		context.response.status = 200;
-		context.response.body = { success: true, quizInfoList, compQuizInfoList };
+		context.response.body = { success: true, avlQuizzes, compQuizzes };
 	} catch (error) {
 		console.error("Error listing quizzes:", error);
 		context.response.status = 500;

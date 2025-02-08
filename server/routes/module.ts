@@ -97,26 +97,22 @@ moduleRouter.get("/api/modules", async (context) => {
 	}
 
 	try {
-		const moduleList = await fetchModuleInfoList();
+		const avlModules = await fetchModuleInfoList();
 		const compModuleIdList = listCompletedRequirementsByType(
 			payload.id,
 			"module"
 		);
-		const compModuleList: Record<string, ItemInfo> = {};
+		const compModules: Record<string, ItemInfo> = {};
 
 		for (const moduleId of compModuleIdList) {
-			if (moduleList[moduleId]) {
-				compModuleList[moduleId] = moduleList[moduleId];
-				delete moduleList[moduleId];
+			if (avlModules[moduleId]) {
+				compModules[moduleId] = avlModules[moduleId];
+				delete avlModules[moduleId];
 			}
 		}
 
 		context.response.status = 200;
-		context.response.body = {
-			success: true,
-			moduleList,
-			compModuleList,
-		};
+		context.response.body = { success: true, avlModules, compModules };
 	} catch (error) {
 		console.error("Error listing modules:", error);
 		context.response.status = 500;

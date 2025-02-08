@@ -1,11 +1,11 @@
-.quiz-cards-container {
+.cards-container {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
 	padding: 20px;
 }
 
-.quiz-card {
+.item-card {
 	background: #e4e4e4;
 	border-radius: 12px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -17,18 +17,18 @@
 	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.quiz-card:hover {
-	transform: translateY(-5px);
+.item-card:hover {
+	transform: scale(1.02);
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.quiz-card h2 {
+.item-card h2 {
 	font-size: 1.5rem;
 	margin-bottom: 10px;
 	color: #333;
 }
 
-.quiz-card p {
+.item-card p {
 	font-size: 1rem;
 	color: #666;
 	margin-bottom: 5px;

@@ -12,7 +12,6 @@
 
 .module-image:hover {
     transform: scale(1.02);
-    transition: transform 0.2s ease-in-out;
 }
 
 .module-image {

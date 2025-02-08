@@ -55,9 +55,9 @@ export default function ModulePage() {
 
 				{completed ? (
 					<>
-						<h2>{module.moduleInfo.title}</h2>
+						<h2>{module.info.title}</h2>
 						<h3>Module Completed!</h3>
-						<p>{module.moduleInfo.description}</p>
+						<p>{module.info.description}</p>
 						<div className="button-group center margins-all-but-down">
 							<button onClick={() => globalThis.location.reload()}>
 								<img
