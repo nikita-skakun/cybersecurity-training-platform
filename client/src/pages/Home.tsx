@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUserData } from "../util/api_utils.ts";
-import { TitleBar } from "../util/screen_utils.tsx";
+import { useUserData } from "../util/ApiUtils.ts";
+import { TitleBar } from "../util/TitleBar.tsx";
 import { ItemInfo } from "@shared/types/item.ts";
+import CardsContainer from "../util/CardContainer.tsx";
 import "./Home.css";
 
 export default function HomePage() {
 	const user = useUserData();
-	const navigate = useNavigate();
 
 	const [avlQuizzes, setAvlQuizzes] = useState<Record<string, ItemInfo>>({});
 	const [compQuizzes, setCompQuizzes] = useState<Record<string, ItemInfo>>({});
@@ -73,58 +72,14 @@ export default function HomePage() {
 				{availableItems.length > 0 && (
 					<>
 						<h2>Unlocked Items</h2>
-						<div className="cards-container">
-							{availableItems.map((item) => (
-								<div
-									className="item-card"
-									key={`${item.itemType}-${item.id}`}
-									onClick={() =>
-										navigate(
-											item.itemType === "quiz"
-												? `/quiz/${item.id}`
-												: `/module/${item.id}`
-										)
-									}
-								>
-									<h2>{item.title}</h2>
-									<p>{item.description}</p>
-									<p>
-										{item.itemType === "quiz"
-											? `Questions: ${item.itemCount}`
-											: `Pages: ${item.itemCount}`}
-									</p>
-								</div>
-							))}
-						</div>
+						<CardsContainer items={availableItems} />
 					</>
 				)}
 
 				{completedItems.length > 0 && (
 					<>
 						<h2>Completed Items</h2>
-						<div className="cards-container">
-							{completedItems.map((item) => (
-								<div
-									className="item-card"
-									key={`${item.itemType}-${item.id}`}
-									onClick={() =>
-										navigate(
-											item.itemType === "quiz"
-												? `/quiz/${item.id}`
-												: `/module/${item.id}`
-										)
-									}
-								>
-									<h2>{item.title}</h2>
-									<p>{item.description}</p>
-									<p>
-										{item.itemType === "quiz"
-											? `Questions: ${item.itemCount}`
-											: `Pages: ${item.itemCount}`}
-									</p>
-								</div>
-							))}
-						</div>
+						<CardsContainer items={completedItems} />
 					</>
 				)}
 			</main>

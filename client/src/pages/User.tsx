@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useUserData } from "../util/api_utils.ts";
-import { TitleBar } from "../util/screen_utils.tsx";
+import { useUserData } from "../util/ApiUtils.ts";
+import { TitleBar } from "../util/TitleBar.tsx";
 
 export default function UserPage() {
 	const navigate = useNavigate();
