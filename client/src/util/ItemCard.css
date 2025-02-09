@@ -8,7 +8,8 @@
 	min-width: 250px;
 	max-width: 350px;
 	flex: 1 1 auto;
-	transition: box-shadow 0.2s ease;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	background-color: #fff;
 }
 
 .item-card:hover {
@@ -46,4 +47,17 @@
 
 .item-type-badge.module {
 	background-color: #ea3d29;
+}
+
+.time-badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px 8px;
+	color: #fff;
+	font-size: 0.8rem;
+	font-weight: bold;
+	border-top-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	background-color: #555;
 }

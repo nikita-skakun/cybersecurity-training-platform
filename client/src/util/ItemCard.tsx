@@ -25,13 +25,9 @@ export default function ItemCard({
 			<div className={`item-type-badge ${itemType}`}>
 				{itemType === "quiz" ? "Quiz" : "Module"}
 			</div>
+			<div className="time-badge">{itemCount}min</div>
 			<h2>{title}</h2>
 			<p>{description}</p>
-			<p>
-				{itemType === "quiz"
-					? `Questions: ${itemCount}`
-					: `Pages: ${itemCount}`}
-			</p>
 		</div>
 	);
 }
