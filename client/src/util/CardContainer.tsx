@@ -1,13 +1,14 @@
 import { ItemInfo } from "@shared/types/item.ts";
 import ItemCard from "./ItemCard.tsx";
+import "./CardContainer.css";
 
-interface CardsContainerProps {
+interface CardContainerProps {
 	items: (ItemInfo & { id: string; itemType: "quiz" | "module" })[];
 }
 
-export default function CardsContainer({ items }: CardsContainerProps) {
+export default function CardContainer({ items }: CardContainerProps) {
 	return (
-		<div className="cards-container">
+		<div className="card-container">
 			{items.map((item) => (
 				<ItemCard key={`${item.itemType}-${item.id}`} {...item} />
 			))}

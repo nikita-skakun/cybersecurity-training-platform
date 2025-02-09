@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ItemInfo } from "@shared/types/item.ts";
+import "./ItemCard.css";
 
 export interface ItemCardProps extends ItemInfo {
 	id: string;
@@ -21,6 +22,9 @@ export default function ItemCard({
 
 	return (
 		<div className="item-card" onClick={handleClick}>
+			<div className={`item-type-badge ${itemType}`}>
+				{itemType === "quiz" ? "Quiz" : "Module"}
+			</div>
 			<h2>{title}</h2>
 			<p>{description}</p>
 			<p>

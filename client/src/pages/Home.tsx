@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { ItemInfo } from "@shared/types/item.ts";
-import CardsContainer from "../util/CardContainer.tsx";
-import "./Home.css";
+import CardContainer from "../util/CardContainer.tsx";
 
 export default function HomePage() {
 	const user = useUserData();
@@ -72,14 +71,14 @@ export default function HomePage() {
 				{availableItems.length > 0 && (
 					<>
 						<h2>Unlocked Items</h2>
-						<CardsContainer items={availableItems} />
+						<CardContainer items={availableItems} />
 					</>
 				)}
 
 				{completedItems.length > 0 && (
 					<>
 						<h2>Completed Items</h2>
-						<CardsContainer items={completedItems} />
+						<CardContainer items={completedItems} />
 					</>
 				)}
 			</main>
