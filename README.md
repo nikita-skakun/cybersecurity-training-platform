@@ -15,7 +15,14 @@ This is a final group project for the INFO 4290 course. We focused on creating a
 0. Install Deno for your Operating System: [Installation Link](https://docs.deno.com/runtime/getting_started/installation/)
 1. Clone the git repository using the command: `git clone git@github.com:nikita-skakun/cybersecurity-training-platform.git`
 2. Go to the newly downloaded directory: `cd cybersecurity-training-platform`
-3. Modify the `config.json.sample` with Active Directory information and rename to `config.json`
-4. Install Deno dependencies: `deno install`
-5. Start the development Deno server: `deno run dev`
-6. Go to the hosted website: <http://localhost:3000>
+3. Install Deno dependencies: `deno install`
+4. Start the development Deno server: `deno run dev --allow-test-user`
+5. Go to the hosted website: <http://localhost:3000>
+6. Login with `test@example.com` email and `test` password
+7. To reset the database for testing, delete the `database.db` file in root directory
+
+## To Use LDAP for Account Management
+
+1. Modify the `config.json.sample` with Active Directory information and rename to `config.json`
+2. Start the production Deno server: `deno run serve`
+3. Go to the hosted website: <http://localhost:3000>

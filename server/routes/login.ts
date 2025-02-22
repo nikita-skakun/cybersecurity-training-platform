@@ -7,6 +7,8 @@ import { generateToken } from "../util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
 import { findOrCreateUserId } from "../util/db_utils.ts";
 
+const allowTestUser = Deno.args.includes("--allow-test-user");
+
 const loadDomainConfigs = (): Record<
 	string,
 	{ url: string; bindDN: string; bindPassword: string; groupDN: string }
@@ -85,6 +87,21 @@ const authenticateUser = async (
 	email: string,
 	password: string
 ): Promise<User | null> => {
+	if (allowTestUser && email === "test@example.com" && password === "test") {
+		const { username, baseDN } = extractFromEmail(email);
+		const domain = email.split("@")[1];
+		const id = findOrCreateUserId(domain, username);
+		console.log("Test login activated for test@example.com");
+		return {
+			username,
+			name: "Test User",
+			baseDN,
+			domain,
+			role: "user",
+			id,
+		};
+	}
+
 	try {
 		validateEmail(email);
 		const { username, baseDN } = extractFromEmail(email);
