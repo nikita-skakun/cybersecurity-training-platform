@@ -1,0 +1,122 @@
+{
+    "info": {
+        "title": "Password Security Quiz",
+        "description": "This quiz tests your knowledge on best practices for creating strong passwords, password managers, and Multi-Factor Authentication (MFA).",
+        "requirements": [
+            "password_security_basics"
+        ],
+        "itemCount": 10
+    },
+    "questions": [
+        {
+            "question": "Which of the following is the best practice for creating a strong password?",
+            "type": "single",
+            "options": [
+                "Using a combination of letters, numbers, and symbols",
+                "Using only lowercase letters and numbers",
+                "Using your name and date of birth",
+                "Reusing the same password for multiple accounts"
+            ],
+            "answer": "Using a combination of letters, numbers, and symbols"
+        },
+        {
+            "question": "What is the primary benefit of using a password manager?",
+            "type": "single",
+            "options": [
+                "It generates and stores strong, unique passwords for each account",
+                "It allows you to share your passwords securely with coworkers",
+                "It eliminates the need for two-factor authentication",
+                "It remembers only one password for all accounts"
+            ],
+            "answer": "It generates and stores strong, unique passwords for each account"
+        },
+        {
+            "question": "How often should you change your passwords?",
+            "type": "single",
+            "options": [
+                "Only when you suspect a security breach",
+                "Every week",
+                "Only if the password is too long",
+                "At least once every few months, or if a breach occurs"
+            ],
+            "answer": "At least once every few months, or if a breach occurs"
+        },
+        {
+            "question": "Which of the following passwords is the weakest?",
+            "type": "single",
+            "options": [
+                "P@ssword123!",
+                "Qwerty123",
+                "G!8z$3xK@7mQ",
+                "A randomly generated 16-character password"
+            ],
+            "answer": "Qwerty123"
+        },
+        {
+            "question": "Why should you avoid using personal information in passwords?",
+            "type": "single",
+            "options": [
+                "Because it makes passwords harder to remember",
+                "Because attackers can easily guess them using social engineering",
+                "Because passwords should only contain numbers",
+                "Because it makes logging in more difficult"
+            ],
+            "answer": "Because attackers can easily guess them using social engineering"
+        },
+        {
+            "question": "What is Multi-Factor Authentication (MFA)?",
+            "type": "single",
+            "options": [
+                "A security feature that requires more than one form of authentication to access an account",
+                "A feature that allows users to log in without a password",
+                "A system that stores all passwords in an encrypted file",
+                "A security question that users answer after entering their password"
+            ],
+            "answer": "A security feature that requires more than one form of authentication to access an account"
+        },
+        {
+            "question": "Which of the following is the safest way to store your passwords?",
+            "type": "single",
+            "options": [
+                "Writing them down in a notebook",
+                "Saving them in a password-protected Excel file",
+                "Memorizing all passwords",
+                "Using a trusted password manager"
+            ],
+            "answer": "Using a trusted password manager"
+        },
+        {
+            "question": "What is the recommended minimum length for a secure password?",
+            "type": "single",
+            "options": [
+                "At least 6 characters",
+                "At least 8 characters",
+                "At least 12 characters",
+                "At least 4 characters"
+            ],
+            "answer": "At least 12 characters"
+        },
+        {
+            "question": "Which of the following is NOT an effective way to secure your passwords?",
+            "type": "single",
+            "options": [
+                "Enabling Multi-Factor Authentication (MFA)",
+                "Using the same password for every account to avoid forgetting it",
+                "Using a password manager to store unique passwords",
+                "Changing passwords after a data breach"
+            ],
+            "answer": "Using the same password for every account to avoid forgetting it"
+        },
+        {
+            "question": "What should you do if you suspect your password has been compromised?",
+            "type": "single",
+            "options": [
+                "Ignore it and continue using the same password",
+                "Change the password immediately and enable Multi-Factor Authentication (MFA)",
+                "Wait until you receive a notification from your company",
+                "Log in once to confirm if the password still works before taking any action"
+            ],
+            "answer": "Change the password immediately and enable Multi-Factor Authentication (MFA)"
+        }
+    ]
+}

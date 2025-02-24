@@ -1,0 +1,122 @@
+{
+    "info": {
+        "title": "Safe Internet Practices Quiz",
+        "description": "This quiz tests your knowledge on recognizing safe vs. unsafe websites, encryption, VPNs, and securely using public Wi-Fi.",
+        "requirements": [
+            "safe_internet_basics"
+        ],
+        "itemCount": 10
+    },
+    "questions": [
+        {
+            "question": "Which of the following is a sign that a website is secure?",
+            "type": "single",
+            "options": [
+                "It has a padlock icon and 'https://' in the address bar",
+                "It loads quickly with no advertisements",
+                "It asks for your credit card details on the homepage",
+                "It has a professional design and layout"
+            ],
+            "answer": "It has a padlock icon and 'https://' in the address bar"
+        },
+        {
+            "question": "What does encryption do in online communication?",
+            "type": "single",
+            "options": [
+                "Scrambles data so that only authorized users can read it",
+                "Hides your internet activity from your employer",
+                "Speeds up your internet connection",
+                "Prevents pop-up ads from appearing on websites"
+            ],
+            "answer": "Scrambles data so that only authorized users can read it"
+        },
+        {
+            "question": "Why is it important to use a Virtual Private Network (VPN) when browsing on public Wi-Fi?",
+            "type": "single",
+            "options": [
+                "It encrypts your internet connection to protect your data",
+                "It makes your internet speed faster",
+                "It allows you to bypass work-related website restrictions",
+                "It automatically removes malware from websites"
+            ],
+            "answer": "It encrypts your internet connection to protect your data"
+        },
+        {
+            "question": "Which of the following is the safest way to log in to an online account?",
+            "type": "single",
+            "options": [
+                "Using a unique, strong password and enabling Multi-Factor Authentication (MFA)",
+                "Using the same password for all accounts to make it easier to remember",
+                "Saving your password in an unencrypted text file on your desktop",
+                "Using a short password that is easy to type quickly"
+            ],
+            "answer": "Using a unique, strong password and enabling Multi-Factor Authentication (MFA)"
+        },
+        {
+            "question": "What should you avoid doing when using public Wi-Fi?",
+            "type": "single",
+            "options": [
+                "Accessing sensitive accounts like online banking or work emails",
+                "Streaming videos or listening to music",
+                "Checking the weather or reading news articles",
+                "Visiting public websites without logging in"
+            ],
+            "answer": "Accessing sensitive accounts like online banking or work emails"
+        },
+        {
+            "question": "Which of the following is NOT a recommended practice for online security?",
+            "type": "single",
+            "options": [
+                "Clicking on links from unknown senders to check their authenticity",
+                "Keeping your software and browser up to date",
+                "Using strong and unique passwords for different accounts",
+                "Enabling Two-Factor Authentication (2FA) whenever possible"
+            ],
+            "answer": "Clicking on links from unknown senders to check their authenticity"
+        },
+        {
+            "question": "What does 'phishing' typically involve?",
+            "type": "single",
+            "options": [
+                "Tricking users into providing personal information through fake emails or websites",
+                "A new type of malware that spreads through social media",
+                "An encryption method used to secure Wi-Fi networks",
+                "A secure way to send login credentials online"
+            ],
+            "answer": "Tricking users into providing personal information through fake emails or websites"
+        },
+        {
+            "question": "Which of the following passwords is the most secure?",
+            "type": "single",
+            "options": [
+                "P@ssw0rd123!",
+                "12345678",
+                "CorrectHorseBatteryStaple123!",
+                "Password2023"
+            ],
+            "answer": "CorrectHorseBatteryStaple123!"
+        },
+        {
+            "question": "If a website asks for sensitive information but lacks 'https://' in the URL, what should you do?",
+            "type": "single",
+            "options": [
+                "Avoid entering any personal or financial information",
+                "Enter your information quickly to minimize exposure",
+                "Only proceed if the website looks professional",
+                "Use a different browser to see if 'https://' appears"
+            ],
+            "answer": "Avoid entering any personal or financial information"
+        },
+        {
+            "question": "What is the safest way to browse the internet?",
+            "type": "single",
+            "options": [
+                "Using a VPN, keeping software updated, and avoiding suspicious links",
+                "Opening multiple browser tabs to prevent tracking",
+                "Using public Wi-Fi without any encryption",
+                "Clicking on pop-ups that offer free security tools"
+            ],
+            "answer": "Using a VPN, keeping software updated, and avoiding suspicious links"
+        }
+    ]
+}

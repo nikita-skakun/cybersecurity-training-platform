@@ -1,0 +1,122 @@
+{
+    "info": {
+        "title": "Phishing Awareness Quiz",
+        "description": "This quiz tests your ability to recognize phishing emails, identify common phishing tactics, and respond appropriately to phishing attempts.",
+        "requirements": [
+            "phishing_awareness_basics"
+        ],
+        "itemCount": 10
+    },
+    "questions": [
+        {
+            "question": "Which of the following is a common sign of a phishing email?",
+            "type": "single",
+            "options": [
+                "An email with urgent language asking you to take immediate action",
+                "An email from your colleague that you expected",
+                "A promotional email from a company you subscribed to",
+                "A newsletter from your favorite website"
+            ],
+            "answer": "An email with urgent language asking you to take immediate action"
+        },
+        {
+            "question": "What is Spear Phishing?",
+            "type": "single",
+            "options": [
+                "A phishing attack targeting a specific individual or organization",
+                "A phishing attack that spreads randomly to multiple recipients",
+                "An attack that infects a computer with malware",
+                "A technique used by hackers to create fake websites"
+            ],
+            "answer": "A phishing attack targeting a specific individual or organization"
+        },
+        {
+            "question": "Which of the following best describes Clone Phishing?",
+            "type": "single",
+            "options": [
+                "A phishing attack that mimics a previously received legitimate email",
+                "A phishing attack where attackers clone an entire website",
+                "An attack that duplicates login credentials of an employee",
+                "A type of malware that infects a user's system"
+            ],
+            "answer": "A phishing attack that mimics a previously received legitimate email"
+        },
+        {
+            "question": "How can you verify that a website is legitimate before entering login credentials?",
+            "type": "single",
+            "options": [
+                "Check for a padlock icon and 'https://' in the URL",
+                "Click on any links in the email to verify the site",
+                "Ensure the website design looks professional",
+                "Trust any website that asks for login details"
+            ],
+            "answer": "Check for a padlock icon and 'https://' in the URL"
+        },
+        {
+            "question": "What should you do if you receive an email that you suspect is a phishing attempt?",
+            "type": "single",
+            "options": [
+                "Click on the link to confirm if it's real",
+                "Reply to the sender asking for verification",
+                "Report the email to IT or security teams",
+                "Forward the email to colleagues to warn them"
+            ],
+            "answer": "Report the email to IT or security teams"
+        },
+        {
+            "question": "Why should you never click on links or download attachments in unexpected emails?",
+            "type": "single",
+            "options": [
+                "Because they might contain malicious software or redirect to a fake website",
+                "Because they take up too much space on your device",
+                "Because it's illegal to open links in suspicious emails",
+                "Because doing so will automatically report the email as phishing"
+            ],
+            "answer": "Because they might contain malicious software or redirect to a fake website"
+        },
+        {
+            "question": "What is the best way to protect yourself from phishing scams?",
+            "type": "single",
+            "options": [
+                "Enable Multi-Factor Authentication (MFA) on your accounts",
+                "Use the same password for all online accounts",
+                "Never check the sender's email address",
+                "Only respond to emails from unknown sources"
+            ],
+            "answer": "Enable Multi-Factor Authentication (MFA) on your accounts"
+        },
+        {
+            "question": "What does a phishing website typically do?",
+            "type": "single",
+            "options": [
+                "Tricks users into entering their personal or login information",
+                "Protects users from malware",
+                "Automatically reports cyber criminals to law enforcement",
+                "Redirects users to legitimate banking sites"
+            ],
+            "answer": "Tricks users into entering their personal or login information"
+        },
+        {
+            "question": "Which of the following is a common phishing tactic used by cybercriminals?",
+            "type": "single",
+            "options": [
+                "Posing as a legitimate company and asking for sensitive information",
+                "Sending encrypted emails that contain security alerts",
+                "Automatically securing user accounts when they log in",
+                "Providing free cybersecurity tools in every phishing email"
+            ],
+            "answer": "Posing as a legitimate company and asking for sensitive information"
+        },
+        {
+            "question": "If you accidentally click on a phishing link, what should you do immediately?",
+            "type": "single",
+            "options": [
+                "Disconnect from the internet and report the incident to IT",
+                "Enter fake login credentials to confuse the hacker",
+                "Ignore it and continue working as usual",
+                "Forward the phishing link to coworkers to warn them"
+            ],
+            "answer": "Disconnect from the internet and report the incident to IT"
+        }
+    ]
+}

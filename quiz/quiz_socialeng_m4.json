@@ -1,0 +1,122 @@
+{
+    "info": {
+        "title": "Social Engineering Awareness Quiz",
+        "description": "This quiz tests your knowledge on social engineering tactics and how to defend against them.",
+        "requirements": [
+            "social_engineering_basics"
+        ],
+        "itemCount": 10
+    },
+    "questions": [
+        {
+            "question": "What is Social Engineering in cybersecurity?",
+            "type": "single",
+            "options": [
+                "A method of hacking using software exploits",
+                "A technique to trick individuals into revealing sensitive information",
+                "A form of phishing that targets IT administrators",
+                "A security practice used to enhance system protection"
+            ],
+            "answer": "A technique to trick individuals into revealing sensitive information"
+        },
+        {
+            "question": "Which of the following is an example of pretexting?",
+            "type": "single",
+            "options": [
+                "A scammer impersonating a bank representative to obtain account details",
+                "A fake website designed to steal login credentials",
+                "A USB device infected with malware left in an office",
+                "An employee accidentally clicking on a phishing email"
+            ],
+            "answer": "A scammer impersonating a bank representative to obtain account details"
+        },
+        {
+            "question": "What is tailgating in the context of social engineering?",
+            "type": "single",
+            "options": [
+                "A hacker following an authorized employee into a restricted area",
+                "A phishing attack disguised as a legitimate email",
+                "An email scam that tricks users into downloading malware",
+                "A method used by organizations to prevent cyber threats"
+            ],
+            "answer": "A hacker following an authorized employee into a restricted area"
+        },
+        {
+            "question": "Which of the following is an example of baiting?",
+            "type": "single",
+            "options": [
+                "A cybercriminal leaving an infected USB drive in a workplace",
+                "An attacker sending a fake IT support request",
+                "A fake website requesting users to enter their passwords",
+                "A ransomware attack that locks users out of their systems"
+            ],
+            "answer": "A cybercriminal leaving an infected USB drive in a workplace"
+        },
+        {
+            "question": "What is a common characteristic of social engineering attacks?",
+            "type": "single",
+            "options": [
+                "They rely on exploiting human psychology rather than technical vulnerabilities",
+                "They only affect large organizations and government agencies",
+                "They use brute force attacks to gain access to systems",
+                "They are primarily based on software vulnerabilities"
+            ],
+            "answer": "They rely on exploiting human psychology rather than technical vulnerabilities"
+        },
+        {
+            "question": "How can organizations protect against social engineering attacks?",
+            "type": "single",
+            "options": [
+                "By educating employees on recognizing and responding to threats",
+                "By installing the latest antivirus software",
+                "By enforcing strict password policies only",
+                "By monitoring social media activity of employees"
+            ],
+            "answer": "By educating employees on recognizing and responding to threats"
+        },
+        {
+            "question": "Which of the following is NOT an example of social engineering?",
+            "type": "single",
+            "options": [
+                "Using a fraudulent email to trick an employee into revealing credentials",
+                "Guessing a password using brute force techniques",
+                "Calling an employee while impersonating IT support",
+                "Leaving a malware-infected USB drive in a parking lot"
+            ],
+            "answer": "Guessing a password using brute force techniques"
+        },
+        {
+            "question": "What should you do if someone claiming to be IT support asks for your password?",
+            "type": "single",
+            "options": [
+                "Provide the password only if they sound legitimate",
+                "Confirm their identity through an official company channel before sharing any information",
+                "Write it down and give it to them later",
+                "Change your password immediately and notify your coworkers"
+            ],
+            "answer": "Confirm their identity through an official company channel before sharing any information"
+        },
+        {
+            "question": "Why do attackers use social engineering instead of technical hacking methods?",
+            "type": "single",
+            "options": [
+                "It is easier to manipulate people than to exploit systems",
+                "It requires advanced programming knowledge",
+                "It is more expensive to carry out",
+                "It is more secure for the attacker"
+            ],
+            "answer": "It is easier to manipulate people than to exploit systems"
+        },
+        {
+            "question": "What should you do if you suspect a social engineering attack?",
+            "type": "single",
+            "options": [
+                "Ignore it and hope it doesn’t happen again",
+                "Report it to your company’s security team immediately",
+                "Share the details with your coworkers so they can take action",
+                "Confront the attacker and ask them to stop"
+            ],
+            "answer": "Report it to your company’s security team immediately"
+        }
+    ]
+}
