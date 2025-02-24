@@ -2,9 +2,7 @@
     "info": {
         "title": "Phishing Awareness Quiz",
         "description": "This quiz tests your ability to recognize phishing emails, identify common phishing tactics, and respond appropriately to phishing attempts.",
-        "requirements": [
-            "phishing_awareness_basics"
-        ],
+        "requirements": [],
         "itemCount": 10
     },
     "questions": [

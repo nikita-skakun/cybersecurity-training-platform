@@ -2,9 +2,7 @@
     "info": {
         "title": "Password Security Quiz",
         "description": "This quiz tests your knowledge on best practices for creating strong passwords, password managers, and Multi-Factor Authentication (MFA).",
-        "requirements": [
-            "password_security_basics"
-        ],
+        "requirements": [],
         "itemCount": 10
     },
     "questions": [

@@ -2,9 +2,7 @@
     "info": {
         "title": "Social Engineering Awareness Quiz",
         "description": "This quiz tests your knowledge on social engineering tactics and how to defend against them.",
-        "requirements": [
-            "social_engineering_basics"
-        ],
+        "requirements": [],
         "itemCount": 10
     },
     "questions": [
@@ -111,12 +109,12 @@
             "question": "What should you do if you suspect a social engineering attack?",
             "type": "single",
             "options": [
-                "Ignore it and hope it doesn’t happen again",
-                "Report it to your company’s security team immediately",
+                "Ignore it and hope it doesn't happen again",
+                "Report it to your company's security team immediately",
                 "Share the details with your coworkers so they can take action",
                 "Confront the attacker and ask them to stop"
             ],
-            "answer": "Report it to your company’s security team immediately"
+            "answer": "Report it to your company's security team immediately"
         }
     ]
 }

@@ -2,9 +2,7 @@
     "info": {
         "title": "Cybersecurity Awareness Quiz",
         "description": "This quiz tests your knowledge on cybersecurity best practices for corporate employees.",
-        "requirements": [
-            "cybersecurity_basics"
-        ],
+        "requirements": [],
         "itemCount": 10
     },
     "questions": [
@@ -14,21 +12,21 @@
             "options": [
                 "Guessing employee usernames",
                 "Sending phishing emails",
-                "Hacking into the company’s main server directly",
+                "Hacking into the company's main server directly",
                 "Asking employees for their credentials in person"
             ],
             "answer": "Sending phishing emails"
         },
         {
-            "question": "You receive an email from your company’s IT department asking you to verify your account by clicking a link. What should you do?",
+            "question": "You receive an email from your company's IT department asking you to verify your account by clicking a link. What should you do?",
             "type": "single",
             "options": [
                 "Click the link immediately and follow the instructions",
                 "Reply to the email with your username and password",
-                "Check the sender’s email address and contact IT separately to verify",
+                "Check the sender's email address and contact IT separately to verify",
                 "Ignore the email and delete it without reporting"
             ],
-            "answer": "Check the sender’s email address and contact IT separately to verify"
+            "answer": "Check the sender's email address and contact IT separately to verify"
         },
         {
             "question": "Why is it important to use unique passwords for different accounts?",
@@ -37,7 +35,7 @@
                 "It makes logging in more fun",
                 "If one password is compromised, other accounts remain secure",
                 "It confuses hackers and prevents them from guessing your password",
-                "It is required by corporate policy, but it doesn’t improve security"
+                "It is required by corporate policy, but it doesn't improve security"
             ],
             "answer": "If one password is compromised, other accounts remain secure"
         },
@@ -86,7 +84,7 @@
             "answer": "The message creates a sense of urgency and asks you to act quickly"
         },
         {
-            "question": "You’re using a public Wi-Fi network at a coffee shop to check work emails. What is the best way to keep your data secure?",
+            "question": "You're using a public Wi-Fi network at a coffee shop to check work emails. What is the best way to keep your data secure?",
             "type": "single",
             "options": [
                 "Ensure the Wi-Fi network requires a password to connect",
