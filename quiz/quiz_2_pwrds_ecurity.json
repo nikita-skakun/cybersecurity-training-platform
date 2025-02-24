@@ -1,6 +1,6 @@
 {
     "info": {
-        "title": "Password Security Quiz",
+        "title": "Password Security",
         "description": "This quiz tests your knowledge on best practices for creating strong passwords, password managers, and Multi-Factor Authentication (MFA).",
         "requirements": [],
         "itemCount": 10
