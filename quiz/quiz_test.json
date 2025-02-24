@@ -1,38 +1,122 @@
 {
     "info": {
-        "title": "Test Quiz",
-        "description": "This is a description of the test quiz",
+        "title": "Cybersecurity Awareness Quiz",
+        "description": "This quiz tests your knowledge on cybersecurity best practices for corporate employees.",
         "requirements": [
-            "module_test"
+            "cybersecurity_basics"
         ],
-        "itemCount": 2
+        "itemCount": 10
     },
     "questions": [
         {
-            "question": "What is the capital of France?",
+            "question": "What is the most common way cybercriminals gain access to corporate systems?",
             "type": "single",
             "options": [
-                "Paris",
-                "London",
-                "Berlin",
-                "Madrid"
+                "Guessing employee usernames",
+                "Sending phishing emails",
+                "Hacking into the company’s main server directly",
+                "Asking employees for their credentials in person"
             ],
-            "answer": "Paris"
+            "answer": "Sending phishing emails"
         },
         {
-            "question": "Which of the following are mammals?",
-            "type": "multiple",
+            "question": "You receive an email from your company’s IT department asking you to verify your account by clicking a link. What should you do?",
+            "type": "single",
             "options": [
-                "Whale",
-                "Shark",
-                "Dolphin",
-                "Turtle",
-                "Crocodile"
+                "Click the link immediately and follow the instructions",
+                "Reply to the email with your username and password",
+                "Check the sender’s email address and contact IT separately to verify",
+                "Ignore the email and delete it without reporting"
             ],
-            "answer": [
-                "Whale",
-                "Dolphin"
-            ]
+            "answer": "Check the sender’s email address and contact IT separately to verify"
+        },
+        {
+            "question": "Why is it important to use unique passwords for different accounts?",
+            "type": "single",
+            "options": [
+                "It makes logging in more fun",
+                "If one password is compromised, other accounts remain secure",
+                "It confuses hackers and prevents them from guessing your password",
+                "It is required by corporate policy, but it doesn’t improve security"
+            ],
+            "answer": "If one password is compromised, other accounts remain secure"
+        },
+        {
+            "question": "What is Multi-Factor Authentication (MFA)?",
+            "type": "single",
+            "options": [
+                "Logging in using your email and a backup email",
+                "Using multiple passwords for the same account",
+                "A security feature that requires additional verification (e.g., a code sent to your phone)",
+                "An advanced firewall that prevents all cyber attacks"
+            ],
+            "answer": "A security feature that requires additional verification (e.g., a code sent to your phone)"
+        },
+        {
+            "question": "Which of the following passwords is the strongest?",
+            "type": "single",
+            "options": [
+                "Password123",
+                "P@ssw0rd",
+                "JjY!9r$2&Xq#",
+                "CompanyName2024"
+            ],
+            "answer": "JjY!9r$2&Xq#"
+        },
+        {
+            "question": "What should you do if you suspect your work computer is infected with malware?",
+            "type": "single",
+            "options": [
+                "Ignore the issue and continue working",
+                "Try to delete suspicious files yourself",
+                "Contact the IT department immediately and follow their instructions",
+                "Restart your computer and hope the problem goes away"
+            ],
+            "answer": "Contact the IT department immediately and follow their instructions"
+        },
+        {
+            "question": "What is a common sign of a phishing attempt?",
+            "type": "single",
+            "options": [
+                "The email is from a well-known sender and looks professional",
+                "The message creates a sense of urgency and asks you to act quickly",
+                "The email contains no links or attachments",
+                "The sender is your colleague and uses proper grammar"
+            ],
+            "answer": "The message creates a sense of urgency and asks you to act quickly"
+        },
+        {
+            "question": "You’re using a public Wi-Fi network at a coffee shop to check work emails. What is the best way to keep your data secure?",
+            "type": "single",
+            "options": [
+                "Ensure the Wi-Fi network requires a password to connect",
+                "Use a VPN (Virtual Private Network) before accessing work resources",
+                "Only visit HTTPS websites",
+                "Log in quickly and disconnect as soon as you finish"
+            ],
+            "answer": "Use a VPN (Virtual Private Network) before accessing work resources"
+        },
+        {
+            "question": "What is the best practice for handling work-related confidential documents?",
+            "type": "single",
+            "options": [
+                "Save them on your personal cloud storage for easy access",
+                "Print them and store them in your desk drawer",
+                "Share them over email with anyone who requests them",
+                "Store them in a secure, company-approved location with restricted access"
+            ],
+            "answer": "Store them in a secure, company-approved location with restricted access"
+        },
+        {
+            "question": "A coworker asks you to share your login credentials because they forgot theirs. What should you do?",
+            "type": "single",
+            "options": [
+                "Give them your login credentials temporarily since they are a trusted coworker",
+                "Report the incident to IT, as sharing credentials is against company policy",
+                "Write your credentials down for them so they can log in",
+                "Log in for them and let them use your computer"
+            ],
+            "answer": "Report the incident to IT, as sharing credentials is against company policy"
         }
     ]
 }
