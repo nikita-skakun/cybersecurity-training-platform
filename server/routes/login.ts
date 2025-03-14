@@ -74,7 +74,7 @@ const extractFromEmail = (
 	const domain = parts[1];
 
 	const baseDN =
-		"cn=users," +
+		"ou=people," +
 		domain
 			.split(".")
 			.map((part) => "dc=" + ldapEscape.dn`${part}`)
