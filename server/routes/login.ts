@@ -30,31 +30,6 @@ const loadDomainConfigs = (): Record<
 
 const domainConfigs = loadDomainConfigs();
 
-const persistentBindList: Record<string, Client> = {};
-
-const getPersistentBind = async (domainKey: string): Promise<Client> => {
-	if (!domainConfigs[domainKey]) {
-		throw new Error(`No configuration found for domain key: ${domainKey}`);
-	}
-
-	if (persistentBindList[domainKey]) {
-		return persistentBindList[domainKey];
-	}
-
-	const { url, bindDN, bindPassword } = domainConfigs[domainKey];
-	const client = new Client({ url });
-
-	try {
-		await client.bind(bindDN, bindPassword);
-		console.log(`Successfully bound client for domain key: ${domainKey}`);
-		persistentBindList[domainKey] = client;
-		return client;
-	} catch (_) {
-		await client.unbind();
-		throw new Error(`Failed to bind client for domain key: ${domainKey}`);
-	}
-};
-
 const validateEmail = (username: string): void => {
 	const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	if (!emailPattern.test(username)) {
@@ -106,46 +81,36 @@ const authenticateUser = async (
 		validateEmail(email);
 		const { username, baseDN } = extractFromEmail(email);
 
-		const client = await getPersistentBind(baseDN);
-
-		// const { searchEntries: userEntries } = await client.search(baseDN, {
-		// 	scope: "sub",
-		// 	filter: `(samAccountName=${username})`,
-		// 	attributes: ["dn", "cn"],
-		// });
-
-		// if (userEntries.length === 0) {
-		// 	throw new Error(`User ${username} not found in domain ${baseDN}.`);
-		// }
-
-		// const userDN = userEntries[0].dn;
-		// console.log(`Found user DN: ${userDN}`);
-
 		const userDN = `cn=${username},${baseDN}`;
 
-		const userClient = new Client({ url: domainConfigs[baseDN].url });
+		const client = new Client({ url: domainConfigs[baseDN].url });
+
+		let name = "";
 
 		try {
-			await userClient.bind(userDN, password);
+			await client.bind(userDN, password);
 			console.log(`Password verification successful for ${username}`);
+
+			const { searchEntries: groupEntries } = await client.search(
+				domainConfigs[baseDN].groupDN,
+				{
+					scope: "sub",
+					filter: `(member=${userDN})`,
+				}
+			);
+
+			if (groupEntries.length <= 0) {
+				throw new Error(`${username} is not a member of PhishingTest`);
+			}
+
+			const {
+				searchEntries: [selfEntry],
+			} = await client.search(baseDN);
+			name = selfEntry.cn?.toString() || "";
 		} catch (_) {
 			throw new Error(`Password verification failed for ${username}`);
 		} finally {
-			await userClient.unbind();
-		}
-
-		const { searchEntries: groupEntries } = await client.search(
-			domainConfigs[baseDN].groupDN,
-			{
-				scope: "sub",
-				filter: `(member=${userDN})`,
-			}
-		);
-
-		if (groupEntries.length > 0) {
-			console.log(`${username} is a member of PhishingTest`);
-		} else {
-			throw new Error(`${username} is not a member of PhishingTest`);
+			await client.unbind();
 		}
 
 		const domain = email.split("@")[1];
@@ -154,7 +119,7 @@ const authenticateUser = async (
 
 		return {
 			username,
-			name: "FIX ME",
+			name,
 			baseDN,
 			domain,
 			role: "user",
