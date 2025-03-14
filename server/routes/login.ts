@@ -108,18 +108,20 @@ const authenticateUser = async (
 
 		const client = await getPersistentBind(baseDN);
 
-		const { searchEntries: userEntries } = await client.search(baseDN, {
-			scope: "sub",
-			filter: `(samAccountName=${username})`,
-			attributes: ["dn", "cn"],
-		});
+		// const { searchEntries: userEntries } = await client.search(baseDN, {
+		// 	scope: "sub",
+		// 	filter: `(samAccountName=${username})`,
+		// 	attributes: ["dn", "cn"],
+		// });
 
-		if (userEntries.length === 0) {
-			throw new Error(`User ${username} not found in domain ${baseDN}.`);
-		}
+		// if (userEntries.length === 0) {
+		// 	throw new Error(`User ${username} not found in domain ${baseDN}.`);
+		// }
 
-		const userDN = userEntries[0].dn;
-		console.log(`Found user DN: ${userDN}`);
+		// const userDN = userEntries[0].dn;
+		// console.log(`Found user DN: ${userDN}`);
+
+		const userDN = `cn=${username},${baseDN}`;
 
 		const userClient = new Client({ url: domainConfigs[baseDN].url });
 
@@ -152,7 +154,7 @@ const authenticateUser = async (
 
 		return {
 			username,
-			name: userEntries[0].cn as string,
+			name: "FIX ME",
 			baseDN,
 			domain,
 			role: "user",
