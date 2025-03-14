@@ -138,7 +138,7 @@ const authenticateUser = async (
 			domainConfigs[baseDN].groupDN,
 			{
 				scope: "sub",
-				filter: `(&(objectClass=group)(member=${userDN}))`,
+				filter: `(member=${userDN})`,
 			}
 		);
 
