@@ -17,8 +17,8 @@
 }
 
 .tab-buttons button.active {
-	background: #0070f3;
-	color: #fff;
+	background: #0070f3 !important;
+	color: #fff !important;
 }
 
 .tab-buttons button:hover {
