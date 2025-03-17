@@ -24,3 +24,9 @@
 .tab-buttons button:not(:last-child) {
 	border-right: 1px solid #ccc;
 }
+
+.empty-message {
+	font-style: italic;
+	color: #666;
+	margin-top: 12px;
+}
