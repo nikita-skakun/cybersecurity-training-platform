@@ -3,6 +3,7 @@ import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { ItemInfo } from "@shared/types/item.ts";
 import CardContainer from "../util/CardContainer.tsx";
+import "./Home.css";
 
 export default function HomePage() {
 	const user = useUserData();
@@ -11,6 +12,10 @@ export default function HomePage() {
 	const [compQuizzes, setCompQuizzes] = useState<Record<string, ItemInfo>>({});
 	const [avlModules, setAvlModules] = useState<Record<string, ItemInfo>>({});
 	const [compModules, setCompModules] = useState<Record<string, ItemInfo>>({});
+
+	const [activeTab, setActiveTab] = useState<"available" | "completed">(
+		"available"
+	);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -68,16 +73,31 @@ export default function HomePage() {
 			<main className="fullsize-container">
 				<h1>Welcome Home!</h1>
 
-				{availableItems.length > 0 && (
+				<div className="tab-buttons">
+					<button
+						type="button"
+						className={activeTab === "available" ? "active" : ""}
+						onClick={() => setActiveTab("available")}
+					>
+						Available
+					</button>
+					<button
+						type="button"
+						className={activeTab === "completed" ? "active" : ""}
+						onClick={() => setActiveTab("completed")}
+					>
+						Completed
+					</button>
+				</div>
+
+				{activeTab === "available" && availableItems.length > 0 && (
 					<>
-						<h2>Unlocked Items</h2>
 						<CardContainer items={availableItems} />
 					</>
 				)}
 
-				{completedItems.length > 0 && (
+				{activeTab === "completed" && completedItems.length > 0 && (
 					<>
-						<h2>Completed Items</h2>
 						<CardContainer items={completedItems} />
 					</>
 				)}

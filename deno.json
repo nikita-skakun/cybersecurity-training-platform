@@ -23,7 +23,7 @@
     "react-dom": "npm:react-dom@^19.0.0",
     "react-router-dom": "npm:react-router-dom@^7.3.0",
     "react": "npm:react@^19.0.0",
-    "vite": "npm:vite@^6.2.1"
+    "vite": "npm:vite@^6.2.2"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {

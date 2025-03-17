@@ -1,0 +1,26 @@
+.tab-buttons {
+	display: inline-flex;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+.tab-buttons button {
+	padding: 10px 24px;
+	border: none;
+	background: #f0f0f0;
+	color: #333;
+	cursor: pointer;
+	font-weight: 500;
+	transition: background 0.3s, color 0.3s;
+}
+
+.tab-buttons button.active {
+	background: #0070f3;
+	color: #fff;
+}
+
+.tab-buttons button:not(:last-child) {
+	border-right: 1px solid #ccc;
+}
