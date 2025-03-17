@@ -21,8 +21,9 @@
 	color: #fff;
 }
 
-.tab-buttons button:not(:last-child) {
-	border-right: 1px solid #ccc;
+.tab-buttons button:hover {
+	background: #005bb5;
+	color: #fff;
 }
 
 .empty-message {
