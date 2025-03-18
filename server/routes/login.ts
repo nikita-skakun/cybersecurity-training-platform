@@ -11,7 +11,7 @@ const allowTestUser = Deno.args.includes("--allow-test-user");
 
 const loadDomainConfigs = (): Record<
 	string,
-	{ url: string; bindDN: string; bindPassword: string; userGroupDN: string; adminGroupDN: string }
+	{ url: string; bindDN: string; bindPassword: string; groupDN: string }
 > => {
 	const configPath = path.resolve("config.json");
 	if (!fs.existsSync(configPath)) {
@@ -92,7 +92,7 @@ const authenticateUser = async (
 			console.log(`Password verification successful for ${username}`);
 
 			const { searchEntries: groupEntries } = await client.search(
-				domainConfigs[baseDN].userGroupDN,
+				domainConfigs[baseDN].groupDN,
 				{
 					scope: "sub",
 					filter: `(member=${userDN})`,
