@@ -5,8 +5,8 @@ import { User } from "@shared/types/user.ts";
 import { verifyToken } from "../util/jwt_utils.ts";
 import { getJson } from "../util/fs_utils.ts";
 import {
-	filterUnlockedItems,
 	listCompletedRequirementsByType,
+	listUnlockedRequirements,
 	markRequirementCompleted,
 } from "../util/db_utils.ts";
 
@@ -26,8 +26,7 @@ async function fetchModule(id: string): Promise<Module> {
 	return moduleData;
 }
 
-// Build a cache of all available modules
-async function fetchModuleInfoList(): Promise<Record<string, ItemInfo>> {
+async function fetchModuleList(): Promise<Record<string, ItemInfo>> {
 	if (Object.keys(moduleInfoCache).length === 0) {
 		for await (const entry of Deno.readDir("./training_module")) {
 			if (entry.isFile && entry.name.endsWith(".json")) {
@@ -46,6 +45,7 @@ const moduleRouter = new Router();
 // GET /api/modules/:id - Return module data
 moduleRouter.get("/api/modules/:id", async (context) => {
 	const { id } = context.params;
+
 	try {
 		const moduleData = await fetchModule(id);
 		context.response.status = 200;
@@ -61,6 +61,7 @@ moduleRouter.get("/api/modules/:id", async (context) => {
 moduleRouter.post("/api/modules/:id/complete", async (context) => {
 	const token = await context.cookies.get("jwtCyberTraining");
 	const payload = verifyToken<User>(token);
+
 	if (!payload) {
 		context.response.status = 403;
 		context.response.body = { success: false, message: "Invalid token" };
@@ -90,7 +91,9 @@ moduleRouter.post("/api/modules/:id/complete", async (context) => {
 // GET /api/modules - Return a list of modules and separate out completed ones
 moduleRouter.get("/api/modules", async (context) => {
 	const token = await context.cookies.get("jwtCyberTraining");
+
 	const payload = verifyToken<User>(token);
+
 	if (!payload) {
 		context.response.status = 403;
 		context.response.body = { success: false, message: "Invalid token" };
@@ -98,18 +101,23 @@ moduleRouter.get("/api/modules", async (context) => {
 	}
 
 	try {
-		const allModules = await fetchModuleInfoList();
+		const allModules = await fetchModuleList();
 		const compModuleIds = listCompletedRequirementsByType(payload.id, "module");
+		const avlModuleIds = listUnlockedRequirements(payload.id, allModules);
 
 		const compModules: Record<string, ItemInfo> = {};
 		for (const moduleId of compModuleIds) {
 			if (allModules[moduleId]) {
 				compModules[moduleId] = allModules[moduleId];
-				delete allModules[moduleId];
 			}
 		}
 
-		const avlModules = filterUnlockedItems(payload.id, allModules);
+		const avlModules: Record<string, ItemInfo> = {};
+		for (const moduleId of avlModuleIds) {
+			if (allModules[moduleId]) {
+				avlModules[moduleId] = allModules[moduleId];
+			}
+		}
 
 		context.response.status = 200;
 		context.response.body = { success: true, avlModules, compModules };

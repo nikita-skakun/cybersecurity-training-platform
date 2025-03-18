@@ -83,18 +83,20 @@ export function listCompletedRequirementsByType(
 	].map((row) => row[0] as string);
 }
 
-// Filter all elements that have all requirements completed for a user
-export function filterUnlockedItems(
+// List all requirements that are unlocked for a user
+export function listUnlockedRequirements(
 	userId: number,
 	items: Record<string, ItemInfo>
-): Record<string, ItemInfo> {
+): string[] {
 	const completedRequirements = new Set(listCompletedRequirements(userId));
 
-	return Object.fromEntries(
-		Object.entries(items).filter(([_, item]) =>
-			item.requirements.every((req) => completedRequirements.has(req))
+	return Object.entries(items)
+		.filter(
+			([id, item]) =>
+				item.requirements.every((req) => completedRequirements.has(req)) &&
+				!completedRequirements.has(id)
 		)
-	);
+		.map(([id, _]) => id);
 }
 
 // Mark a requirement as completed for a user

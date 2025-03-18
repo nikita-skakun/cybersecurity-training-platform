@@ -46,7 +46,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 			<span onClick={() => navigate("/")}>Cybersecurity Training Platform</span>
 			<div className="button-group">
 				<div className="tooltip-container">
-					<button onClick={() => navigate("/user")}>
+					<button type="button" onClick={() => navigate("/user")}>
 						<img src="/icons/profile_icon.svg" className="icon" />
 						{user?.name ?? "???"}
 					</button>
@@ -54,7 +54,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 						Session expires in: {countdown ?? "???"}
 					</span>
 				</div>
-				<button onClick={handleLogout} className="red-button">
+				<button type="button" onClick={handleLogout} className="red-button">
 					Logout
 				</button>
 			</div>
