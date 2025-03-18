@@ -90,17 +90,21 @@ export default function HomePage() {
 					</button>
 				</div>
 
-				{activeTab === "available" ? (
-					availableItems.length > 0 ? (
-						<CardContainer items={availableItems} />
+				{
+					activeTab === "available" ? (
+						availableItems.length > 0 ? (
+							<CardContainer items={availableItems} />
+						) : (
+							<p className="empty-message">No available items yet.</p>
+						)
 					) : (
-						<p className="empty-message">No available items yet.</p>
+						// completedItems.length > 0 ?
+						<CardContainer items={completedItems} />
 					)
-				) : completedItems.length > 0 ? (
-					<CardContainer items={completedItems} />
-				) : (
-					<p className="empty-message">No completed items yet.</p>
-				)}
+					// : (
+					// 	<p className="empty-message">No completed items yet.</p>
+					// )
+				}
 			</main>
 		</div>
 	);
