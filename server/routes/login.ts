@@ -34,7 +34,7 @@ const loadDomainConfigs = (): Record<
 	return parsedConfig.domains;
 };
 
-const domainConfigs = loadDomainConfigs();
+const domainConfigs = allowTestUser ? {} : loadDomainConfigs();
 
 const validateEmail = (username: string): void => {
 	const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
