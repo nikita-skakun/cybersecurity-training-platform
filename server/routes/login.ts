@@ -11,7 +11,13 @@ const allowTestUser = Deno.args.includes("--allow-test-user");
 
 const loadDomainConfigs = (): Record<
 	string,
-	{ url: string; bindDN: string; bindPassword: string; userGroupDN: string; adminGroupDN: string }
+	{
+		url: string;
+		bindDN: string;
+		bindPassword: string;
+		userGroupDN: string;
+		adminGroupDN: string;
+	}
 > => {
 	const configPath = path.resolve("config.json");
 	if (!fs.existsSync(configPath)) {
@@ -86,6 +92,7 @@ const authenticateUser = async (
 		const client = new Client({ url: domainConfigs[baseDN].url });
 
 		let name = "";
+		let role = "user";
 
 		try {
 			await client.bind(userDN, password);
@@ -100,7 +107,19 @@ const authenticateUser = async (
 			);
 
 			if (groupEntries.length <= 0) {
-				throw new Error(`${username} is not a member of any user group.`);
+				const { searchEntries: groupEntries } = await client.search(
+					domainConfigs[baseDN].adminGroupDN,
+					{
+						scope: "sub",
+						filter: `(member=${userDN})`,
+					}
+				);
+
+				if (groupEntries.length > 0) {
+					role = "admin";
+				} else {
+					throw new Error(`${username} is not a member of any user group.`);
+				}
 			}
 
 			const {
@@ -122,7 +141,7 @@ const authenticateUser = async (
 			name,
 			baseDN,
 			domain,
-			role: "user",
+			role,
 			id,
 		};
 	} catch (ex) {
