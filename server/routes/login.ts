@@ -96,7 +96,7 @@ const authenticateUser = async (
 
 		try {
 			await client.bind(userDN, password);
-			console.log(`Password verification successful for ${username}`);
+			console.log(`Password verification successful for ${email}`);
 
 			const { searchEntries: groupEntries } = await client.search(
 				domainConfigs[baseDN].userGroupDN,
@@ -118,7 +118,7 @@ const authenticateUser = async (
 				if (groupEntries.length > 0) {
 					role = "admin";
 				} else {
-					throw new Error(`${username} is not a member of any user group.`);
+					throw new Error(`${email} is not a member of any user group.`);
 				}
 			}
 
@@ -127,14 +127,14 @@ const authenticateUser = async (
 			} = await client.search(baseDN);
 			name = selfEntry.cn?.toString() || "";
 		} catch (_) {
-			throw new Error(`Password verification failed for ${username}`);
+			throw new Error(`Password verification failed for ${email}`);
 		} finally {
 			await client.unbind();
 		}
 
 		const domain = email.split("@")[1];
 		const id = findOrCreateUserId(domain, username);
-		console.log(`User ${id} authenticated successfully.`);
+		console.log(`User #${id} authenticated successfully.`);
 
 		return {
 			username,
