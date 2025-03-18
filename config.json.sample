@@ -1,11 +1,11 @@
 {
     "domains": {
-        "cn=users,dc=test-client-ad,dc=com": {
-            "url": "ldaps://dc01.test-client-ad.com",
-            "bindDN": "cn=ro_admin,cn=users,dc=test-client-ad,dc=com",
+        "ou=people,dc=test-client-ad,dc=com": {
+            "url": "ldaps://dc01.test-client-ad.com:6360",
+            "bindDN": "uid=ro_admin,ou=people,dc=test-client-ad,dc=com",
             "bindPassword": "password",
-            "userGroupDN": "cn=phishing_user,cn=users,dc=test-client-ad,dc=com",
-            "adminGroupDN": "cn=phishing_admin,cn=users,dc=test-client-ad,dc=com"
+            "userGroupDN": "cn=phishing_user,ou=groups,dc=test-client-ad,dc=com",
+            "adminGroupDN": "cn=phishing_admin,ou=groups,dc=test-client-ad,dc=com"
         }
     }
 }
