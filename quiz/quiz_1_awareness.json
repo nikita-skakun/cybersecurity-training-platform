@@ -2,7 +2,7 @@
     "info": {
         "title": "Cybersecurity Awareness",
         "description": "This quiz tests your knowledge on cybersecurity best practices for corporate employees.",
-        "requirements": [],
+        "requirements": ["module_1_awareness"],
         "itemCount": 10
     },
     "questions": [

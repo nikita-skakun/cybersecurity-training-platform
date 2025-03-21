@@ -2,7 +2,7 @@
     "info": {
         "title": "Safe Internet Practices",
         "description": "This quiz tests your knowledge on recognizing safe vs. unsafe websites, encryption, VPNs, and securely using public Wi-Fi.",
-        "requirements": [],
+        "requirements": ["module_5_safe_practices"],
         "itemCount": 10
     },
     "questions": [
