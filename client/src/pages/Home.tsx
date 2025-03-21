@@ -20,9 +20,10 @@ export default function HomePage() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const [quizResponse, moduleResponse] = await Promise.all([
+				const [quizResponse, moduleResponse, _] = await Promise.all([
 					fetch("/api/quiz"),
 					fetch("/api/modules"),
+					fetch("/api/companyUsers"),
 				]);
 
 				const quizData = await quizResponse.json();

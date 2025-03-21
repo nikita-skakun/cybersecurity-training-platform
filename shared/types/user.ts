@@ -11,3 +11,9 @@ export interface User {
 	nbf?: number;
 	iat?: number;
 }
+
+export interface AdminUserInfo {
+	username: string;
+	id: number;
+	name: string;
+}

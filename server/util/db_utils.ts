@@ -61,6 +61,20 @@ export function findOrCreateUserId(domain: string, username: string): number {
 	}
 }
 
+export function findUserId(domain: string, username: string): number {
+	const rows = [
+		...db.query("SELECT id FROM users WHERE domain = ? AND username = ?", [
+			domain,
+			username,
+		]),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
+	} else {
+		return -1;
+	}
+}
+
 // List all completed requirements for a user
 export function listCompletedRequirements(userId: number): string[] {
 	return [
