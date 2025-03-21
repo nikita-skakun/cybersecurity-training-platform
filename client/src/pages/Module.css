@@ -25,10 +25,10 @@
 .module-text {
 	width: 70%;
 	white-space: pre-line;
+	text-align: left;
+	margin-top: 10px;
 }
 
-.module-text ul,
-.module-text ol,
 .module-text li,
 .module-text h4 {
 	font-family: Inter, Arial, sans-serif;
