@@ -17,7 +17,7 @@ export default function ModulePage() {
 	useEffect(() => {
 		fetch(`/api/modules/${id}`)
 			.then((res) => res.json())
-			.then((data) => setModule<Module>(data.module))
+			.then((data) => setModule(data.module))
 			.catch((err) => console.error("Failed to load module:", err));
 	}, [id]);
 
@@ -59,7 +59,10 @@ export default function ModulePage() {
 						<h3>Module Completed!</h3>
 						<p>{module.info.description}</p>
 						<div className="button-group center margins-all-but-down">
-							<button onClick={() => globalThis.location.reload()}>
+							<button
+								type="button"
+								onClick={() => globalThis.location.reload()}
+							>
 								<img
 									src="/icons/reload_icon.svg"
 									className="icon"
@@ -67,7 +70,7 @@ export default function ModulePage() {
 								/>
 								Try Again
 							</button>
-							<button onClick={() => navigate("/")}>
+							<button type="button" onClick={() => navigate("/")}>
 								<img src="/icons/back_icon.svg" className="icon" alt="Back" />
 								Home
 							</button>
@@ -106,13 +109,21 @@ export default function ModulePage() {
 						)}
 
 						<div className="button-group center margins-all-but-down">
-							<button onClick={handleBack} disabled={currentPageIndex === 0}>
+							<button
+								type="button"
+								onClick={handleBack}
+								disabled={currentPageIndex === 0}
+							>
 								&lt; Back
 							</button>
 							{currentPageIndex === module.pages.length - 1 ? (
-								<button onClick={handleComplete}>Finish &gt;</button>
+								<button type="button" onClick={handleComplete}>
+									Finish &gt;
+								</button>
 							) : (
-								<button onClick={handleNext}>Next &gt;</button>
+								<button type="button" onClick={handleNext}>
+									Next &gt;
+								</button>
 							)}
 						</div>
 					</>
