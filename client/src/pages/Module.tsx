@@ -58,9 +58,9 @@ export default function ModulePage() {
 
 				{completed ? (
 					<>
-						<h2>{module.info.title}</h2>
-						<h3>Module Completed!</h3>
-						<p>{module.info.description}</p>
+						<h1>{module.info.title}</h1>
+						<h2>Module Completed!</h2>
+						<p>Congratulations! You can now attempt to complete the relevant quiz or another module from home screen.</p>
 						<div className="button-group center margins-all-but-down">
 							<button
 								type="button"
@@ -81,7 +81,8 @@ export default function ModulePage() {
 					</>
 				) : (
 					<>
-						<h1>{currentPage.title}</h1>
+						<h1>{module.info.title}</h1>
+						<h2>{currentPage.title}</h2>
 						{currentPage.content && (
 							<div className="center">
 								<div className="module-text">

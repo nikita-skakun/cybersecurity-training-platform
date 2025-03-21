@@ -12,7 +12,7 @@
         },
         {
             "title": "Common Social Engineering Techniques",
-            "content": "Attackers employ various social engineering techniques, including:\n\n- **Phishing**: Sending fraudulent communications, typically emails, that appear to come from reputable sources to steal sensitive data.\n- **Pretexting**: Creating a fabricated scenario to steal personal information by pretending to need data to confirm the victim's identity.\n- **Baiting**: Offering something enticing to lure victims into a trap, such as leaving infected USB drives in public places.\n- **Tailgating/Piggybacking**: Gaining unauthorized physical access to secure areas by following someone with legitimate access.\n- **Quid Pro Quo**: Offering a service or benefit in exchange for information or access."
+            "content": "Attackers employ various social engineering techniques, including:\n\n- **Phishing**: Sending fraudulent communications, typically emails, that appear to come from reputable sources to steal sensitive data.\n- **Pretexting**: Creating a fabricated scenario to steal personal information by pretending to need data to confirm the victim's identity.\n- **Baiting**: Offering something enticing to lure victims into a trap, such as leaving infected USB drives in public places.\n- **Tailgating / Piggybacking**: Gaining unauthorized physical access to secure areas by following someone with legitimate access.\n- **Quid Pro Quo**: Offering a service or benefit in exchange for information or access."
         },
         {
             "title": "Recognizing Social Engineering Attacks",
