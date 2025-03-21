@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
@@ -30,7 +30,9 @@ export default function ModulePage() {
 	};
 
 	const handleBack = () => {
-		if (currentPageIndex > 0) {
+		if (currentPageIndex === 0) {
+			navigate("/");
+		} else {
 			setCurrentPageIndex(currentPageIndex - 1);
 		}
 	};
@@ -109,12 +111,8 @@ export default function ModulePage() {
 						)}
 
 						<div className="button-group center margins-all-but-down">
-							<button
-								type="button"
-								onClick={handleBack}
-								disabled={currentPageIndex === 0}
-							>
-								&lt; Back
+							<button type="button" onClick={handleBack}>
+								&lt; {currentPageIndex === 0 ? "Home" : "Back"}
 							</button>
 							{currentPageIndex === module.pages.length - 1 ? (
 								<button type="button" onClick={handleComplete}>

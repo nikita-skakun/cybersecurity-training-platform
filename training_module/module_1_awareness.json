@@ -1,7 +1,7 @@
 {
     "info": {
-        "title": "General Cybersecurity Awareness",
-        "description": "This module provides a detailed introduction to cybersecurity, explaining its importance, the risks of cyber threats, and the best practices for staying secure in a digital environment. It helps users recognize potential dangers and adopt safe online behaviors.",
+        "title": "Cybersecurity Awareness",
+        "description": "This module provides an introduction to cybersecurity, explaining its importance, the risks of cyber threats, and the best practices for staying secure in a digital environment.",
         "requirements": [],
         "itemCount": 5
     },
