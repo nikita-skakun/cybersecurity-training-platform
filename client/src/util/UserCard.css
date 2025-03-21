@@ -1,0 +1,47 @@
+.user-card {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 16px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background-color: #fff;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.user-card:hover {
+	background-color: #f9f9f9;
+}
+
+.user-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.user-name {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+.user-username {
+	font-size: 0.9rem;
+	color: #666;
+	margin: 2px 0 0 0;
+}
+
+.email-button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.85rem;
+	transition: background-color 0.2s ease;
+}
+
+.email-button:hover {
+	background-color: #0056b3;
+}
