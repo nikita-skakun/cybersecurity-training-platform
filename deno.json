@@ -21,6 +21,7 @@
     "ldap-escape": "npm:ldap-escape@^2.0.6",
     "ldapts": "npm:ldapts@^7.3.1",
     "react-dom": "npm:react-dom@^19.0.0",
+    "react-markdown": "npm:react-markdown@^10.1.0",
     "react-router-dom": "npm:react-router-dom@^7.4.0",
     "react": "npm:react@^19.0.0",
     "vite": "npm:vite@^6.2.2"

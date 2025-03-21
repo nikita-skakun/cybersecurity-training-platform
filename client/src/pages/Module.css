@@ -12,10 +12,18 @@
 }
 
 .module-image:hover {
-    transform: scale(1.02);
+	transform: scale(1.02);
 }
 
 .module-text {
-    width: 70%;
-    white-space: pre-line;
+	width: 70%;
+	white-space: pre-line;
+}
+
+.module-text ul,
+.module-text ol,
+.module-text li {
+	font-family: Inter, Arial, sans-serif;
+	font-size: 24px;
+	color: #555;
 }

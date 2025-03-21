@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { Module, Page } from "@shared/types/module.ts";
+import ReactMarkdown from "react-markdown";
 import "./Module.css";
 
 export default function ModulePage() {
@@ -83,7 +84,9 @@ export default function ModulePage() {
 						<h1>{currentPage.title}</h1>
 						{currentPage.content && (
 							<div className="center">
-								<p className="module-text">{currentPage.content}</p>
+								<div className="module-text">
+									<ReactMarkdown>{currentPage.content}</ReactMarkdown>
+								</div>
 							</div>
 						)}
 						{currentPage.videos && (
@@ -96,7 +99,6 @@ export default function ModulePage() {
 								))}
 							</div>
 						)}
-
 						{currentPage.images && (
 							<div className="image-group center margins-all-but-down">
 								{currentPage.images.map((img, idx) => (
@@ -109,7 +111,6 @@ export default function ModulePage() {
 								))}
 							</div>
 						)}
-
 						<div className="button-group center margins-all-but-down">
 							<button type="button" onClick={handleBack}>
 								&lt; {currentPageIndex === 0 ? "Home" : "Back"}
