@@ -16,7 +16,7 @@ function loadOrGenerateKey() {
 	}
 }
 
-export function generateToken<T>(payload: T): string {
+export function generateToken<T extends string | object>(payload: T): string {
 	return jwt.sign(payload, key, {
 		algorithm: "HS256",
 		expiresIn: "1d",
@@ -28,8 +28,11 @@ export function verifyToken<T>(token: string | undefined): T | null {
 		return null;
 	}
 	try {
-		const payload: T = jwt.verify(token, key);
-		return payload;
+		const decoded = jwt.verify(token, key);
+		if (typeof decoded === "object" && decoded !== null) {
+			return decoded as T;
+		}
+		return null;
 	} catch {
 		return null;
 	}

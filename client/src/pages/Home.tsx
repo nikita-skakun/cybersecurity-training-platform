@@ -144,7 +144,7 @@ export default function HomePage() {
 				) : (
 					// Render admin view as long thin user cards
 					<div className="admin-user-section">
-						<h2>All Users</h2>
+						<h2>All Users - {user?.domain ?? "Company"}</h2>
 						{userList.length > 0 ? (
 							<UserCardContainer users={userList} />
 						) : (
