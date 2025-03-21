@@ -1,0 +1,45 @@
+{
+    "info": {
+        "title": "Phishing Awareness",
+        "description": "This module educates users about phishing attacks, their various forms, real-world examples, and strategies to recognize and prevent such threats.",
+        "requirements": [],
+        "itemCount": 5
+    },
+    "pages": [
+        {
+            "title": "Introduction to Phishing",
+            "content": "Phishing is a type of cyber attack where malicious actors impersonate trustworthy entities to deceive individuals into divulging sensitive information, such as usernames, passwords, or financial details. These attacks are commonly executed through emails, messages, or fraudulent websites designed to appear legitimate.",
+            "images": [
+                "/awareness/phishing_intro.jpg"
+            ]
+        },
+        {
+            "title": "Common Phishing Techniques",
+            "content": "Phishers employ various tactics to trick their targets. Some prevalent methods include:\n\n- **Email Phishing**: Mass emails sent to many individuals, aiming to deceive recipients into clicking malicious links or providing personal information.\n- **Spear Phishing**: Targeted attacks tailored to specific individuals or organizations, often leveraging personal information to appear credible.\n- **Smishing and Vishing**: Phishing attempts conducted via SMS text messages (smishing) or voice calls (vishing), urging recipients to share sensitive data or perform specific actions.",
+            "images": [
+                "/awareness/phishing_techniques.jpg"
+            ]
+        },
+        {
+            "title": "Recognizing Phishing Attempts",
+            "content": "To identify potential phishing attacks, be vigilant for the following indicators:\n\n- **Suspicious Sender Addresses**: Email addresses that closely mimic legitimate ones but contain slight alterations.\n- **Generic Greetings**: Use of non-personalized salutations like 'Dear Customer' instead of your actual name.\n- **Urgent or Threatening Language**: Messages that create a sense of urgency or fear to prompt immediate action.\n- **Unexpected Attachments or Links**: Emails containing unsolicited attachments or links urging you to click.",
+            "videos": [
+                "/awareness/recognize_phishing.mp4"
+            ]
+        },
+        {
+            "title": "Real-World Phishing Examples",
+            "content": "Understanding real-world phishing scenarios enhances awareness:\n\n- **Business Email Compromise (BEC)**: Attackers impersonate company executives to trick employees into transferring funds or sharing sensitive data.\n- **Clone Phishing**: Duplicating legitimate emails but replacing links or attachments with malicious ones.\n- **Government Agency Scams**: Fraudsters pose as officials from entities like the IRS or local tax authorities, demanding immediate payments or personal information.",
+            "images": [
+                "/awareness/real_world_examples.jpg"
+            ]
+        },
+        {
+            "title": "Preventive Measures and Best Practices",
+            "content": "Adopt the following strategies to protect against phishing attempts:\n\n- **Verify Sender Identity**: Confirm the authenticity of unsolicited messages by contacting the purported sender through official channels.\n- **Hover Before Clicking**: Before clicking on links, hover over them to preview the URL and ensure it directs to a legitimate site.\n- **Use Multi-Factor Authentication (MFA)**: Enable MFA on accounts to add an extra layer of security beyond just passwords.\n- **Keep Software Updated**: Regularly update operating systems, browsers, and security software to patch vulnerabilities.",
+            "videos": [
+                "/awareness/preventive_measures.mp4"
+            ]
+        }
+    ]
+}
