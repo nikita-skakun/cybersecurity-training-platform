@@ -1,7 +1,9 @@
+/* Module.css */
 .image-group {
 	display: flex;
 	align-items: center;
 	gap: 2rem;
+	flex-wrap: wrap;
 }
 
 .module-image {
@@ -9,13 +11,25 @@
 	border-radius: 16px;
 	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 	transition: transform 0.2s ease-in-out;
+	min-width: 200px;
 }
 
 .module-image:hover {
-    transform: scale(1.02);
+	transform: scale(1.02);
 }
 
 .module-text {
-    width: 70%;
-    white-space: pre-line;
+	width: 70%;
+	white-space: pre-line;
+	min-width: 250px;
+}
+
+@media (max-width: 768px) {
+	.image-group {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.module-image, .module-text {
+		width: 100%;
+	}
 }

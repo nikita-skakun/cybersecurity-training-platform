@@ -1,6 +1,15 @@
+/* CardContainer.css */
 .card-container {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
 	padding: 20px;
+	justify-content: center;
+}
+
+@media (max-width: 600px) {
+	.card-container {
+		gap: 12px;
+		padding: 10px;
+	}
 }

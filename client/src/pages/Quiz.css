@@ -1,3 +1,4 @@
+/* Quiz.css */
 .options-container {
 	display: flex;
 	flex-direction: column;
@@ -25,9 +26,17 @@
 .options-container input {
 	accent-color: #007bff;
 	transform: scale(1.2);
+	cursor: pointer;
 }
 
 .options-container label:has(input:checked) {
 	background: #e6f2ff;
 	border-color: #007bff;
+}
+
+@media (max-width: 480px) {
+	.options-container label {
+		padding: 8px 12px;
+		font-size: 0.95rem;
+	}
 }

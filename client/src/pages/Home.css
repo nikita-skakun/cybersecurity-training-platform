@@ -1,9 +1,11 @@
+/* Home.css */
 .tab-buttons {
 	display: inline-flex;
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	overflow: hidden;
 	margin-bottom: 10px;
+	flex-wrap: wrap;
 }
 
 .tab-buttons button {
@@ -14,6 +16,7 @@
 	cursor: pointer;
 	font-weight: 500;
 	transition: background 0.3s, color 0.3s;
+	flex: 1;
 }
 
 .tab-buttons button.active {
@@ -30,4 +33,12 @@
 	font-style: italic;
 	color: #666;
 	margin-top: 12px;
+	text-align: center;
+}
+
+@media (max-width: 500px) {
+	.tab-buttons button {
+		padding: 8px 16px;
+		font-size: 0.9rem;
+	}
 }

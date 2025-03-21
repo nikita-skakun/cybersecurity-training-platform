@@ -1,3 +1,4 @@
+/* UserCard.css */
 .user-card {
 	display: flex;
 	justify-content: space-between;
@@ -10,8 +11,9 @@
 	transition: background-color 0.2s ease;
 }
 
-.user-card:hover {
-	background-color: #f9f9f9;
+.user-card:hover,
+.user-card:focus-within {
+	background-color: #f4f4f4;
 }
 
 .user-info {
@@ -39,9 +41,15 @@
 	border-radius: 4px;
 	cursor: pointer;
 	font-size: 0.85rem;
-	transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .email-button:hover {
 	background-color: #0056b3;
+	transform: scale(1.05);
+}
+
+.email-button:focus {
+	outline: 2px solid #007bff;
+	outline-offset: 2px;
 }
