@@ -23,12 +23,12 @@
         },
         {
             "title": "Real-World Social Engineering Examples",
-            "content": "Understanding real-world scenarios enhances awareness:\n\n- **2020 Twitter Hack**: Attackers used social engineering to access Twitter's internal systems, compromising high-profile accounts to promote a cryptocurrency scam. :contentReference[oaicite:0]{index=0}\n- **Deepfake Impersonation**: Criminals used AI-generated voice technology to impersonate executives, instructing employees to transfer funds to fraudulent accounts. :contentReference[oaicite:1]{index=1}\n- **AI-Driven Phishing**: Scammers used AI to analyze social media activities and send highly personalized phishing emails, making detection challenging. :contentReference[oaicite:2]{index=2}"
+            "content": "Understanding real-world scenarios enhances awareness:\n\n- **2020 Twitter Hack**: Attackers used social engineering to access Twitter's internal systems, compromising high-profile accounts to promote a cryptocurrency scam.\n- **Deepfake Impersonation**: Criminals used AI-generated voice technology to impersonate executives, instructing employees to transfer funds to fraudulent accounts.\n- **AI-Driven Phishing**: Scammers used AI to analyze social media activities and send highly personalized phishing emails, making detection challenging."
             
         },
         {
             "title": "Preventive Measures and Best Practices",
-            "content": "Adopt the following strategies to protect against social engineering attacks:\n\n- **Educate and Train**: Regularly conduct security awareness training to recognize and respond to social engineering tactics. :contentReference[oaicite:3]{index=3}\n- **Verify Identities**: Independently verify the identity of individuals requesting sensitive information or actions.\n- **Use Multi-Factor Authentication (MFA)**: Implement MFA to add an extra layer of security beyond just passwords. :contentReference[oaicite:4]{index=4}\n- **Establish Secret Verification Methods**: Create secret phrases or passwords with family and colleagues to confirm identities during suspicious interactions. :contentReference[oaicite:5]{index=5}"
+            "content": "Adopt the following strategies to protect against social engineering attacks:\n\n- **Educate and Train**: Regularly conduct security awareness training to recognize and respond to social engineering tactics.\n- **Verify Identities**: Independently verify the identity of individuals requesting sensitive information or actions.\n- **Use Multi-Factor Authentication (MFA)**: Implement MFA to add an extra layer of security beyond just passwords.\n- **Establish Secret Verification Methods**: Create secret phrases or passwords with family and colleagues to confirm identities during suspicious interactions."
             
         }
     ]
