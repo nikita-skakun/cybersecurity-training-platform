@@ -2,7 +2,9 @@
     "info": {
         "title": "Social Engineering Awareness",
         "description": "This quiz tests your knowledge on social engineering tactics and how to defend against them.",
-        "requirements": ["module_4_social_eng"],
+        "requirements": [
+            "module_4_social_eng"
+        ],
         "itemCount": 10
     },
     "questions": [
