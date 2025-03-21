@@ -15,6 +15,13 @@
 	transform: scale(1.02);
 }
 
+.module-video {
+	width: 80%;
+	border-radius: 16px;
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+	transition: transform 0.2s ease-in-out;
+}
+
 .module-text {
 	width: 70%;
 	white-space: pre-line;

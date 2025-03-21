@@ -92,7 +92,7 @@ export default function ModulePage() {
 						{currentPage.videos && (
 							<div className="image-group center margins-all-but-down">
 								{currentPage.videos.map((video, idx) => (
-									<video key={idx} controls>
+									<video key={idx} controls className="module-video">
 										<source src={video} type="video/mp4" />
 										Your browser does not support the video tag.
 									</video>
