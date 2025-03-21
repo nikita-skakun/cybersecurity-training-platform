@@ -76,20 +76,23 @@ export default function QuizPage() {
 				<div className="progress-bar-container">
 					<div className="progress-bar" style={{ width: `${progress}%` }}></div>
 				</div>
-				<h2>{quiz.title}</h2>
+				<h1 style={{ textAlign: "center" }}>{quiz.info.title}</h1>
 
 				{score !== null ? (
 					<>
-						<h3>Quiz Completed!</h3>
+						<h2>Quiz Completed!</h2>
 						<p>
 							Your Score: <strong>{score}%</strong>
 						</p>
 						<div className="button-group center margins-all-but-down">
-							<button onClick={() => globalThis.location.reload()}>
+							<button
+								type="button"
+								onClick={() => globalThis.location.reload()}
+							>
 								<img src="/icons/reload_icon.svg" className="icon" />
 								Try Again
 							</button>
-							<button onClick={() => navigate("/")}>
+							<button type="button" onClick={() => navigate("/")}>
 								<img src="/icons/back_icon.svg" className="icon" />
 								Home
 							</button>
@@ -97,7 +100,7 @@ export default function QuizPage() {
 					</>
 				) : (
 					<>
-						<h3>{currentQuestion.question}</h3>
+						<h2>{currentQuestion.question}</h2>
 						<div className="options-container">
 							{currentQuestion.options.map((option: string) => (
 								<label key={option}>
@@ -122,12 +125,14 @@ export default function QuizPage() {
 						</div>
 						<div className="button-group center margins-all-but-down">
 							<button
+								type="button"
 								onClick={handleBack}
 								disabled={currentQuestionIndex === 0}
 							>
 								&lt;
 							</button>
 							<button
+								type="button"
 								onClick={handleNext}
 								disabled={
 									!isAnswerSelected ||
@@ -137,6 +142,7 @@ export default function QuizPage() {
 								&gt;
 							</button>
 							<button
+								type="button"
 								onClick={handleSubmit}
 								disabled={
 									!isAnswerSelected ||

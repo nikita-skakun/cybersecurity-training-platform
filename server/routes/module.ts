@@ -131,4 +131,31 @@ moduleRouter.get("/api/modules", async (context) => {
 	}
 });
 
+// GET /api/moduleCount - Return the number of modules
+moduleRouter.get("/api/moduleCount", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
+	try {
+		const modules = await fetchModuleList();
+		context.response.status = 200;
+		context.response.body = {
+			success: true,
+			count: Object.keys(modules).length,
+		};
+	} catch (error) {
+		console.error("Error fetching module count:", error);
+		context.response.status = 500;
+		context.response.body = {
+			success: false,
+			message: "Failed to fetch module count",
+		};
+	}
+});
+
 export default moduleRouter;

@@ -4,13 +4,20 @@ import "./UserCardContainer.css";
 
 interface UserCardContainerProps {
 	users: AdminUserInfo[];
+	quizCount: number;
+	moduleCount: number;
 }
 
-export default function UserCardContainer({ users }: UserCardContainerProps) {
+export default function UserCardContainer(props: UserCardContainerProps) {
 	return (
 		<div className="user-card-container">
-			{users.map((user) => (
-				<UserCard key={user.id} {...user} />
+			{props.users.map((user) => (
+				<UserCard
+					key={user.id}
+					user={user}
+					quizCount={props.quizCount}
+					moduleCount={props.moduleCount}
+				/>
 			))}
 		</div>
 	);

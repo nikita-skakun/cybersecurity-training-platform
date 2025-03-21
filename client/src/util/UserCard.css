@@ -45,3 +45,37 @@
 .email-button:hover {
 	background-color: #0056b3;
 }
+
+
+/* Red box */
+.red-box {
+	background-color: #ffcccc;
+	color: #d8000c;
+	border: 1px solid #d8000c;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	font-size: 0.9rem;
+}
+
+/* Yellow box */
+.yellow-box {
+	background-color: #ffffcc;
+	color: #9f6000;
+	border: 1px solid #9f6000;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	font-size: 0.9rem;
+}
+
+/* Green box */
+.green-box {
+	background-color: #ccffcc;
+	color: #4f8a10;
+	border: 1px solid #4f8a10;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+	font-size: 0.9rem;
+}

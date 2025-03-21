@@ -3,7 +3,11 @@ import { verifyToken } from "../util/jwt_utils.ts";
 import { AdminUserInfo, User } from "@shared/types/user.ts";
 import { domainConfigs } from "../util/ldap.ts";
 import { Client } from "ldapts";
-import { findUserId } from "../util/db_utils.ts";
+import {
+	findUserId,
+	getAverageScore,
+	listCompletedRequirementsByType,
+} from "../util/db_utils.ts";
 
 const userRouter = new Router();
 
@@ -81,7 +85,15 @@ userRouter.get("/api/companyUsers", async (context) => {
 			const name = entry.cn?.toString() || "";
 			const id = findUserId(payload.domain, username) ?? -1;
 
-			users.push({ username, id, name });
+			let compQuizzes, compModules, avgScore;
+
+			if (id >= 0) {
+				compQuizzes = listCompletedRequirementsByType(id, "quiz").length;
+				compModules = listCompletedRequirementsByType(id, "module").length;
+				avgScore = getAverageScore(id);
+			}
+
+			users.push({ username, id, name, compQuizzes, compModules, avgScore });
 		}
 
 		// Respond with user data

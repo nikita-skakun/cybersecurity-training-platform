@@ -155,6 +155,19 @@ export function storeQuizResult(
 	);
 }
 
+// Get average score for a user
+export function getAverageScore(userId: number): number {
+	const rows = [
+		...db.query("SELECT AVG(score) FROM results WHERE user_id = ?", [userId]),
+	];
+	if (rows.length > 0) {
+		const avgScore = rows[0][0] as number;
+		return avgScore ?? 0;
+	} else {
+		return 0;
+	}
+}
+
 export function closeDatabase(): void {
 	try {
 		db.close();

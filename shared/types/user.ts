@@ -16,4 +16,7 @@ export interface AdminUserInfo {
 	username: string;
 	id: number;
 	name: string;
+	compQuizzes?: number;
+	compModules?: number;
+	avgScore?: number;
 }

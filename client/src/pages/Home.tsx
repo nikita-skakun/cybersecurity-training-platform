@@ -18,6 +18,8 @@ export default function HomePage() {
 		"available"
 	);
 	const [userList, setUserList] = useState<AdminUserInfo[]>([]);
+	const [quizCount, setQuizCount] = useState(0);
+	const [moduleCount, setModuleCount] = useState(0);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -62,16 +64,34 @@ export default function HomePage() {
 			}
 
 			try {
-				const response = await fetch("/api/companyUsers");
-				const data = await response.json();
-				if (data.success && Array.isArray(data.users)) {
-					setUserList(data.users);
+				const [quizCount, moduleCount, companyUserList] = await Promise.all([
+					fetch("/api/quizCount"),
+					fetch("/api/moduleCount"),
+					fetch("/api/companyUsers"),
+				]);
+
+				const companyUserListData = await companyUserList.json();
+				if (
+					companyUserListData.success &&
+					Array.isArray(companyUserListData.users)
+				) {
+					setUserList(companyUserListData.users);
 					localStorage.setItem(
 						"adminUserListCache",
-						JSON.stringify(data.users)
+						JSON.stringify(companyUserListData.users)
 					);
 				} else {
-					console.error("Failed to fetch users:", data.message);
+					console.error("Failed to fetch users:", companyUserListData.message);
+				}
+
+				const quizCountData = await quizCount.json();
+				if (quizCountData.success) {
+					setQuizCount(quizCountData.count);
+				}
+
+				const moduleCountData = await moduleCount.json();
+				if (moduleCountData.success) {
+					setModuleCount(moduleCountData.count);
 				}
 			} catch (error) {
 				console.error("Error fetching users:", error);
@@ -146,7 +166,7 @@ export default function HomePage() {
 					<div className="admin-user-section">
 						<h2>All Users - {user?.domain ?? "Company"}</h2>
 						{userList.length > 0 ? (
-							<UserCardContainer users={userList} />
+							<UserCardContainer users={userList} quizCount={quizCount} moduleCount={moduleCount} />
 						) : (
 							<p className="empty-message">No users found.</p>
 						)}

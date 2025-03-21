@@ -199,4 +199,31 @@ quizRouter.get("/api/quiz", async (context) => {
 	}
 });
 
+// GET /api/quizCount - Return the number of quizzes
+quizRouter.get("/api/quizCount", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
+	try {
+		const quizzes = await fetchQuizList();
+		context.response.status = 200;
+		context.response.body = {
+			success: true,
+			count: Object.keys(quizzes).length,
+		};
+	} catch (error) {
+		console.error("Error fetching quiz count:", error);
+		context.response.status = 500;
+		context.response.body = {
+			success: false,
+			message: "Failed to fetch quiz count",
+		};
+	}
+});
+
 export default quizRouter;
