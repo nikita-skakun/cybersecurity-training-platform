@@ -22,8 +22,9 @@
 
 .module-text ul,
 .module-text ol,
-.module-text li {
+.module-text li,
+.module-text h4 {
 	font-family: Inter, Arial, sans-serif;
-	font-size: 24px;
+	font-size: 18px;
 	color: #555;
 }

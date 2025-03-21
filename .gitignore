@@ -25,6 +25,7 @@ deno.lock
 *.sw?
 
 client/.vite
+client/public/videos
 
 config.json
 jwt_key.pem
