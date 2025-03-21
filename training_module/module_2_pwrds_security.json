@@ -16,12 +16,12 @@
         },
         {
             "title": "Best Practices for Creating Strong Passwords",
-            "content": "To enhance password security, consider the following best practices:\n\n- **Use Long Passwords**: Aim for at least 12 characters; longer passwords are generally more secure. :contentReference[oaicite:0]{index=0}\n- **Create Complex Passwords**: Combine uppercase and lowercase letters, numbers, and symbols. :contentReference[oaicite:1]{index=1}\n- **Avoid Common Words and Patterns**: Refrain from using easily guessable information like 'password', '123456', or personal details. :contentReference[oaicite:2]{index=2}\n- **Use Passphrases**: Consider using a sequence of random words or a memorable phrase to create a strong and memorable password. :contentReference[oaicite:3]{index=3}",
+            "content": "To enhance password security, consider the following best practices:\n\n- **Use Long Passwords**: Aim for at least 12 characters; longer passwords are generally more secure. :contentReference[oaicite:0]{index=0}\n- **Create Complex Passwords**: Combine uppercase and lowercase letters, numbers, and symbols. :contentReference[oaicite:1]{index=1}\n- **Avoid Common Words and Patterns**: Refrain from using easily guessable information like 'password', '123456', or personal details. :contentReference[oaicite:2]{index=2}\n- **Use Passphrases**: Consider using a sequence of random words or a memorable phrase to create a strong and memorable password. :contentReference[oaicite:3]{index=3}"
             
         },
         {
             "title": "Password Management Strategies",
-            "content": "Managing multiple strong passwords can be challenging. The following strategies can help:\n\n- **Use a Password Manager**: Tools like Bitwarden can securely store and generate unique passwords for different accounts. :contentReference[oaicite:4]{index=4}\n- **Enable Multi-Factor Authentication (MFA)**: Adding an extra layer of security, such as a code sent to your phone, can significantly reduce the risk of unauthorized access. :contentReference[oaicite:5]{index=5}\n- **Regularly Update Passwords**: Change passwords periodically, especially if you suspect they have been compromised.",
+            "content": "Managing multiple strong passwords can be challenging. The following strategies can help:\n\n- **Use a Password Manager**: Tools like Bitwarden can securely store and generate unique passwords for different accounts. :contentReference[oaicite:4]{index=4}\n- **Enable Multi-Factor Authentication (MFA)**: Adding an extra layer of security, such as a code sent to your phone, can significantly reduce the risk of unauthorized access. :contentReference[oaicite:5]{index=5}\n- **Regularly Update Passwords**: Change passwords periodically, especially if you suspect they have been compromised."
           
         },
         {
