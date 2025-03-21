@@ -3,7 +3,7 @@
         "title": "Password Security",
         "description": "This module educates users on the importance of strong password practices, common threats to password security, and strategies to create and manage secure passwords effectively.",
         "requirements": [],
-        "itemCount": 5
+        "itemCount": 6
     },
     "pages": [
         {
@@ -27,6 +27,12 @@
         {
             "title": "The Future of Password Security",
             "content": "The landscape of password security is evolving with advancements like passkeys, which aim to replace traditional passwords with more secure alternatives. Supported by major tech companies, passkeys utilize biometrics or PINs, offering enhanced security and convenience."
+        },
+        {
+            "title": "Overview",
+            "videos": [
+                "/videos/pwrds_security.mp4"
+            ]
         }
     ]
 }

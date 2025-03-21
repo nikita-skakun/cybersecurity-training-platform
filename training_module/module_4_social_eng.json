@@ -3,33 +3,34 @@
         "title": "Social Engineering",
         "description": "This module educates users about social engineering attacks, their various forms, real-world examples, and strategies to recognize and prevent such threats.",
         "requirements": [],
-        "itemCount": 5
+        "itemCount": 6
     },
     "pages": [
         {
             "title": "Introduction to Social Engineering",
             "content": "Social engineering is the art of manipulating individuals into performing actions or divulging confidential information. Attackers exploit human psychology rather than technical vulnerabilities, making these attacks particularly effective. Common tactics include impersonation, persuasion, and coercion."
-         
         },
         {
             "title": "Common Social Engineering Techniques",
             "content": "Attackers employ various social engineering techniques, including:\n\n- **Phishing**: Sending fraudulent communications, typically emails, that appear to come from reputable sources to steal sensitive data.\n- **Pretexting**: Creating a fabricated scenario to steal personal information by pretending to need data to confirm the victim's identity.\n- **Baiting**: Offering something enticing to lure victims into a trap, such as leaving infected USB drives in public places.\n- **Tailgating/Piggybacking**: Gaining unauthorized physical access to secure areas by following someone with legitimate access.\n- **Quid Pro Quo**: Offering a service or benefit in exchange for information or access."
-          
         },
         {
             "title": "Recognizing Social Engineering Attacks",
             "content": "To identify potential social engineering attacks, be vigilant for the following indicators:\n\n- **Unsolicited Requests**: Unexpected communications requesting sensitive information or immediate action.\n- **Emotional Manipulation**: Messages that induce fear, curiosity, or urgency to prompt quick responses.\n- **Too Good to Be True Offers**: Enticing offers or opportunities that seem unusually advantageous.\n- **Pressure Tactics**: Attempts to rush decisions without allowing time for consideration."
-           
         },
         {
             "title": "Real-World Social Engineering Examples",
             "content": "Understanding real-world scenarios enhances awareness:\n\n- **2020 Twitter Hack**: Attackers used social engineering to access Twitter's internal systems, compromising high-profile accounts to promote a cryptocurrency scam.\n- **Deepfake Impersonation**: Criminals used AI-generated voice technology to impersonate executives, instructing employees to transfer funds to fraudulent accounts.\n- **AI-Driven Phishing**: Scammers used AI to analyze social media activities and send highly personalized phishing emails, making detection challenging."
-            
         },
         {
             "title": "Preventive Measures and Best Practices",
             "content": "Adopt the following strategies to protect against social engineering attacks:\n\n- **Educate and Train**: Regularly conduct security awareness training to recognize and respond to social engineering tactics.\n- **Verify Identities**: Independently verify the identity of individuals requesting sensitive information or actions.\n- **Use Multi-Factor Authentication (MFA)**: Implement MFA to add an extra layer of security beyond just passwords.\n- **Establish Secret Verification Methods**: Create secret phrases or passwords with family and colleagues to confirm identities during suspicious interactions."
-            
+        },
+        {
+            "title": "Overview",
+            "videos": [
+                "/videos/social_eng.mp4"
+            ]
         }
     ]
 }

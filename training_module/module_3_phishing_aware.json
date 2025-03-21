@@ -3,7 +3,7 @@
         "title": "Phishing Awareness",
         "description": "This module educates users about phishing attacks, their various forms, real-world examples, and strategies to recognize and prevent such threats.",
         "requirements": [],
-        "itemCount": 5
+        "itemCount": 6
     },
     "pages": [
         {
@@ -25,6 +25,12 @@
         {
             "title": "Preventive Measures and Best Practices",
             "content": "Adopt the following strategies to protect against phishing attempts:\n\n- **Verify Sender Identity**: Confirm the authenticity of unsolicited messages by contacting the purported sender through official channels.\n- **Hover Before Clicking**: Before clicking on links, hover over them to preview the URL and ensure it directs to a legitimate site.\n- **Use Multi-Factor Authentication (MFA)**: Enable MFA on accounts to add an extra layer of security beyond just passwords.\n- **Keep Software Updated**: Regularly update operating systems, browsers, and security software to patch vulnerabilities."
+        },
+        {
+            "title": "Overview",
+            "videos": [
+                "/videos/phishing_aware.mp4"
+            ]
         }
     ]
 }
