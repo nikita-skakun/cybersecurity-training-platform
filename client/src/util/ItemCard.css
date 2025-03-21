@@ -1,3 +1,4 @@
+/* ItemCard.css */
 .item-card {
 	position: relative;
 	border: 1px solid #ccc;
@@ -15,6 +16,11 @@
 .item-card:hover {
 	transform: scale(1.02);
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.item-card:focus {
+	outline: 2px solid #0081d7;
+	outline-offset: 4px;
 }
 
 .item-card h2 {
@@ -40,6 +46,7 @@
 	font-weight: bold;
 	border-top-left-radius: 8px;
 	border-bottom-right-radius: 8px;
+	transition: background-color 0.2s ease;
 }
 
 .item-type-badge.quiz {
@@ -48,6 +55,10 @@
 
 .item-type-badge.module {
 	background-color: #ea3d29;
+}
+
+.item-type-badge:hover {
+	opacity: 0.9;
 }
 
 .time-badge {
