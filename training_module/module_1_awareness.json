@@ -1,0 +1,33 @@
+{
+    "info": {
+        "title": "General Cybersecurity Awareness",
+        "description": "This module introduces users to basic cybersecurity principles, common threats, and the importance of maintaining good security habits in the digital world.",
+        "requirements": [],
+        "itemCount": 5
+    },
+    "pages": [
+        {
+            "title": "What is Cybersecurity?",
+            "content": "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These attacks aim to access, change, or destroy sensitive information; extort money; or interrupt normal business processes. Everyone using technology needs to understand the importance of cybersecurity."
+        },
+        {
+            "title": "Why Cybersecurity Matters",
+            "content": "With the increasing use of technology, the risk of cyber attacks has grown. Cybersecurity breaches can lead to identity theft, data loss, financial damage, and harm to personal or organizational reputations. Staying aware helps minimize these risks for individuals and organizations alike.",
+          
+        },
+        {
+            "title": "Common Cyber Threats",
+            "content": "Some common cyber threats include:\n- **Phishing**: Fraudulent attempts to steal sensitive information.\n- **Malware**: Malicious software like viruses, ransomware, or spyware.\n- **Social Engineering**: Manipulating people to reveal confidential data.\n- **Data Breaches**: Unauthorized access to confidential information.\n- **Denial of Service (DoS)**: Overloading a system to shut it down.",
+         
+        },
+        {
+            "title": "Cyber Hygiene Tips",
+            "content": "To stay safe online, follow these best practices:\n- Keep software and systems updated.\n- Use strong, unique passwords for each account.\n- Be cautious when clicking on links or downloading files.\n- Avoid using public Wi-Fi for sensitive transactions.\n- Enable firewalls and antivirus programs.",
+            
+        },
+        {
+            "title": "Your Role in Cybersecurity",
+            "content": "Cybersecurity is a shared responsibility. Whether you're an employee, student, or internet user, your actions can protect or expose valuable data. By staying informed and practicing good habits, you contribute to a safer digital environment for everyone."
+        }
+    ]
+}
