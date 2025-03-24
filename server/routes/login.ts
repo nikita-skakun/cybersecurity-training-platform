@@ -55,6 +55,7 @@ const authenticateUser = async (
 				name: "Test User",
 				baseDN,
 				domain,
+				companyName: "Test Company",
 				role,
 				id,
 			};
@@ -103,6 +104,7 @@ const authenticateUser = async (
 			name,
 			baseDN,
 			domain,
+			companyName: domainConfigs[baseDN].companyName,
 			role,
 			id,
 		};

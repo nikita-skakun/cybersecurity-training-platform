@@ -38,6 +38,18 @@ export function loadOrCreateDatabase(): DB {
     );
   `);
 
+	// Create the phishing emails table if it doesn't exist
+	db.execute(`
+	CREATE TABLE IF NOT EXISTS phishing_emails (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		uuid TEXT NOT NULL,
+		user_id TEXT NOT NULL,
+		created_at TEXT NOT NULL,
+		template_name TEXT NOT NULL,
+		clicked_at TEXT
+	);
+	`);
+
 	return db;
 }
 
@@ -163,6 +175,76 @@ export function getAverageScore(userId: number): number {
 	if (rows.length > 0) {
 		const avgScore = rows[0][0] as number;
 		return avgScore ?? 0;
+	} else {
+		return 0;
+	}
+}
+
+// Create a phishing email entry
+export function createPhishingEmail(
+	userId: number,
+	uuid: string,
+	templateName: string
+): void {
+	const now = new Date().toISOString();
+	db.query(
+		"INSERT INTO phishing_emails (uuid, user_id, created_at, template_name, clicked_at) VALUES (?, ?, ?, ?, NULL)",
+		[uuid, userId, now, templateName]
+	);
+}
+
+// Update phishing email entry when clicked by uuid
+export function updatePhishingEmailClicked(uuid: string): void {
+	const now = new Date().toISOString();
+	db.query("UPDATE phishing_emails SET clicked_at = ? WHERE uuid = ?", [
+		now,
+		uuid,
+	]);
+}
+
+// Get all phishing emails for a user
+export function getPhishingEmails(userId: number): {
+	templateName: string;
+	createdAt: string;
+	clickedAt: string | null;
+}[] {
+	const rows = [
+		...db.query(
+			"SELECT created_at, template_name, clicked_at FROM phishing_emails WHERE user_id = ?",
+			[userId]
+		),
+	];
+	return rows.map((row) => ({
+		createdAt: row[0] as string,
+		templateName: row[1] as string,
+		clickedAt: row[2] ? (row[2] as string) : null,
+	}));
+}
+
+// Get number of phishing emails sent to a user
+export function getPhishingSentCount(userId: number): number {
+	const rows = [
+		...db.query("SELECT COUNT(*) FROM phishing_emails WHERE user_id = ?", [
+			userId,
+		]),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
+	} else {
+		return 0;
+	}
+}
+
+// Get number of phishing emails clicked by a user
+export function getPhishingClickedCount(userId: number): number {
+	const rows = [
+		...db.query(
+			"SELECT COUNT(*) FROM phishing_emails WHERE user_id = ? AND clicked_at IS NOT NULL",
+			[userId]
+		),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
 	} else {
 		return 0;
 	}

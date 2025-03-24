@@ -56,9 +56,9 @@ button:hover {
 }
 
 button:disabled {
-	background-color: #dcdcdc;
-	color: #666;
-	cursor: not-allowed;
+	background-color: #dcdcdc !important;
+	color: #666 !important;
+	cursor: not-allowed !important;
 }
 
 .flex-center {

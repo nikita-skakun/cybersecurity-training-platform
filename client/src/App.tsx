@@ -4,6 +4,7 @@ import HomePage from "./pages/Home.tsx";
 import UserPage from "./pages/User.tsx";
 import QuizPage from "./pages/Quiz.tsx";
 import ModulePage from "./pages/Module.tsx";
+import PhishPage from "./pages/Phish.tsx";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/user" element={<UserPage />} />
 				<Route path="/quiz/:id/*" element={<QuizPage />} />
 				<Route path="/module/:id/*" element={<ModulePage />} />
+				<Route path="/process/:uuid/*" element={<PhishPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

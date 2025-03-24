@@ -3,6 +3,7 @@ export interface User {
 	name: string;
 	baseDN: string;
 	domain: string;
+	companyName: string;
 	role: string;
 	id: number;
 
@@ -19,4 +20,6 @@ export interface AdminUserInfo {
 	compQuizzes?: number;
 	compModules?: number;
 	avgScore?: number;
+	phishingSent?: number;
+	phishingClicked?: number;
 }

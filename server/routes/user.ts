@@ -6,8 +6,11 @@ import { Client } from "ldapts";
 import {
 	findUserId,
 	getAverageScore,
+	getPhishingClickedCount,
+	getPhishingSentCount,
 	listCompletedRequirementsByType,
 } from "../util/db_utils.ts";
+import { sendPhishingEmail } from "../util/mail.ts";
 
 const userRouter = new Router();
 
@@ -85,15 +88,26 @@ userRouter.get("/api/companyUsers", async (context) => {
 			const name = entry.cn?.toString() || "";
 			const id = findUserId(payload.domain, username) ?? -1;
 
-			let compQuizzes, compModules, avgScore;
+			let compQuizzes, compModules, avgScore, phishingSent, phishingClicked;
 
 			if (id >= 0) {
 				compQuizzes = listCompletedRequirementsByType(id, "quiz").length;
 				compModules = listCompletedRequirementsByType(id, "module").length;
 				avgScore = getAverageScore(id);
+				phishingSent = getPhishingSentCount(id);
+				phishingClicked = getPhishingClickedCount(id);
 			}
 
-			users.push({ username, id, name, compQuizzes, compModules, avgScore });
+			users.push({
+				username,
+				id,
+				name,
+				compQuizzes,
+				compModules,
+				avgScore,
+				phishingSent,
+				phishingClicked,
+			});
 		}
 
 		// Respond with user data
@@ -102,7 +116,6 @@ userRouter.get("/api/companyUsers", async (context) => {
 			success: true,
 			users,
 		};
-		console.log(users);
 	} catch (error) {
 		console.error("Error fetching company users:", error);
 		context.response.status = 500;
@@ -119,6 +132,56 @@ userRouter.get("/api/companyUsers", async (context) => {
 				console.error("Error unbinding LDAP client:", unbindError);
 			}
 		}
+	}
+});
+
+// Send phishing email to user
+userRouter.post("/api/sendPhishingEmail", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+
+	if (!payload || payload.role !== "admin") {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+	const jsonData = await context.request.body?.json();
+	if (!jsonData) {
+		context.response.status = 400;
+		context.response.body = { success: false, message: "Invalid request body" };
+		return;
+	}
+	const { username, name, userId } = jsonData as {
+		username: string;
+		name: string;
+		userId: number;
+	};
+
+	if (!username || !name || !userId) {
+		context.response.status = 400;
+		context.response.body = {
+			success: false,
+			message: "Username, name, and user ID are required",
+		};
+		return;
+	}
+
+	const email = username + "@" + payload.domain;
+	const company = payload.companyName;
+
+	console.log("Sending phishing email to:", email);
+
+	try {
+		await sendPhishingEmail(email, name, company, userId);
+		context.response.status = 200;
+		context.response.body = { success: true, message: "Email sent" };
+	} catch (error) {
+		console.error("Error sending email:", error);
+		context.response.status = 500;
+		context.response.body = {
+			success: false,
+			message: "Email sending failed",
+		};
 	}
 });
 

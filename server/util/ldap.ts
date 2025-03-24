@@ -7,6 +7,7 @@ export interface LdapConfig {
 	bindPassword: string;
 	userGroupDN: string;
 	adminGroupDN: string;
+	companyName: string;
 }
 
 export const allowTestUser = Deno.args.includes("--allow-test-user");

@@ -2,6 +2,7 @@ import path from "node:path";
 import fs from "node:fs";
 import nodemailer from "nodemailer";
 import handlebars from "handlebars";
+import { createPhishingEmail } from "./db_utils.ts";
 
 export interface MailConfig {
 	host: string;
@@ -119,7 +120,7 @@ export async function sendPhishingEmail(
 	email: string,
 	name: string,
 	company: string,
-	link: string
+	userId: number
 ) {
 	if (!mailConfig) {
 		throw new Error(
@@ -128,6 +129,18 @@ export async function sendPhishingEmail(
 	}
 
 	const transporter = nodemailer.createTransport(mailConfig);
+
+	const uuid = crypto.randomUUID();
+
+	// Randomly select a template
+	const templateNames = Object.keys(templates);
+	const randomIndex = Math.floor(Math.random() * templateNames.length);
+	const templateName = templateNames[randomIndex];
+	const templateInfo = templates[templateName];
+
+	createPhishingEmail(userId, uuid, templateName);
+
+	const link = `https://echo-shield.com/process/${uuid}`;
 
 	const templateData = {
 		name,
@@ -151,18 +164,14 @@ export async function sendPhishingEmail(
 		link,
 	};
 
-	// Randomly select a template
-	const templateNames = Object.keys(templates);
-	const randomIndex = Math.floor(Math.random() * templateNames.length);
-	const templateName = templateNames[randomIndex];
-	const templateInfo = templates[templateName];
-
 	const mailOptions = {
 		from: templateInfo?.from,
 		to: email,
 		subject: templateInfo?.subject,
 		html: templateInfo?.template(templateData),
 	};
+
+	console.log("Sending email:", mailOptions);
 
 	try {
 		const info = await transporter.sendMail(mailOptions);

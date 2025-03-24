@@ -20,10 +20,25 @@ export default function UserCard({
 		// navigate(`/admin/users/${user.id}`);
 	};
 
-	const handleSendTestEmail = (e: React.MouseEvent) => {
+	const handleSendPhishingEmail = (e: React.MouseEvent) => {
 		e.stopPropagation();
 
-		fetch(`/api/sendTestEmail/${user.id}`, { method: "POST" })
+		if (user.id < 0) {
+			alert("User never logged in");
+			return;
+		}
+
+		fetch("/api/sendPhishingEmail", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				username: user.username,
+				name: user.name,
+				userId: user.id,
+			}),
+		})
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
@@ -51,7 +66,7 @@ export default function UserCard({
 				<>
 					<div>
 						<p>
-							{"Average Score: "}
+							{"🎯: "}
 							<span
 								className={
 									(user.avgScore ?? 0) < 50
@@ -61,13 +76,13 @@ export default function UserCard({
 										: "yellow-box"
 								}
 							>
-								{user.avgScore ?? 0}%
+								{(user.avgScore ?? 0).toFixed(2)}%
 							</span>
 						</p>
 					</div>
 					<div>
 						<p>
-							{"Quizzes: "}
+							{"📝: "}
 							<span
 								className={
 									(user.compQuizzes ?? 0) / quizCount < 0.5
@@ -83,7 +98,7 @@ export default function UserCard({
 					</div>
 					<div>
 						<p>
-							{"Modules: "}
+							{"📖: "}
 							<span
 								className={
 									(user.compModules ?? 0) / moduleCount < 0.5
@@ -97,15 +112,28 @@ export default function UserCard({
 							</span>
 						</p>
 					</div>
+					<div>
+						<p>
+							{"🎣: "}
+							<span
+								className={
+									(user.phishingClicked ?? 0) > 0 ? "red-box" : "green-box"
+								}
+							>
+								{user.phishingClicked} / {user.phishingSent}
+							</span>
+						</p>
+					</div>
 				</>
 			)}
 
 			<button
 				type="button"
 				className="email-button"
-				onClick={handleSendTestEmail}
+				onClick={handleSendPhishingEmail}
+				disabled={user.id < 0}
 			>
-				Send Email
+				Phish
 			</button>
 		</div>
 	);

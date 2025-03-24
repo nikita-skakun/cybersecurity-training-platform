@@ -5,7 +5,8 @@
             "bindDN": "uid=ro_admin,ou=people,dc=test-client-ad,dc=com",
             "bindPassword": "password",
             "userGroupDN": "cn=phishing_user,ou=groups,dc=test-client-ad,dc=com",
-            "adminGroupDN": "cn=phishing_admin,ou=groups,dc=test-client-ad,dc=com"
+            "adminGroupDN": "cn=phishing_admin,ou=groups,dc=test-client-ad,dc=com",
+            "companyName": "The Company"
         }
     },
     "mail": {

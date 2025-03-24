@@ -13,7 +13,7 @@ export default function UserCardContainer(props: UserCardContainerProps) {
 		<div className="user-card-container">
 			{props.users.map((user) => (
 				<UserCard
-					key={user.id}
+					key={user.username}
 					user={user}
 					quizCount={props.quizCount}
 					moduleCount={props.moduleCount}
