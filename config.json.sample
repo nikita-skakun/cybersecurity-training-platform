@@ -7,5 +7,14 @@
             "userGroupDN": "cn=phishing_user,ou=groups,dc=test-client-ad,dc=com",
             "adminGroupDN": "cn=phishing_admin,ou=groups,dc=test-client-ad,dc=com"
         }
+    },
+    "mail": {
+        "host": "mail.echo-shield.com",
+        "port": 465,
+        "secure": true,
+        "auth": {
+            "user": "no-reply@echo-shield.com",
+            "pass": "password"
+        }
     }
 }

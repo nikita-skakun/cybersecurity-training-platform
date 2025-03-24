@@ -1,0 +1,62 @@
+<html>
+
+<body style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px;">
+  <div
+    style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+    <!-- Header Section -->
+    <div style="background-color: #4CAF50; color: #ffffff; padding: 20px; text-align: center;">
+      <h2 style="margin: 0;">New Document Shared With You</h2>
+    </div>
+
+    <!-- Body Content -->
+    <div style="padding: 30px;">
+      <p style="font-size: 16px;">Dear <strong>{{name}}</strong>,</p>
+
+      <p style="font-size: 16px; line-height: 1.5;">
+        <strong>{{managerName}}</strong>
+        has shared a confidential document with you through the
+        {{company}}
+        Secure Document Portal. You have been granted access to review and
+        approve the attached document by
+        <strong>{{tomorrow}}</strong>.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.5;">
+        Please review the document at your earliest convenience. Failure to
+        respond within the allotted time may delay the approval process for
+        your department.
+      </p>
+
+      <!-- Document Link -->
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="{{link}}"
+          style="background-color: #4CAF50; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 16px; border-radius: 6px; display: inline-block;">
+          View Document
+        </a>
+      </div>
+
+      <!-- Additional Notes -->
+      <p style="font-size: 14px; color: #555555; line-height: 1.5;">
+        If you were not expecting this document or believe this notification
+        was sent in error, please contact our IT Help Desk immediately at
+        <a href="mailto:it-support@{{domain}}" style="color: #4CAF50;">it-support@{{domain}}</a>.
+      </p>
+
+      <!-- Closing -->
+      <p style="font-size: 16px; line-height: 1.5;">
+        Best regards,<br />
+        {{company}}
+        Document Management System
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f0f0f0; padding: 10px; text-align: center; font-size: 12px; color: #888888;">
+      This message was generated automatically. Please do not reply.
+    </div>
+
+  </div>
+</body>
+
+</html>

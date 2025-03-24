@@ -18,7 +18,7 @@ This is a final group project for the INFO 4290 course. We focused on creating a
 3. Install Deno dependencies: `deno install`
 4. Start the development Deno server: `deno run dev --allow-test-user`
 5. Go to the hosted website: <http://localhost:3000>
-6. Login with `test@example.com` email and `test` password
+6. Login with email `test@example.com` and password `test`
 7. To reset the database for testing, delete the `database.db` file in root directory
 
 ## To Use LDAP for Account Management
