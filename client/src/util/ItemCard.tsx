@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { ItemInfo } from "@shared/types/item.ts";
 import "./ItemCard.css";
+import { QuizResult } from "@shared/types/quiz.ts";
 
 export interface ItemCardProps extends ItemInfo {
 	id: string;
 	itemType: "quiz" | "module";
+	score: QuizResult | null;
 }
 
 export default function ItemCard({
@@ -13,6 +15,7 @@ export default function ItemCard({
 	title,
 	description,
 	itemCount,
+	score,
 }: ItemCardProps) {
 	const navigate = useNavigate();
 
@@ -28,6 +31,9 @@ export default function ItemCard({
 			<div className="time-badge">{itemCount} min</div>
 			<h2>{title}</h2>
 			<p>{description}</p>
+			{score != null && itemType === "quiz" && (
+				<div className="score-badge">{score.score}%</div>
+			)}
 		</div>
 	);
 }

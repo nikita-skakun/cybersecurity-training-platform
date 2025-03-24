@@ -15,3 +15,8 @@ export interface Quiz {
 export interface UserAnswers {
 	[key: number]: string | string[];
 }
+
+export interface QuizResult {
+	score: number;
+	completedAt: Date;
+}

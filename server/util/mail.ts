@@ -110,7 +110,6 @@ function loadTemplates(): Record<string, TemplateInfo> {
 			}
 		}
 	});
-	console.log("Loaded templates:", Object.keys(templates));
 	return templates;
 }
 

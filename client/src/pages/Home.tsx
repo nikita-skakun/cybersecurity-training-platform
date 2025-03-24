@@ -3,6 +3,7 @@ import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { ItemInfo } from "@shared/types/item.ts";
 import { AdminUserInfo } from "@shared/types/user.ts";
+import { QuizResult } from "@shared/types/quiz.ts";
 import CardContainer from "../util/CardContainer.tsx";
 import UserCardContainer from "../util/UserCardContainer.tsx";
 import "./Home.css";
@@ -20,8 +21,31 @@ export default function HomePage() {
 	const [userList, setUserList] = useState<AdminUserInfo[]>([]);
 	const [quizCount, setQuizCount] = useState(0);
 	const [moduleCount, setModuleCount] = useState(0);
+	const [quizScores, setQuizScores] = useState<
+		Record<string, QuizResult | null>
+	>({});
 
 	useEffect(() => {
+		async function fetchQuizScores(quizzes: Record<string, ItemInfo>) {
+			const quizIds = Object.keys(quizzes);
+			const scorePromises = quizIds.map(async (quizId) => {
+				try {
+					const res = await fetch(`/api/quiz/${quizId}/score`);
+					const data = await res.json();
+					return { id: quizId, score: data.success ? data.score : null };
+				} catch (error) {
+					console.error(`Error fetching score for quiz ${quizId}:`, error);
+					return { id: quizId, score: null };
+				}
+			});
+
+			const scores = await Promise.all(scorePromises);
+			return scores.reduce((acc, { id, score }) => {
+				acc[id] = score;
+				return acc;
+			}, {} as Record<string, QuizResult | null>);
+		}
+
 		async function fetchData() {
 			try {
 				const [quizResponse, moduleResponse] = await Promise.all([
@@ -35,6 +59,11 @@ export default function HomePage() {
 				if (quizData.success) {
 					setAvlQuizzes(quizData.avlQuizzes as Record<string, ItemInfo>);
 					setCompQuizzes(quizData.compQuizzes as Record<string, ItemInfo>);
+
+					// Fetch scores for quizzes
+					const availableScores = await fetchQuizScores(quizData.avlQuizzes);
+					const completedScores = await fetchQuizScores(quizData.compQuizzes);
+					setQuizScores({ ...availableScores, ...completedScores });
 				} else {
 					console.error("Failed to fetch quizzes:", quizData.message);
 				}
@@ -135,6 +164,7 @@ export default function HomePage() {
 			...item,
 			id,
 			itemType,
+			score: itemType === "quiz" ? quizScores[id] ?? null : null, // Add score if it's a quiz
 		}));
 
 	const availableItems = [

@@ -5,6 +5,7 @@ import { User } from "@shared/types/user.ts";
 import { verifyToken } from "../util/jwt_utils.ts";
 import { getJson } from "../util/fs_utils.ts";
 import {
+	getQuizResult,
 	listCompletedRequirementsByType,
 	listUnlockedRequirements,
 	markRequirementCompleted,
@@ -224,6 +225,25 @@ quizRouter.get("/api/quizCount", async (context) => {
 			message: "Failed to fetch quiz count",
 		};
 	}
+});
+
+// Get /api/quiz/:id/score - Return the score of a quiz
+quizRouter.get("/api/quiz/:id/score", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
+	const userId = payload.id;
+	const quizId = context.params.id;
+
+	const score = getQuizResult(userId, quizId);
+
+	context.response.status = 200;
+	context.response.body = { success: true, score };
 });
 
 export default quizRouter;

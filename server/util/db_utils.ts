@@ -167,6 +167,30 @@ export function storeQuizResult(
 	);
 }
 
+// Get most update quiz result for a user
+export function getQuizResult(
+	userId: number,
+	quizId: string
+): {
+	score: number;
+	completedAt: Date;
+} | null {
+	const rows = [
+		...db.query(
+			"SELECT score, completed_at FROM results WHERE user_id = ? AND quiz_id = ? ORDER BY completed_at DESC LIMIT 1",
+			[userId, quizId]
+		),
+	];
+	if (rows.length > 0) {
+		return {
+			score: rows[0][0] as number,
+			completedAt: new Date(rows[0][1] as string),
+		};
+	} else {
+		return null;
+	}
+}
+
 // Get average score for a user
 export function getAverageScore(userId: number): number {
 	const rows = [
