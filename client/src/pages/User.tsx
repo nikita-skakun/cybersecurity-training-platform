@@ -10,7 +10,7 @@ export default function UserPage() {
 		<div className="page-container">
 			<TitleBar user={user} />
 			<main className="shrunk-container">
-				<h1>User Profile</h1>
+				<h1>User Profile {user ? `| ${user.name}` : ""}</h1>
 
 				{!user ? (
 					<p>Loading user data...</p>
@@ -20,7 +20,7 @@ export default function UserPage() {
 							<strong>Username:</strong> {user.username}
 						</p>
 						<p>
-							<strong>Name:</strong> {user.name}
+							<strong>Company:</strong> {user.companyName}
 						</p>
 						<p>
 							<strong>Domain:</strong> {user.domain}
@@ -32,7 +32,7 @@ export default function UserPage() {
 				) : (
 					<p>No user data available.</p>
 				)}
-				<button onClick={() => navigate("/")}>
+				<button type="button" onClick={() => navigate("/")}>
 					<img src="/icons/back_icon.svg" className="icon" />
 					Home
 				</button>
