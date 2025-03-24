@@ -71,7 +71,7 @@ export default function UserCard({
 								className={
 									(user.avgScore ?? 0) < 50
 										? "red-box"
-										: (user.avgScore ?? 0) > 90
+										: (user.avgScore ?? 0) >= 90
 										? "green-box"
 										: "yellow-box"
 								}
@@ -89,7 +89,7 @@ export default function UserCard({
 								className={
 									(user.compQuizzes ?? 0) / quizCount < 0.5
 										? "red-box"
-										: (user.compQuizzes ?? 0) / quizCount > 0.9
+										: (user.compQuizzes ?? 0) / quizCount >= 0.9
 										? "green-box"
 										: "yellow-box"
 								}
@@ -107,7 +107,7 @@ export default function UserCard({
 								className={
 									(user.compModules ?? 0) / moduleCount < 0.5
 										? "red-box"
-										: (user.compModules ?? 0) / moduleCount > 0.9
+										: (user.compModules ?? 0) / moduleCount >= 0.9
 										? "green-box"
 										: "yellow-box"
 								}
