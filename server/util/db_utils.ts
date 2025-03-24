@@ -194,12 +194,21 @@ export function createPhishingEmail(
 }
 
 // Update phishing email entry when clicked by uuid
-export function updatePhishingEmailClicked(uuid: string): void {
+export function updatePhishingEmailClicked(uuid: string): number | null {
 	const now = new Date().toISOString();
 	db.query("UPDATE phishing_emails SET clicked_at = ? WHERE uuid = ?", [
 		now,
 		uuid,
 	]);
+
+	const rows = [
+		...db.query("SELECT user_id FROM phishing_emails WHERE uuid = ?", [uuid]),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
+	} else {
+		return null;
+	}
 }
 
 // Get all phishing emails for a user

@@ -9,6 +9,7 @@ import {
 	getPhishingClickedCount,
 	getPhishingSentCount,
 	listCompletedRequirementsByType,
+	updatePhishingEmailClicked,
 } from "../util/db_utils.ts";
 import { sendPhishingEmail } from "../util/mail.ts";
 
@@ -183,6 +184,19 @@ userRouter.post("/api/sendPhishingEmail", async (context) => {
 			message: "Email sending failed",
 		};
 	}
+});
+
+userRouter.post("/api/phishCaught/:uuid", (context) => {
+	const uuid = context.params.uuid;
+
+	const userId = updatePhishingEmailClicked(uuid);
+	console.log("Phishing simulation caught:", userId);
+
+	context.response.status = 200;
+	context.response.body = {
+		success: true,
+		message: "Phishing simulation caught",
+	};
 });
 
 export default userRouter;
