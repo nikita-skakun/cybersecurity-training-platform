@@ -51,10 +51,14 @@ export default function HomePage() {
 		}
 
 		async function fetchAdminUserList() {
-			const cached = localStorage.getItem("adminUserListCache");
-			if (cached) {
+			// Load cached data
+			const cachedUsers = localStorage.getItem("adminUserListCache");
+			const cachedQuizCount = localStorage.getItem("quizCountCache");
+			const cachedModuleCount = localStorage.getItem("moduleCountCache");
+
+			if (cachedUsers) {
 				try {
-					const parsed = JSON.parse(cached);
+					const parsed = JSON.parse(cachedUsers);
 					if (Array.isArray(parsed)) {
 						setUserList(parsed);
 					}
@@ -63,14 +67,42 @@ export default function HomePage() {
 				}
 			}
 
-			try {
-				const [quizCount, moduleCount, companyUserList] = await Promise.all([
-					fetch("/api/quizCount"),
-					fetch("/api/moduleCount"),
-					fetch("/api/companyUsers"),
-				]);
+			if (cachedQuizCount) {
+				setQuizCount(parseInt(cachedQuizCount, 10));
+			}
 
-				const companyUserListData = await companyUserList.json();
+			if (cachedModuleCount) {
+				setModuleCount(parseInt(cachedModuleCount, 10));
+			}
+
+			// Fetch updated data
+			try {
+				const [quizCountRes, moduleCountRes, companyUserListRes] =
+					await Promise.all([
+						fetch("/api/quizCount"),
+						fetch("/api/moduleCount"),
+						fetch("/api/companyUsers"),
+					]);
+
+				const quizCountData = await quizCountRes.json();
+				if (quizCountData.success) {
+					setQuizCount(quizCountData.count);
+					localStorage.setItem(
+						"quizCountCache",
+						quizCountData.count.toString()
+					);
+				}
+
+				const moduleCountData = await moduleCountRes.json();
+				if (moduleCountData.success) {
+					setModuleCount(moduleCountData.count);
+					localStorage.setItem(
+						"moduleCountCache",
+						moduleCountData.count.toString()
+					);
+				}
+
+				const companyUserListData = await companyUserListRes.json();
 				if (
 					companyUserListData.success &&
 					Array.isArray(companyUserListData.users)
@@ -82,16 +114,6 @@ export default function HomePage() {
 					);
 				} else {
 					console.error("Failed to fetch users:", companyUserListData.message);
-				}
-
-				const quizCountData = await quizCount.json();
-				if (quizCountData.success) {
-					setQuizCount(quizCountData.count);
-				}
-
-				const moduleCountData = await moduleCount.json();
-				if (moduleCountData.success) {
-					setModuleCount(moduleCountData.count);
 				}
 			} catch (error) {
 				console.error("Error fetching users:", error);
@@ -166,7 +188,11 @@ export default function HomePage() {
 					<div className="admin-user-section">
 						<h2>All Users - {user?.companyName ?? "Company"}</h2>
 						{userList.length > 0 ? (
-							<UserCardContainer users={userList} quizCount={quizCount} moduleCount={moduleCount} />
+							<UserCardContainer
+								users={userList}
+								quizCount={quizCount}
+								moduleCount={moduleCount}
+							/>
 						) : (
 							<p className="empty-message">No users found.</p>
 						)}
