@@ -199,3 +199,15 @@ button:disabled {
 	background-color: #0081d7;
 	transition: width 0.3s ease;
 }
+
+.warning-text {
+	font-size: 1.2rem;
+	color: #d32f2f;
+	font-weight: bold;
+	text-align: center;
+	background-color: #ffebee;
+	padding: 15px;
+	border-radius: 8px;
+	border: 2px solid #d32f2f;
+	box-shadow: 0 0 10px rgba(211, 47, 47, 0.5);
+}

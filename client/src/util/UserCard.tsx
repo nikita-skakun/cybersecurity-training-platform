@@ -64,7 +64,7 @@ export default function UserCard({
 				<p className="red-box">User never logged in</p>
 			) : (
 				<>
-					<div>
+					<div className="tooltip-container">
 						<p>
 							{"🎯: "}
 							<span
@@ -75,12 +75,14 @@ export default function UserCard({
 										? "green-box"
 										: "yellow-box"
 								}
+								style={{ display: "inline-block" }}
 							>
 								{(user.avgScore ?? 0).toFixed(2)}%
 							</span>
 						</p>
+						<span className="tooltip-text">Average quiz score</span>
 					</div>
-					<div>
+					<div className="tooltip-container">
 						<p>
 							{"📝: "}
 							<span
@@ -91,12 +93,14 @@ export default function UserCard({
 										? "green-box"
 										: "yellow-box"
 								}
+								style={{ display: "inline-block" }}
 							>
 								{user.compQuizzes} / {quizCount}
 							</span>
 						</p>
+						<span className="tooltip-text">Completed quizzes</span>
 					</div>
-					<div>
+					<div className="tooltip-container">
 						<p>
 							{"📖: "}
 							<span
@@ -107,22 +111,26 @@ export default function UserCard({
 										? "green-box"
 										: "yellow-box"
 								}
+								style={{ display: "inline-block" }}
 							>
 								{user.compModules} / {moduleCount}
 							</span>
 						</p>
+						<span className="tooltip-text">Completed training modules</span>
 					</div>
-					<div>
+					<div className="tooltip-container">
 						<p>
 							{"🎣: "}
 							<span
 								className={
 									(user.phishingClicked ?? 0) > 0 ? "red-box" : "green-box"
 								}
+								style={{ display: "inline-block" }}
 							>
 								{user.phishingClicked} / {user.phishingSent}
 							</span>
 						</p>
+						<span className="tooltip-text">Phishing emails clicked</span>
 					</div>
 				</>
 			)}
