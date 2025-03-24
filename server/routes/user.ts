@@ -32,6 +32,46 @@ userRouter.get("/api/userData", async (context) => {
 	}
 });
 
+async function getAdminUserInfo(
+	client: Client,
+	username: string,
+	baseDN: string,
+	domain: string
+): Promise<AdminUserInfo | null> {
+	const userDN = `uid=${username},${baseDN}`;
+	const { searchEntries: userEntries } = await client.search(userDN, {
+		scope: "base",
+		attributes: ["cn"],
+	});
+
+	const entry = userEntries[0];
+	if (!entry) return null;
+
+	const name = entry.cn?.toString() || "";
+	const id = findUserId(domain, username) ?? -1;
+
+	let compQuizzes, compModules, avgScore, phishingSent, phishingClicked;
+
+	if (id >= 0) {
+		compQuizzes = listCompletedRequirementsByType(id, "quiz").length;
+		compModules = listCompletedRequirementsByType(id, "module").length;
+		avgScore = getAverageScore(id);
+		phishingSent = getPhishingSentCount(id);
+		phishingClicked = getPhishingClickedCount(id);
+	}
+
+	return {
+		username,
+		id,
+		name,
+		compQuizzes,
+		compModules,
+		avgScore,
+		phishingSent,
+		phishingClicked,
+	};
+}
+
 // get company users if user is admin
 userRouter.get("/api/companyUsers", async (context) => {
 	let client: Client | null = null;
@@ -71,45 +111,19 @@ userRouter.get("/api/companyUsers", async (context) => {
 			return;
 		}
 
-		// Search all users from member DN
-		const users: AdminUserInfo[] = [];
+		// Extract usernames from member DNs
+		const usernames = memberDNs.map(
+			(dn) => dn.toString().split(",")[0].split("=")[1]
+		);
 
-		for (const userDN of memberDNs) {
-			const userDNStr = userDN.toString();
-
-			const { searchEntries: userEntries } = await client.search(userDNStr, {
-				scope: "base",
-				attributes: ["uid", "cn"],
-			});
-
-			const entry = userEntries[0];
-			if (!entry?.uid) continue;
-
-			const username = entry.uid.toString();
-			const name = entry.cn?.toString() || "";
-			const id = findUserId(payload.domain, username) ?? -1;
-
-			let compQuizzes, compModules, avgScore, phishingSent, phishingClicked;
-
-			if (id >= 0) {
-				compQuizzes = listCompletedRequirementsByType(id, "quiz").length;
-				compModules = listCompletedRequirementsByType(id, "module").length;
-				avgScore = getAverageScore(id);
-				phishingSent = getPhishingSentCount(id);
-				phishingClicked = getPhishingClickedCount(id);
-			}
-
-			users.push({
-				username,
-				id,
-				name,
-				compQuizzes,
-				compModules,
-				avgScore,
-				phishingSent,
-				phishingClicked,
-			});
-		}
+		// Fetch all users concurrently
+		const users = (
+			await Promise.all(
+				usernames.map((username) =>
+					getAdminUserInfo(client!, username, payload.baseDN, payload.domain)
+				)
+			)
+		).filter((user): user is AdminUserInfo => user !== null); // Remove null values
 
 		// Respond with user data
 		context.response.status = 200;
@@ -119,6 +133,72 @@ userRouter.get("/api/companyUsers", async (context) => {
 		};
 	} catch (error) {
 		console.error("Error fetching company users:", error);
+		context.response.status = 500;
+		context.response.body = {
+			success: false,
+			message: "Internal server error",
+		};
+	} finally {
+		// Always unbind LDAP client
+		if (client) {
+			try {
+				await client.unbind();
+			} catch (unbindError) {
+				console.error("Error unbinding LDAP client:", unbindError);
+			}
+		}
+	}
+});
+
+// get user data if user is admin
+userRouter.get("/api/userData/:username", async (context) => {
+	let client: Client | null = null;
+
+	try {
+		// Authenticate and authorize
+		const token = await context.cookies.get("jwtCyberTraining");
+		const payload = verifyToken<User>(token);
+
+		if (!payload || payload.role !== "admin") {
+			context.response.status = 403;
+			context.response.body = { success: false, message: "Invalid token" };
+			return;
+		}
+
+		// Get domain configuration
+		const domainConfig = domainConfigs[payload.baseDN];
+		if (!domainConfig) {
+			context.response.status = 500;
+			context.response.body = { success: false, message: "Invalid domain" };
+			return;
+		}
+
+		// Connect to LDAP
+		client = new Client({ url: domainConfig.url });
+		await client.bind(domainConfig.bindDN, domainConfig.bindPassword);
+
+		// Fetch user data
+		const userData = await getAdminUserInfo(
+			client,
+			context.params.username,
+			payload.baseDN,
+			payload.domain
+		);
+
+		if (!userData) {
+			context.response.status = 404;
+			context.response.body = { success: false, message: "User not found" };
+			return;
+		}
+
+		// Respond with user data
+		context.response.status = 200;
+		context.response.body = {
+			success: true,
+			user: userData,
+		};
+	} catch (error) {
+		console.error("Error fetching user data:", error);
 		context.response.status = 500;
 		context.response.body = {
 			success: false,
