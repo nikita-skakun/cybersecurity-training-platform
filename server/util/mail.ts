@@ -13,8 +13,13 @@ export interface MailConfig {
 	};
 }
 
-// Load transport configuration from config.json
-const loadMailConfig = (): MailConfig | null => {
+interface TemplateInfo {
+	template: HandlebarsTemplateDelegate;
+	from: string;
+	subject: string;
+}
+
+function loadMailConfig(): MailConfig | null {
 	try {
 		const configPath = path.resolve("config.json");
 		if (!fs.existsSync(configPath)) {
@@ -37,23 +42,84 @@ const loadMailConfig = (): MailConfig | null => {
 		console.error("Error parsing configuration file:", error);
 		return null;
 	}
-};
+}
 
 const mailConfig = loadMailConfig();
 
-const templatePath = path.resolve(
-	"phishing_template/employee_survey_template.hbs"
-);
-const templateSource = fs.readFileSync(templatePath, "utf-8");
-const template = handlebars.compile(templateSource);
+function loadTemplate(templateName: string): TemplateInfo | null {
+	try {
+		const templatePath = path.resolve(`phishing_template/${templateName}.hbs`);
+		const templateSource = fs.readFileSync(templatePath, "utf-8");
+		const template = handlebars.compile(templateSource);
 
-export async function sendEmail(
+		let from = "";
+		let subject = "";
+
+		switch (templateName) {
+			case "docs_sharing_template":
+				from = `Google Docs <${mailConfig?.auth.user}>`;
+				subject = "Document shared with you";
+				break;
+			case "employee_survey_template":
+				from = `Human Resources Department <${mailConfig?.auth.user}>`;
+				subject = "We Value Your Feedback!";
+				break;
+			case "gift_card_template":
+				from = `Human Resources Department <${mailConfig?.auth.user}>`;
+				subject = "🎉 You've Been Selected!";
+				break;
+			case "hr_policy_template":
+				from = `Human Resources Department <${mailConfig?.auth.user}>`;
+				subject = "Important: Action Required - HR Policy Update";
+				break;
+			case "login_attempt_template":
+				from = `IT Security Team <${mailConfig?.auth.user}>`;
+				subject = "Unusual Login Attempt Detected";
+				break;
+			case "password_expiry_template":
+				from = `IT Security Team <${mailConfig?.auth.user}>`;
+				subject = "Password Expiry Notification";
+				break;
+			default:
+				console.log(`Unknown template: ${templateName}`);
+				return null;
+		}
+
+		return {
+			template,
+			from,
+			subject,
+		};
+	} catch (error) {
+		console.error("Error loading template:", error);
+		return null;
+	}
+}
+
+function loadTemplates(): Record<string, TemplateInfo> {
+	const templatesDir = path.resolve("phishing_template");
+	const templateFiles = fs.readdirSync(templatesDir);
+	const templates: Record<string, TemplateInfo> = {};
+	templateFiles.forEach((file) => {
+		if (file.endsWith(".hbs")) {
+			const templateName = file.replace(".hbs", "");
+			const templateInfo = loadTemplate(templateName);
+			if (templateInfo) {
+				templates[templateName] = templateInfo;
+			}
+		}
+	});
+	console.log("Loaded templates:", Object.keys(templates));
+	return templates;
+}
+
+const templates = loadTemplates();
+
+export async function sendPhishingEmail(
 	email: string,
 	name: string,
-	from: string,
 	company: string,
-	link: string,
-	subject: string
+	link: string
 ) {
 	if (!mailConfig) {
 		throw new Error(
@@ -85,11 +151,17 @@ export async function sendEmail(
 		link,
 	};
 
+	// Randomly select a template
+	const templateNames = Object.keys(templates);
+	const randomIndex = Math.floor(Math.random() * templateNames.length);
+	const templateName = templateNames[randomIndex];
+	const templateInfo = templates[templateName];
+
 	const mailOptions = {
-		from,
+		from: templateInfo?.from,
 		to: email,
-		subject,
-		html: template(templateData),
+		subject: templateInfo?.subject,
+		html: templateInfo?.template(templateData),
 	};
 
 	try {

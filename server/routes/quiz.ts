@@ -37,7 +37,7 @@ async function fetchQuizList(): Promise<Record<string, ItemInfo>> {
 			if (entry.isFile && entry.name.endsWith(".json")) {
 				const id = entry.name.replace(".json", "");
 				const quiz = await fetchQuiz(id);
-				const quizInfo: ItemInfo = quiz.info;
+				const quizInfo = quiz.info;
 				quizInfoCache[id] = quizInfo;
 			}
 		}

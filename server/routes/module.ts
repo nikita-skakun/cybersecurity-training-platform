@@ -32,7 +32,7 @@ async function fetchModuleList(): Promise<Record<string, ItemInfo>> {
 			if (entry.isFile && entry.name.endsWith(".json")) {
 				const id = entry.name.replace(".json", "");
 				const moduleData = await fetchModule(id);
-				const moduleInfo: ItemInfo = moduleData.info;
+				const moduleInfo = moduleData.info;
 				moduleInfoCache[id] = moduleInfo;
 			}
 		}
