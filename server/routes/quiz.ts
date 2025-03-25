@@ -2,15 +2,15 @@ import { Router } from "jsr:@oak/oak";
 import { Quiz, UserAnswers } from "@shared/types/quiz.ts";
 import { ItemInfo } from "@shared/types/item.ts";
 import { User } from "@shared/types/user.ts";
-import { verifyToken } from "../util/jwt_utils.ts";
-import { getJson } from "../util/fs_utils.ts";
+import { verifyToken } from "@server/util/jwt_utils.ts";
+import { getJson } from "@server/util/fs_utils.ts";
 import {
 	getQuizResult,
 	listCompletedRequirementsByType,
 	listUnlockedRequirements,
 	markRequirementCompleted,
 	storeQuizResult,
-} from "../util/db_utils.ts";
+} from "@server/util/db_utils.ts";
 
 const quizInfoCache: Record<string, ItemInfo> = {};
 const quizCache: Record<string, Quiz> = {};

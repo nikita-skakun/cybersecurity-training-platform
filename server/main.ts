@@ -1,10 +1,10 @@
 import { Application } from "jsr:@oak/oak";
 import { oakCors } from "@tajpouria/cors";
-import routeStaticFilesFrom from "./util/static_utils.ts";
-import loginRouter from "./routes/login.ts";
-import userRouter from "./routes/user.ts";
-import quizRouter from "./routes/quiz.ts";
-import moduleRouter from "./routes/module.ts";
+import routeStaticFilesFrom from "@server/util/static_utils.ts";
+import loginRouter from "@server/routes/login.ts";
+import userRouter from "@server/routes/user.ts";
+import quizRouter from "@server/routes/quiz.ts";
+import moduleRouter from "@server/routes/module.ts";
 
 const app = new Application();
 

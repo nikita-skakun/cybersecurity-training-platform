@@ -1,7 +1,7 @@
 import { Router } from "jsr:@oak/oak";
-import { verifyToken } from "../util/jwt_utils.ts";
+import { verifyToken } from "@server/util/jwt_utils.ts";
 import { AdminUserInfo, User } from "@shared/types/user.ts";
-import { domainConfigs } from "../util/ldap.ts";
+import { domainConfigs } from "@server/util/ldap.ts";
 import { Client } from "ldapts";
 import {
 	findUserId,

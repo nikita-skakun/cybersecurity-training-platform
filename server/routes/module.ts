@@ -2,13 +2,13 @@ import { Router } from "jsr:@oak/oak";
 import { Module } from "@shared/types/module.ts";
 import { ItemInfo } from "@shared/types/item.ts";
 import { User } from "@shared/types/user.ts";
-import { verifyToken } from "../util/jwt_utils.ts";
-import { getJson } from "../util/fs_utils.ts";
+import { verifyToken } from "@server/util/jwt_utils.ts";
+import { getJson } from "@server/util/fs_utils.ts";
 import {
 	listCompletedRequirementsByType,
 	listUnlockedRequirements,
 	markRequirementCompleted,
-} from "../util/db_utils.ts";
+} from "@server/util/db_utils.ts";
 
 const moduleInfoCache: Record<string, ItemInfo> = {};
 const moduleCache: Record<string, Module> = {};

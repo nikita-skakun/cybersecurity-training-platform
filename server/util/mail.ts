@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs";
 import nodemailer from "nodemailer";
 import handlebars from "handlebars";
-import { createPhishingEmail } from "./db_utils.ts";
+import { createPhishingEmail } from "@server/util/db_utils.ts";
 
 export interface MailConfig {
 	host: string;

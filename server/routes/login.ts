@@ -1,10 +1,10 @@
 import { Router } from "jsr:@oak/oak";
 import { Client } from "npm:ldapts";
 import ldapEscape from "npm:ldap-escape";
-import { generateToken } from "../util/jwt_utils.ts";
+import { generateToken } from "@server/util/jwt_utils.ts";
 import { User } from "@shared/types/user.ts";
-import { findOrCreateUserId } from "../util/db_utils.ts";
-import { allowTestUser, domainConfigs } from "../util/ldap.ts";
+import { findOrCreateUserId } from "@server/util/db_utils.ts";
+import { allowTestUser, domainConfigs } from "@server/util/ldap.ts";
 
 const validateEmail = (username: string): void => {
 	const emailPattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -34,10 +34,11 @@ const extractFromEmail = (
 	return { username, baseDN };
 };
 
-const authenticateUser = async (
+export async function authenticateUser(
 	email: string,
-	password: string
-): Promise<User | null> => {
+	password: string,
+	testUserAllowed: boolean
+): Promise<User | null> {
 	let client: Client | null = null;
 	try {
 		validateEmail(email);
@@ -46,7 +47,7 @@ const authenticateUser = async (
 
 		let role = "user";
 
-		if (allowTestUser && email === "test@example.com" && password === "test") {
+		if (testUserAllowed && email === "test@example.com" && password === "test") {
 			const id = findOrCreateUserId(domain, username);
 			console.log("Test login activated for test@example.com");
 
@@ -120,7 +121,7 @@ const authenticateUser = async (
 	}
 
 	return null;
-};
+}
 
 const loginRouter = new Router();
 
@@ -146,7 +147,7 @@ loginRouter.post("/api/login", async (context) => {
 			return;
 		}
 
-		const loggedInUserInfo = await authenticateUser(email, password);
+		const loggedInUserInfo = await authenticateUser(email, password, allowTestUser);
 
 		if (loggedInUserInfo) {
 			const token = generateToken(loggedInUserInfo);
