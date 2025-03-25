@@ -8,7 +8,6 @@ Deno.test("Test user can login", async () => {
 
 	const user = await authenticateUser(email, password, true);
 
-	// Verify that a user object is returned
 	assertNotEquals(
 		user,
 		null,
@@ -16,11 +15,23 @@ Deno.test("Test user can login", async () => {
 	);
 
 	if (user) {
-		// Check expected properties for the test user
 		assertEquals(user.name, "Test User");
 		assertEquals(user.role, "user");
 		assertEquals(user.companyName, "Test Company");
 		assertEquals(user.username, "test");
 		assertEquals(user.domain, "example.com");
 	}
+});
+
+Deno.test("Test user cannot login with invalid credentials", async () => {
+	const email = "invalid@example.com";
+	const password = "wrong_password";
+
+	const user = await authenticateUser(email, password, true);
+
+	assertEquals(
+		user,
+		null,
+		"User should be null for invalid test credentials"
+	);
 });
