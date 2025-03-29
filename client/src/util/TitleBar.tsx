@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@shared/types/user.ts";
+import {
+	AppBar,
+	Toolbar,
+	Typography,
+	Button,
+	Tooltip,
+	Box,
+} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	const [countdown, setCountdown] = useState("");
 	const navigate = useNavigate();
 
-	// Countdown timer for session expiration
 	useEffect(() => {
 		const exp = user?.exp;
 		if (exp) {
@@ -42,24 +50,31 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	};
 
 	return (
-		<header className="header-bar">
-			<span onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-				Cybersecurity Training Platform
-			</span>
-			<div className="button-group">
-				<div className="tooltip-container">
-					<button type="button" onClick={() => navigate("/user")}>
-						<img src="/icons/profile_icon.svg" className="icon" />
-						{user?.name ?? "???"}
-					</button>
-					<span className="tooltip-text">
-						Session expires in: {countdown ?? "???"}
-					</span>
-				</div>
-				<button type="button" onClick={handleLogout} className="red-button">
-					Logout
-				</button>
-			</div>
-		</header>
+		<AppBar position="static" sx={{ mb: 2, bgcolor: "#212121" }}>
+			<Toolbar>
+				<Typography
+					variant="h6"
+					sx={{ flexGrow: 1, cursor: "pointer", color: "white" }}
+					onClick={() => navigate("/")}
+				>
+					Cybersecurity Training Platform
+				</Typography>
+				<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+					<Tooltip title={`Session expires in: ${countdown ?? "???"}`} arrow>
+						<Button
+							variant="contained"
+							startIcon={<AccountCircleIcon />}
+							onClick={() => navigate("/user")}
+							sx={{ color: "white" }}
+						>
+							{user?.name ?? "???"}
+						</Button>
+					</Tooltip>
+					<Button color="error" variant="contained" onClick={handleLogout}>
+						Logout
+					</Button>
+				</Box>
+			</Toolbar>
+		</AppBar>
 	);
 };

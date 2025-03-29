@@ -1,6 +1,6 @@
 import { AdminUserInfo } from "@shared/types/user.ts";
 import UserCard from "./UserCard.tsx";
-import "./UserCardContainer.css";
+import { Grid } from "@mui/material";
 
 interface UserCardContainerProps {
 	users: AdminUserInfo[];
@@ -10,15 +10,20 @@ interface UserCardContainerProps {
 
 export default function UserCardContainer(props: UserCardContainerProps) {
 	return (
-		<div className="user-card-container">
+		<Grid container spacing={2}>
 			{props.users.map((user) => (
-				<UserCard
-					key={user.username}
-					user={user}
-					quizCount={props.quizCount}
-					moduleCount={props.moduleCount}
-				/>
+				<Grid
+					size={{ xs: 12, sm: 6 }}
+					key={user.id}
+					sx={{ display: "flex", justifyContent: "center" }}
+				>
+					<UserCard
+						user={user}
+						quizCount={props.quizCount}
+						moduleCount={props.moduleCount}
+					/>
+				</Grid>
 			))}
-		</div>
+		</Grid>
 	);
 }

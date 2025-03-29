@@ -6,7 +6,7 @@ import { AdminUserInfo } from "@shared/types/user.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import CardContainer from "../util/CardContainer.tsx";
 import UserCardContainer from "../util/UserCardContainer.tsx";
-import "./Home.css";
+import { Box, Button, ButtonGroup, Container, Typography } from "@mui/material";
 
 export default function HomePage() {
 	const user = useUserData();
@@ -177,58 +177,75 @@ export default function HomePage() {
 	];
 
 	return (
-		<div className="page-container">
+		<>
 			<TitleBar user={user} />
-			<main className="fullsize-container">
-				<h1>Welcome Home!</h1>
+			<Container maxWidth="xl">
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						textAlign: "center",
+						mt: 4,
+					}}
+				>
+					<Typography variant="h4" gutterBottom>
+						Welcome Home!
+					</Typography>
 
-				{user?.role === "user" ? (
-					<>
-						<div className="tab-buttons">
-							<button
-								type="button"
-								className={activeTab === "available" ? "active" : ""}
-								onClick={() => setActiveTab("available")}
-							>
-								Available
-							</button>
-							<button
-								type="button"
-								className={activeTab === "completed" ? "active" : ""}
-								onClick={() => setActiveTab("completed")}
-							>
-								Completed
-							</button>
-						</div>
+					{user?.role === "user" ? (
+						<>
+							<ButtonGroup variant="contained" sx={{ mb: 3 }}>
+								<Button
+									variant={activeTab === "available" ? "contained" : "outlined"}
+									onClick={() => setActiveTab("available")}
+								>
+									Available
+								</Button>
+								<Button
+									variant={activeTab === "completed" ? "contained" : "outlined"}
+									onClick={() => setActiveTab("completed")}
+								>
+									Completed
+								</Button>
+							</ButtonGroup>
 
-						{activeTab === "available" ? (
-							availableItems.length > 0 ? (
-								<CardContainer items={availableItems} />
+							{activeTab === "available" ? (
+								availableItems.length > 0 ? (
+									<CardContainer items={availableItems} />
+								) : (
+									<Typography variant="body1" color="textSecondary">
+										No available items yet.
+									</Typography>
+								)
+							) : completedItems.length > 0 ? (
+								<CardContainer items={completedItems} />
 							) : (
-								<p className="empty-message">No available items yet.</p>
-							)
-						) : completedItems.length > 0 ? (
-							<CardContainer items={completedItems} />
-						) : (
-							<p className="empty-message">No completed items yet.</p>
-						)}
-					</>
-				) : (
-					// Render admin view as long thin user cards
-					<div className="admin-user-section">
-						<h2>All Users - {user?.companyName ?? "Company"}</h2>
-						{userList.length > 0 ? (
-							<UserCardContainer
-								users={userList}
-								quizCount={quizCount}
-								moduleCount={moduleCount}
-							/>
-						) : (
-							<p className="empty-message">No users found.</p>
-						)}
-					</div>
-				)}
-			</main>
-		</div>
+								<Typography variant="body1" color="textSecondary">
+									No completed items yet.
+								</Typography>
+							)}
+						</>
+					) : (
+						<>
+							<Typography variant="h5">
+								All Users - {user?.companyName ?? "Company"}
+							</Typography>
+							{userList.length > 0 ? (
+								<UserCardContainer
+									users={userList}
+									quizCount={quizCount}
+									moduleCount={moduleCount}
+								/>
+							) : (
+								<Typography variant="body1" color="textSecondary">
+									No users found.
+								</Typography>
+							)}
+						</>
+					)}
+				</Box>
+			</Container>
+		</>
 	);
 }

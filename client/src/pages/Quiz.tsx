@@ -3,7 +3,25 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { Quiz } from "@shared/types/quiz.ts";
-import "./Quiz.css";
+import {
+	Container,
+	Paper,
+	Box,
+	Typography,
+	Button,
+	CircularProgress,
+	LinearProgress,
+	Radio,
+	RadioGroup,
+	FormControlLabel,
+	FormControl,
+	Checkbox,
+	FormGroup,
+} from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import HomeIcon from "@mui/icons-material/Home";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 export default function QuizPage() {
 	const { id } = useParams<{ id: string }>();
@@ -21,7 +39,19 @@ export default function QuizPage() {
 			.catch((err) => console.error("Failed to load quiz:", err));
 	}, [id]);
 
-	if (!quiz) return <div>Loading...</div>;
+	if (!quiz)
+		return (
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					height: "100vh",
+				}}
+			>
+				<CircularProgress />
+			</Box>
+		);
 
 	const currentQuestion = quiz.questions[currentQuestionIndex];
 
@@ -63,98 +93,140 @@ export default function QuizPage() {
 	};
 
 	let isAnswerSelected = answers[currentQuestionIndex] !== undefined;
-	if (isAnswerSelected && Array.isArray(answers[currentQuestionIndex]))
+	if (isAnswerSelected && Array.isArray(answers[currentQuestionIndex])) {
 		isAnswerSelected = (answers[currentQuestionIndex] as string[]).length > 0;
+	}
 
 	let progress = (currentQuestionIndex / quiz.questions.length) * 100;
 	if (score !== null) progress = 100;
 
 	return (
-		<div className="page-container">
+		<>
 			<TitleBar user={user} />
-			<main className="shrunk-container">
-				<div className="progress-bar-container">
-					<div className="progress-bar" style={{ width: `${progress}%` }}></div>
-				</div>
-				<h1 style={{ textAlign: "center" }}>{quiz.info.title}</h1>
+			<Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+				<Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+					{/* Progress Bar */}
+					<Box sx={{ width: "100%", mb: 3 }}>
+						<LinearProgress variant="determinate" value={progress} />
+					</Box>
 
-				{score !== null ? (
-					<>
-						<h2>Quiz Completed!</h2>
-						<p>
-							Your Score: <strong>{score}%</strong>
-						</p>
-						<div className="button-group center margins-all-but-down">
-							<button
-								type="button"
-								onClick={() => globalThis.location.reload()}
+					<Typography variant="h4" align="center" gutterBottom>
+						{quiz.info.title}
+					</Typography>
+
+					{score !== null ? (
+						<Box sx={{ textAlign: "center" }}>
+							<Typography variant="h5" gutterBottom>
+								Quiz Completed!
+							</Typography>
+							<Typography variant="body1" gutterBottom>
+								Your Score: <strong>{score}%</strong>
+							</Typography>
+							<Box
+								sx={{
+									display: "flex",
+									justifyContent: "center",
+									gap: 2,
+									mt: 3,
+								}}
 							>
-								<img src="/icons/reload_icon.svg" className="icon" />
-								Try Again
-							</button>
-							<button type="button" onClick={() => navigate("/")}>
-								<img src="/icons/back_icon.svg" className="icon" />
-								Home
-							</button>
-						</div>
-					</>
-				) : (
-					<>
-						<h2>{currentQuestion.question}</h2>
-						<div className="options-container">
-							{currentQuestion.options.map((option: string) => (
-								<label key={option}>
-									<input
-										type={
-											currentQuestion.type === "single" ? "radio" : "checkbox"
-										}
-										name={`question-${currentQuestionIndex}`}
-										value={option}
-										checked={
-											currentQuestion.type === "single"
-												? answers[currentQuestionIndex] === option
-												: (answers[currentQuestionIndex] as string[])?.includes(
-														option
-												  )
-										}
-										onChange={() => handleAnswerChange(option)}
-									/>
-									{option}
-								</label>
-							))}
-						</div>
-						<div className="button-group center margins-all-but-down">
-							<button
-								type="button"
-								onClick={handleBack}
-								disabled={currentQuestionIndex === 0}
-							>
-								&lt;
-							</button>
-							<button
-								type="button"
-								onClick={handleNext}
-								disabled={
-									!isAnswerSelected ||
-									currentQuestionIndex === quiz.questions.length - 1
-								}
-							>
-								&gt;
-							</button>
-							<button
-								type="button"
-								onClick={handleSubmit}
-								disabled={
-									!isAnswerSelected ||
-									currentQuestionIndex !== quiz.questions.length - 1
-								}
-							>
-								Submit
-							</button>
-						</div>
-					</>
-				)}
-			</main>
-		</div>
+								<Button
+									variant="outlined"
+									color="primary"
+									onClick={() => globalThis.location.reload()}
+									startIcon={<ReplayIcon />}
+								>
+									Try Again
+								</Button>
+								<Button
+									variant="contained"
+									color="primary"
+									onClick={() => navigate("/")}
+									startIcon={<HomeIcon />}
+								>
+									Home
+								</Button>
+							</Box>
+						</Box>
+					) : (
+						<>
+							<Typography variant="h5" align="center" gutterBottom>
+								{currentQuestion.question}
+							</Typography>
+							<Box sx={{ mt: 3, mb: 3 }}>
+								{currentQuestion.type === "single" ? (
+									<FormControl component="fieldset">
+										<RadioGroup
+											name={`question-${currentQuestionIndex}`}
+											value={answers[currentQuestionIndex] || ""}
+											onChange={(e) => handleAnswerChange(e.target.value)}
+										>
+											{currentQuestion.options.map((option: string) => (
+												<FormControlLabel
+													key={option}
+													value={option}
+													control={<Radio />}
+													label={option}
+												/>
+											))}
+										</RadioGroup>
+									</FormControl>
+								) : (
+									<FormControl component="fieldset">
+										<FormGroup>
+											{currentQuestion.options.map((option: string) => (
+												<FormControlLabel
+													key={option}
+													control={
+														<Checkbox
+															checked={
+																(
+																	answers[currentQuestionIndex] as string[]
+																)?.includes(option) || false
+															}
+															onChange={() => handleAnswerChange(option)}
+														/>
+													}
+													label={option}
+												/>
+											))}
+										</FormGroup>
+									</FormControl>
+								)}
+							</Box>
+							<Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+								<Button
+									variant="contained"
+									onClick={handleBack}
+									disabled={currentQuestionIndex === 0}
+									startIcon={<ChevronLeftIcon />}
+								>
+									Previous
+								</Button>
+								{currentQuestionIndex < quiz.questions.length - 1 ? (
+									<Button
+										variant="contained"
+										onClick={handleNext}
+										disabled={!isAnswerSelected}
+										endIcon={<ChevronRightIcon />}
+									>
+										Next
+									</Button>
+								) : (
+									<Button
+										variant="contained"
+										onClick={handleSubmit}
+										disabled={!isAnswerSelected}
+										endIcon={<ChevronRightIcon />}
+									>
+										Submit
+									</Button>
+								)}
+							</Box>
+						</>
+					)}
+				</Paper>
+			</Container>
+		</>
 	);
 }

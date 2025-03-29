@@ -4,7 +4,19 @@ import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { Module, Page } from "@shared/types/module.ts";
 import ReactMarkdown from "react-markdown";
-import "./Module.css";
+import {
+	Box,
+	Button,
+	CircularProgress,
+	Container,
+	LinearProgress,
+	Paper,
+	Typography,
+} from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import HomeIcon from "@mui/icons-material/Home";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 export default function ModulePage() {
 	const { id } = useParams<{ id: string }>();
@@ -22,7 +34,20 @@ export default function ModulePage() {
 			.catch((err) => console.error("Failed to load module:", err));
 	}, [id]);
 
-	if (!module) return <div>Loading module...</div>;
+	if (!module) {
+		return (
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					height: "100vh",
+				}}
+			>
+				<CircularProgress />
+			</div>
+		);
+	}
 
 	const handleNext = () => {
 		if (currentPageIndex < module.pages.length - 1) {
@@ -49,86 +74,136 @@ export default function ModulePage() {
 	if (completed) progress = 100;
 
 	return (
-		<div className="page-container">
+		<>
 			<TitleBar user={user} />
-			<main className="fullsize-container">
-				<div className="progress-bar-container">
-					<div className="progress-bar" style={{ width: `${progress}%` }}></div>
-				</div>
+			<Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+				<Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							textAlign: "center",
+						}}
+					>
+						{/* Progress Bar */}
+						<Box sx={{ width: "100%", mb: 3 }}>
+							<LinearProgress variant="determinate" value={progress} />
+						</Box>
 
-				{completed ? (
-					<>
-						<h1>{module.info.title}</h1>
-						<h2>Module Completed!</h2>
-						<p>Congratulations! You can now attempt to complete the relevant quiz or another module from home screen.</p>
-						<div className="button-group center margins-all-but-down">
-							<button
-								type="button"
-								onClick={() => globalThis.location.reload()}
-							>
-								<img
-									src="/icons/reload_icon.svg"
-									className="icon"
-									alt="Reload"
-								/>
-								Try Again
-							</button>
-							<button type="button" onClick={() => navigate("/")}>
-								<img src="/icons/back_icon.svg" className="icon" alt="Back" />
-								Home
-							</button>
-						</div>
-					</>
-				) : (
-					<>
-						<h1>{module.info.title}</h1>
-						<h2>{currentPage.title}</h2>
-						{currentPage.content && (
-							<div className="center">
-								<div className="module-text">
-									<ReactMarkdown>{currentPage.content}</ReactMarkdown>
-								</div>
-							</div>
+						{completed ? (
+							<>
+								<Typography variant="h4" gutterBottom>
+									{module.info.title}
+								</Typography>
+								<Typography variant="h5" gutterBottom>
+									Module Completed!
+								</Typography>
+								<Typography variant="body1" sx={{ mb: 3 }}>
+									Congratulations! You can now attempt the relevant quiz or
+									another module from the home screen.
+								</Typography>
+								<Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+									<Button
+										variant="outlined"
+										color="primary"
+										onClick={() => globalThis.location.reload()}
+										startIcon={<ReplayIcon />}
+									>
+										Try Again
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										onClick={() => navigate("/")}
+										startIcon={<HomeIcon />}
+									>
+										Home
+									</Button>
+								</Box>
+							</>
+						) : (
+							<>
+								<Typography variant="h4" gutterBottom>
+									{module.info.title}
+								</Typography>
+								<Typography variant="h5" gutterBottom>
+									{currentPage.title}
+								</Typography>
+								{currentPage.content && (
+									<Box sx={{ mb: 3, textAlign: "left", width: "100%" }} className="md-text">
+										<ReactMarkdown>{currentPage.content}</ReactMarkdown>
+									</Box>
+								)}
+								{currentPage.videos && (
+									<Box
+										sx={{
+											display: "flex",
+											justifyContent: "center",
+											gap: 2,
+											mb: 3,
+											flexWrap: "wrap",
+										}}
+									>
+										{currentPage.videos.map((video, idx) => (
+											<video
+												key={idx}
+												controls
+												style={{ maxWidth: "100%", borderRadius: 8 }}
+											>
+												<source src={video} type="video/mp4" />
+												Your browser does not support the video tag.
+											</video>
+										))}
+									</Box>
+								)}
+								{currentPage.images && (
+									<Box
+										sx={{
+											display: "flex",
+											justifyContent: "center",
+											gap: 2,
+											mb: 3,
+											flexWrap: "wrap",
+										}}
+									>
+										{currentPage.images.map((img, idx) => (
+											<img
+												key={idx}
+												src={img}
+												alt={`Media ${idx}`}
+												style={{ maxWidth: "100%", borderRadius: 8 }}
+											/>
+										))}
+									</Box>
+								)}
+								<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+									<Button
+										variant="contained"
+										onClick={handleBack}
+										startIcon={<ChevronLeftIcon />}
+									>
+										{currentPageIndex === 0 ? "Home" : "Back"}
+									</Button>
+									<Button
+										variant="contained"
+										onClick={
+											currentPageIndex === module.pages.length - 1
+												? handleComplete
+												: handleNext
+										}
+										endIcon={<ChevronRightIcon />}
+									>
+										{currentPageIndex === module.pages.length - 1
+											? "Finish"
+											: "Next"}
+									</Button>
+								</Box>
+							</>
 						)}
-						{currentPage.videos && (
-							<div className="image-group center margins-all-but-down">
-								{currentPage.videos.map((video, idx) => (
-									<video key={idx} controls className="module-video">
-										<source src={video} type="video/mp4" />
-										Your browser does not support the video tag.
-									</video>
-								))}
-							</div>
-						)}
-						{currentPage.images && (
-							<div className="image-group center margins-all-but-down">
-								{currentPage.images.map((img, idx) => (
-									<img
-										key={idx}
-										src={img}
-										className="module-image"
-										alt={`Media ${idx}`}
-									/>
-								))}
-							</div>
-						)}
-						<div className="button-group center margins-all-but-down">
-							<button type="button" onClick={handleBack}>
-								&lt; {currentPageIndex === 0 ? "Home" : "Back"}
-							</button>
-							{currentPageIndex === module.pages.length - 1 ? (
-								<button type="button" onClick={handleComplete}>
-									Finish &gt;
-								</button>
-							) : (
-								<button type="button" onClick={handleNext}>
-									Next &gt;
-								</button>
-							)}
-						</div>
-					</>
-				)}
-			</main>
-		</div>
+					</Box>
+				</Paper>
+			</Container>
+		</>
 	);
 }

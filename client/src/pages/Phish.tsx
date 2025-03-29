@@ -1,5 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { Container, Box, Typography, Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function PhishPage() {
 	const { uuid } = useParams<{ uuid: string }>();
@@ -16,30 +18,28 @@ export default function PhishPage() {
 	}, [uuid]);
 
 	return (
-		<div className="page-container">
-			<main className="shrunk-container">
-				<div className="center">
-					<h1>You Failed the Phishing Test</h1>
-				</div>
-				<div className="center">
-					<p className="warning-text">
-						You have been caught in our phishing simulation! This exercise is
-						designed to help you recognize phishing attempts and improve your
-						cybersecurity awareness. Remember to always verify links and sender
-						information before clicking or providing sensitive information.
-					</p>
-				</div>
-				<div className="center">
-					<button
-						type="button"
-						className="margins-all-but-down"
-						onClick={() => navigate("/")}
-					>
-						<img src="/icons/back_icon.svg" className="icon" alt="Back" />
-						Landing Page
-					</button>
-				</div>
-			</main>
-		</div>
+		<Container maxWidth="sm" sx={{ mt: 4, textAlign: "center" }}>
+			<Box sx={{ mb: 3 }}>
+				<Typography variant="h3" component="h1" gutterBottom>
+					You Failed the Phishing Test
+				</Typography>
+			</Box>
+			<Box sx={{ mb: 4 }}>
+				<Typography variant="body1" color="error">
+					You have been caught in our phishing simulation! This exercise is
+					designed to help you recognize phishing attempts and improve your
+					cybersecurity awareness. Remember to always verify links and sender
+					information before clicking or providing sensitive information.
+				</Typography>
+			</Box>
+			<Button
+				variant="contained"
+				color="primary"
+				startIcon={<ArrowBackIcon />}
+				onClick={() => navigate("/")}
+			>
+				Landing Page
+			</Button>
+		</Container>
 	);
 }

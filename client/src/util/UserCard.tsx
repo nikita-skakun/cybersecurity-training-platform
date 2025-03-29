@@ -1,6 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import { AdminUserInfo } from "@shared/types/user.ts";
-import "./UserCard.css";
+import {
+	Box,
+	Typography,
+	Button,
+	Card,
+	CardContent,
+	CardActions,
+	Tooltip,
+} from "@mui/material";
 
 interface UserCardProps {
 	user: AdminUserInfo;
@@ -13,16 +20,8 @@ export default function UserCard({
 	quizCount,
 	moduleCount,
 }: UserCardProps) {
-	const navigate = useNavigate();
-
-	const handleClick = () => {
-		// TODO: Navigate to user details page
-		// navigate(`/admin/users/${user.id}`);
-	};
-
 	const handleSendPhishingEmail = (e: React.MouseEvent) => {
 		e.stopPropagation();
-
 		if (user.id < 0) {
 			alert("User never logged in");
 			return;
@@ -53,96 +52,165 @@ export default function UserCard({
 			});
 	};
 
+	// Helper function to choose a color based on thresholds
+	const getColor = (value: number, thresholds: [number, number]): string => {
+		if (value < thresholds[0]) return "#f44336"; // red
+		if (value >= thresholds[1]) return "#4caf50"; // green
+		return "#ff9800"; // yellow/orange
+	};
+
+	const avgScore = user.avgScore ?? 0;
+	const avgScoreColor = getColor(avgScore, [50, 90]);
+
+	const compQuizRatio = quizCount > 0 ? (user.compQuizzes ?? 0) / quizCount : 0;
+	const compQuizColor = getColor(compQuizRatio, [0.5, 0.9]);
+
+	const compModuleRatio =
+		moduleCount > 0 ? (user.compModules ?? 0) / moduleCount : 0;
+	const compModuleColor = getColor(compModuleRatio, [0.5, 0.9]);
+
+	const phishingColor = (user.phishingClicked ?? 0) > 0 ? "#f44336" : "#4caf50";
+
 	return (
-		<div className="user-card" onClick={handleClick}>
-			<div className="user-info">
-				<h2 className="user-name">{user.name}</h2>
-				<p className="user-username">@{user.username}</p>
-			</div>
+		<Card sx={{ width: 360, m: 1 }}>
+			<CardContent>
+				<Typography variant="h6">{user.name}</Typography>
+				<Typography variant="body2" color="text.secondary" gutterBottom>
+					@{user.username}
+				</Typography>
 
-			{user.id < 0 ? (
-				<p className="red-box">User never logged in</p>
-			) : (
-				<>
-					<div className="tooltip-container">
-						<p>
-							{"🎯: "}
-							<span
-								className={
-									(user.avgScore ?? 0) < 50
-										? "red-box"
-										: (user.avgScore ?? 0) >= 90
-										? "green-box"
-										: "yellow-box"
-								}
-								style={{ display: "inline-block" }}
+				{user.id < 0 ? (
+					<Box
+						sx={{
+							mt: 2,
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							minHeight: 135,
+						}}
+					>
+						<Typography
+							variant="body1"
+							sx={{ color: "#f44336", fontSize: "1.1rem" }}
+							align="center"
+						>
+							User never logged in
+						</Typography>
+					</Box>
+				) : (
+					<Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1 }}>
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Typography variant="body2">Average quiz score</Typography>
+							<Typography
+								variant="body2"
+								sx={{
+									backgroundColor: avgScoreColor,
+									color: "#fff",
+									px: 1,
+									py: 0.5,
+									borderRadius: 1,
+									minWidth: 50,
+									textAlign: "center",
+								}}
 							>
-								{(user.avgScore ?? 0).toFixed(2)}%
-							</span>
-						</p>
-						<span className="tooltip-text">Average quiz score</span>
-					</div>
-					<div className="tooltip-container">
-						<p>
-							{"📝: "}
-							<span
-								className={
-									(user.compQuizzes ?? 0) / quizCount < 0.5
-										? "red-box"
-										: (user.compQuizzes ?? 0) / quizCount >= 0.9
-										? "green-box"
-										: "yellow-box"
-								}
-								style={{ display: "inline-block" }}
-							>
-								{user.compQuizzes} / {quizCount}
-							</span>
-						</p>
-						<span className="tooltip-text">Completed quizzes</span>
-					</div>
-					<div className="tooltip-container">
-						<p>
-							{"📖: "}
-							<span
-								className={
-									(user.compModules ?? 0) / moduleCount < 0.5
-										? "red-box"
-										: (user.compModules ?? 0) / moduleCount >= 0.9
-										? "green-box"
-										: "yellow-box"
-								}
-								style={{ display: "inline-block" }}
-							>
-								{user.compModules} / {moduleCount}
-							</span>
-						</p>
-						<span className="tooltip-text">Completed training modules</span>
-					</div>
-					<div className="tooltip-container">
-						<p>
-							{"🎣: "}
-							<span
-								className={
-									(user.phishingClicked ?? 0) > 0 ? "red-box" : "green-box"
-								}
-								style={{ display: "inline-block" }}
-							>
-								{user.phishingClicked} / {user.phishingSent}
-							</span>
-						</p>
-						<span className="tooltip-text">Phishing emails clicked</span>
-					</div>
-				</>
-			)}
-
-			<button
-				type="button"
-				className="email-button"
-				onClick={handleSendPhishingEmail}
-				disabled={user.id < 0}
-			>
-				Phish
-			</button>
-		</div>
+								{avgScore.toFixed(0)}%
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Typography variant="body2">Completed quizzes</Typography>
+							<Tooltip title="Completed quizzes / Total quizzes" arrow>
+								<Typography
+									variant="body2"
+									sx={{
+										backgroundColor: compQuizColor,
+										color: "#fff",
+										px: 1,
+										py: 0.5,
+										borderRadius: 1,
+										minWidth: 50,
+										textAlign: "center",
+									}}
+								>
+									{user.compQuizzes} / {quizCount}
+								</Typography>
+							</Tooltip>
+						</Box>
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Typography variant="body2">Completed modules</Typography>
+							<Tooltip title="Completed modules / Total modules" arrow>
+								<Typography
+									variant="body2"
+									sx={{
+										backgroundColor: compModuleColor,
+										color: "#fff",
+										px: 1,
+										py: 0.5,
+										borderRadius: 1,
+										minWidth: 50,
+										textAlign: "center",
+									}}
+								>
+									{user.compModules} / {moduleCount}
+								</Typography>
+							</Tooltip>
+						</Box>
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Typography variant="body2">Phishing emails clicked</Typography>
+							<Tooltip title="Clicked emails / Sent emails" arrow>
+								<Typography
+									variant="body2"
+									sx={{
+										backgroundColor: phishingColor,
+										color: "#fff",
+										px: 1,
+										py: 0.5,
+										borderRadius: 1,
+										minWidth: 50,
+										textAlign: "center",
+									}}
+								>
+									{user.phishingClicked} / {user.phishingSent}
+								</Typography>
+							</Tooltip>
+						</Box>
+					</Box>
+				)}
+			</CardContent>
+			<CardActions>
+				<Button
+					size="small"
+					variant="contained"
+					onClick={handleSendPhishingEmail}
+					disabled={user.id < 0}
+					fullWidth
+				>
+					Phish
+				</Button>
+			</CardActions>
+		</Card>
 	);
 }
