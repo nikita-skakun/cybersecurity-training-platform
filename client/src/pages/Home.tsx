@@ -16,9 +16,16 @@ export default function HomePage() {
 	const [compQuizzes, setCompQuizzes] = useState<Record<string, ItemInfo>>({});
 	const [avlModules, setAvlModules] = useState<Record<string, ItemInfo>>({});
 	const [compModules, setCompModules] = useState<Record<string, ItemInfo>>({});
-	const [activeTab, setActiveTab] = useState<"available" | "completed">(
-		"available"
-	);
+	const [activeTab, setActiveTab] = useState<"available" | "completed">(() => {
+		const savedTab = localStorage.getItem("activeHomeTab");
+		return savedTab === "available" || savedTab === "completed"
+			? savedTab
+			: "available";
+	});
+
+	useEffect(() => {
+		localStorage.setItem("activeHomeTab", activeTab);
+	}, [activeTab]);
 	const [userList, setUserList] = useState<AdminUserInfo[]>([]);
 	const [quizCount, setQuizCount] = useState(0);
 	const [moduleCount, setModuleCount] = useState(0);
