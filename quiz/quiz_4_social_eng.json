@@ -1,6 +1,6 @@
 {
     "info": {
-        "title": "Social Engineering Awareness",
+        "title": "Social Engineering",
         "description": "This quiz tests your knowledge on social engineering tactics and how to defend against them.",
         "requirements": [
             "module_4_social_eng"
