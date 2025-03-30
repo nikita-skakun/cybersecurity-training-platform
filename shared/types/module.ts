@@ -1,7 +1,7 @@
 import { ItemInfo } from "@shared/types/item.ts";
 
 export interface Page {
-	title: string;
+	title?: string;
 	content?: string;
 	images?: string[];
 	videos?: string[];

@@ -27,7 +27,6 @@
             "content": "Adopt the following strategies to protect against social engineering attacks:\n- **Educate and Train**: Regularly conduct security awareness training to recognize and respond to social engineering tactics.\n- **Verify Identities**: Independently verify the identity of individuals requesting sensitive information or actions.\n- **Use Multi-Factor Authentication (MFA)**: Implement MFA to add an extra layer of security beyond just passwords.\n- **Establish Secret Verification Methods**: Create secret phrases or passwords with family and colleagues to confirm identities during suspicious interactions."
         },
         {
-            "title": "Overview",
             "videos": [
                 "/videos/social_eng.mkv"
             ]
