@@ -131,7 +131,7 @@ loginRouter.post("/api/login", async (context) => {
 			context.response.status = 400;
 			context.response.body = {
 				success: false,
-				message: "Request body is missing.",
+				message: "Request Body is Missing",
 			};
 			return;
 		}
@@ -142,7 +142,7 @@ loginRouter.post("/api/login", async (context) => {
 			context.response.status = 400;
 			context.response.body = {
 				success: false,
-				message: "Invalid request body format.",
+				message: "Invalid Request Body Format",
 			};
 			return;
 		}
@@ -160,18 +160,18 @@ loginRouter.post("/api/login", async (context) => {
 			context.response.status = 200;
 			context.response.body = {
 				success: true,
-				message: "Login successful!",
+				message: "Login Successful",
 			};
 		} else {
 			context.response.status = 401;
 			context.response.body = {
 				success: false,
-				message: "Invalid credentials.",
+				message: "Invalid Credentials",
 			};
 		}
 	} catch (error) {
 		context.response.status = 500;
-		context.response.body = { success: false, message: "Server error." };
+		context.response.body = { success: false, message: "Server Error" };
 		console.error(error);
 	}
 });
@@ -179,7 +179,7 @@ loginRouter.post("/api/login", async (context) => {
 loginRouter.post("/api/logout", (context) => {
 	context.cookies.delete("jwtCyberTraining");
 	context.response.status = 200;
-	context.response.body = { success: true, message: "Logged out successfully" };
+	context.response.body = { success: true, message: "Logged Out Successfully" };
 });
 
 export default loginRouter;

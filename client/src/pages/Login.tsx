@@ -6,17 +6,20 @@ import {
 	Typography,
 	TextField,
 	Button,
+	CircularProgress,
 } from "@mui/material";
 
 export default function LoginPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		setError("");
+		setLoading(true);
 
 		const response = await fetch("/api/login", {
 			method: "POST",
@@ -25,6 +28,7 @@ export default function LoginPage() {
 		});
 
 		const result = await response.json();
+		setLoading(false);
 
 		if (result.success) {
 			navigate("/");
@@ -43,14 +47,12 @@ export default function LoginPage() {
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				p: 2,
 			}}
 		>
 			<Paper
 				elevation={6}
 				sx={{
 					p: 4,
-					width: "100%",
 					maxWidth: 400,
 					bgcolor: "rgba(255, 255, 255, 0.7)",
 					backdropFilter: "blur(12px)",
@@ -59,9 +61,6 @@ export default function LoginPage() {
 			>
 				<Typography variant="h4" align="center" gutterBottom>
 					Cybersecurity Training Platform
-				</Typography>
-				<Typography variant="h5" align="center" gutterBottom>
-					Login
 				</Typography>
 				<Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
 					<TextField
@@ -87,7 +86,7 @@ export default function LoginPage() {
 							variant="body2"
 							color="error"
 							align="center"
-							sx={{ mt: 1 }}
+							sx={{ mt: 1, textTransform: "uppercase" }}
 						>
 							{error}
 						</Typography>
@@ -97,10 +96,15 @@ export default function LoginPage() {
 						variant="contained"
 						color="primary"
 						fullWidth
-						disabled={!email || !password}
-						sx={{ mt: 3 }}
+						disabled={!email || !password || loading}
+						sx={{
+							mt: 2,
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "center",
+						}}
 					>
-						Login
+						{loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
 					</Button>
 				</Box>
 			</Paper>
