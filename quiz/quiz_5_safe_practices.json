@@ -9,7 +9,7 @@
     },
     "questions": [
         {
-            "question": "Which of the following is a sign that a website is secure?",
+            "question": "Which is a sign that the connection to a website is secure?",
             "type": "single",
             "options": [
                 "It has a padlock icon and 'https://' in the address bar",
