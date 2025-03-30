@@ -41,11 +41,11 @@ export default function LoginPage() {
 	return (
 		<PageContainer sx={{ alignItems: "center" }}>
 			<Paper
-				elevation={6}
+				elevation={4}
 				sx={{
 					p: 4,
 					maxWidth: 400,
-					backdropFilter: "blur(6px)",
+					backdropFilter: "blur(40px)",
 					borderRadius: 4,
 				}}
 			>

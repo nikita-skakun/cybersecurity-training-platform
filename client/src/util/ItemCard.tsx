@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
+import { CardContent, Typography, Chip, Box, Paper } from "@mui/material";
 import { ItemInfo } from "@shared/types/item.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import theme from "./Theme.ts";
@@ -30,8 +30,9 @@ export default function ItemCard({
 			: theme.palette.warning.light;
 
 	return (
-		<Card
+		<Paper
 			onClick={handleClick}
+			elevation={2}
 			sx={{
 				cursor: "pointer",
 				boxShadow: 3,
@@ -135,6 +136,6 @@ export default function ItemCard({
 					</Typography>
 				</Box>
 			</CardContent>
-		</Card>
+		</Paper>
 	);
 }

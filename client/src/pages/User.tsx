@@ -20,7 +20,7 @@ export default function UserPage() {
 			<TitleBar user={user} />
 			<PageContainer sx={{ alignItems: "center" }}>
 				<Paper
-					elevation={6}
+					elevation={4}
 					sx={{
 						display: "flex",
 						flexDirection: "column",

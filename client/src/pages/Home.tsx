@@ -214,14 +214,22 @@ export default function HomePage() {
 								availableItems.length > 0 ? (
 									<CardContainer items={availableItems} />
 								) : (
-									<Typography variant="body1" color="textSecondary">
+									<Typography
+										variant="h5"
+										color="textSecondary"
+										sx={{ fontStyle: "italic", textShadow: "0 0 6px #000" }}
+									>
 										No available items yet.
 									</Typography>
 								)
 							) : completedItems.length > 0 ? (
 								<CardContainer items={completedItems} />
 							) : (
-								<Typography variant="body1" color="textSecondary">
+								<Typography
+									variant="h5"
+									color="textSecondary"
+									sx={{ fontStyle: "italic", textShadow: "0 0 6px #000" }}
+								>
 									No completed items yet.
 								</Typography>
 							)}

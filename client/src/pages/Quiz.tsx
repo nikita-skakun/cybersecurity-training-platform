@@ -107,7 +107,7 @@ export default function QuizPage() {
 			<TitleBar user={user} />
 			<PageContainer sx={{ alignItems: "center", height: "100vh" }}>
 				<Paper
-					elevation={6}
+					elevation={4}
 					sx={{
 						display: "flex",
 						flexDirection: "column",

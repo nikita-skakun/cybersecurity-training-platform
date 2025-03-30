@@ -21,7 +21,7 @@ export default function PhishPage() {
 	return (
 		<PageContainer sx={{ alignItems: "center" }}>
 			<Paper
-				elevation={6}
+				elevation={4}
 				sx={{
 					p: 4,
 					maxWidth: 800,
