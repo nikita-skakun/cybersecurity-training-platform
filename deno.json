@@ -32,6 +32,7 @@
     "react-markdown": "npm:react-markdown@^10.1.0",
     "react-router-dom": "npm:react-router-dom@^7.4.1",
     "react": "npm:react@^19.1.0",
+    "react-to-print": "npm:react-to-print@^3.0.5",
     "vite": "npm:vite@^6.2.3"
   },
   "nodeModulesDir": "auto",

@@ -3,6 +3,7 @@ import { CardContent, Typography, Chip, Box, Paper } from "@mui/material";
 import { ItemInfo } from "@shared/types/item.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import theme from "./Theme.ts";
+import DownloadIcon from "@mui/icons-material/Download";
 
 export interface ItemCardProps extends ItemInfo {
 	id: string;
@@ -136,6 +137,44 @@ export default function ItemCard({
 					</Typography>
 				</Box>
 			</CardContent>
+
+			{itemType === "quiz" && score !== null && (
+				<Box
+					sx={{
+						position: "absolute",
+						bottom: 8,
+						right: 8,
+						zIndex: 1,
+					}}
+				>
+					<Chip
+						icon={<DownloadIcon fontSize="small" />}
+						onClick={(e) => {
+							e.stopPropagation();
+							navigate(`/certificate/${id}`);
+						}}
+						sx={{
+							backgroundColor: "#2b2f31",
+							color: theme.palette.primary.light,
+							fontWeight: 700,
+							boxShadow: 1,
+							borderRadius: "50%",
+							height: 32,
+							width: 32,
+							"& .MuiChip-icon": {
+								margin: 0,
+								padding: 0,
+							},
+							"& .MuiChip-label": {
+								display: "none",
+							},
+							"&:hover": {
+								backgroundColor: "#3b4144",
+							},
+						}}
+					/>
+				</Box>
+			)}
 		</Paper>
 	);
 }

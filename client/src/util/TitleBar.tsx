@@ -55,7 +55,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 		<AppBar
 			position="absolute"
 			elevation={3}
-			sx={{ backdropFilter: "blur(6px)" }}
+			sx={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0, 0, 0, 0.6)", zIndex: 1000 }}
 		>
 			<Toolbar>
 				<Typography
@@ -81,6 +81,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 					>
 						<Button
 							variant="outlined"
+							sx={{ color: "white", borderColor: "white" }}
 							startIcon={<AccountCircleIcon />}
 							onClick={() => navigate("/user")}
 						>
