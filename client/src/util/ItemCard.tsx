@@ -33,7 +33,7 @@ export default function ItemCard({
 	return (
 		<Paper
 			onClick={handleClick}
-			elevation={2}
+			elevation={4}
 			sx={{
 				cursor: "pointer",
 				boxShadow: 3,

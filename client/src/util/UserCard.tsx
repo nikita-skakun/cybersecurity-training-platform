@@ -72,6 +72,7 @@ export default function UserCard({
 
 	return (
 		<Card
+			elevation={4}
 			sx={{
 				width: 360,
 				m: 1,

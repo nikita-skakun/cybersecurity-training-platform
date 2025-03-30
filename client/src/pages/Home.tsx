@@ -244,6 +244,7 @@ export default function HomePage() {
 					) : (
 						<>
 							<Card
+								elevation={4}
 								sx={{
 									mb: 2,
 									py: 2,
