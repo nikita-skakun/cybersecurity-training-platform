@@ -10,6 +10,8 @@ import {
 	Box,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import theme from "./Theme.ts";
 
 export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	const [countdown, setCountdown] = useState("");
@@ -50,29 +52,52 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	};
 
 	return (
-		<AppBar position="static" sx={{ mb: 2, bgcolor: "#212121" }}>
+		<AppBar
+			position="absolute"
+			elevation={3}
+			sx={{ backdropFilter: "blur(6px)" }}
+		>
 			<Toolbar>
 				<Typography
 					variant="h6"
-					sx={{ flexGrow: 1, cursor: "pointer", color: "white" }}
+					noWrap
+					sx={{
+						cursor: "pointer",
+						color: "white",
+						overflow: "hidden",
+						textOverflow: "ellipsis",
+						whiteSpace: "nowrap",
+					}}
 					onClick={() => navigate("/")}
 				>
 					Cybersecurity Training Platform
 				</Typography>
+				<Box sx={{ flexGrow: 1 }} />
 				<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-					<Tooltip title={`Session expires in: ${countdown ?? "???"}`} arrow>
+					<Tooltip
+						title={`Session expires in: ${countdown ?? "???"}`}
+						arrow
+						disableInteractive
+					>
 						<Button
-							variant="contained"
+							variant="outlined"
 							startIcon={<AccountCircleIcon />}
 							onClick={() => navigate("/user")}
-							sx={{ color: "white" }}
 						>
-							{user?.name ?? "???"}
+							<Typography noWrap sx={{ overflow: "hidden" }}>
+								{user?.name ?? "???"}
+							</Typography>
 						</Button>
 					</Tooltip>
-					<Button color="error" variant="contained" onClick={handleLogout}>
-						Logout
-					</Button>
+					<Tooltip title="Logout" arrow disableInteractive>
+						<Button
+							sx={{ backgroundColor: theme.palette.error.dark }}
+							variant="contained"
+							onClick={handleLogout}
+						>
+							<LogoutIcon />
+						</Button>
+					</Tooltip>
 				</Box>
 			</Toolbar>
 		</AppBar>

@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import {
-	Container,
 	Box,
 	Typography,
 	Button,
 	CircularProgress,
+	Paper,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PageContainer from "../util/PageContainer.tsx";
 
 export default function UserPage() {
 	const navigate = useNavigate();
@@ -17,17 +18,18 @@ export default function UserPage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<Container maxWidth="sm">
-				<Box
+			<PageContainer sx={{ alignItems: "center" }}>
+				<Paper
+					elevation={6}
 					sx={{
 						display: "flex",
 						flexDirection: "column",
-						alignItems: "center",
-						mt: 4,
-						p: 3,
-						boxShadow: 3,
-						borderRadius: 2,
-						bgcolor: "background.paper",
+						mt: 8,
+						p: 4,
+						minWidth: "400px",
+						maxWidth: "90%",
+						backdropFilter: "blur(40px)",
+						borderRadius: 4,
 					}}
 				>
 					<Typography variant="h4" gutterBottom>
@@ -54,16 +56,16 @@ export default function UserPage() {
 					)}
 
 					<Button
-						variant="contained"
-						color="primary"
+						variant="outlined"
+						fullWidth
 						startIcon={<ArrowBackIcon />}
 						onClick={() => navigate("/")}
-						sx={{ mt: 3, width: "100%" }}
+						sx={{ mt: 3 }}
 					>
 						Home
 					</Button>
-				</Box>
-			</Container>
+				</Paper>
+			</PageContainer>
 		</>
 	);
 }

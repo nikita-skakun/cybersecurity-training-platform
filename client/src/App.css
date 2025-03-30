@@ -6,21 +6,10 @@
 
 body {
 	font-family: Roboto, sans-serif;
-	background-color: #e8e8eb;
-	/* justify-content: center;
-	align-items: center; */
-	/* min-height: 100vh;
-	height: 100vh; */
 }
 
 .md-text {
 	font-size: 17px;
-	line-height: 1.5;
-	color: #333;
+	line-height: 2;
+	color: #bbb;
 }
-
-/* p {
-	font-size: 17px;
-	line-height: 1.5;
-	color: #333;
-} */

@@ -16,7 +16,7 @@ export default function CardContainer({ items }: CardContainerProps) {
 		<Grid container spacing={2}>
 			{items.map((item) => (
 				<Grid
-					size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+					size={{ sm: 12, md: 6, lg: 4, xl: 3 }}
 					key={`${item.itemType}-${item.id}`}
 				>
 					<ItemCard {...item} />

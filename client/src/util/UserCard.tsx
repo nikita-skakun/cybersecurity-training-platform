@@ -52,7 +52,6 @@ export default function UserCard({
 			});
 	};
 
-	// Helper function to choose a color based on thresholds
 	const getColor = (value: number, thresholds: [number, number]): string => {
 		if (value < thresholds[0]) return "#f44336"; // red
 		if (value >= thresholds[1]) return "#4caf50"; // green
@@ -63,16 +62,26 @@ export default function UserCard({
 	const avgScoreColor = getColor(avgScore, [50, 90]);
 
 	const compQuizRatio = quizCount > 0 ? (user.compQuizzes ?? 0) / quizCount : 0;
-	const compQuizColor = getColor(compQuizRatio, [0.5, 0.9]);
+	const compQuizColor = getColor(compQuizRatio, [0.5, 1]);
 
 	const compModuleRatio =
 		moduleCount > 0 ? (user.compModules ?? 0) / moduleCount : 0;
-	const compModuleColor = getColor(compModuleRatio, [0.5, 0.9]);
+	const compModuleColor = getColor(compModuleRatio, [0.5, 1]);
 
 	const phishingColor = (user.phishingClicked ?? 0) > 0 ? "#f44336" : "#4caf50";
 
 	return (
-		<Card sx={{ width: 360, m: 1 }}>
+		<Card
+			sx={{
+				width: 360,
+				m: 1,
+				boxShadow: 3,
+				borderRadius: 2,
+				transition: "transform 0.2s ease-in-out",
+				"&:hover": { transform: "scale(1.02)" },
+				backdropFilter: "blur(40px)",
+			}}
+		>
 			<CardContent>
 				<Typography variant="h6">{user.name}</Typography>
 				<Typography variant="body2" color="text.secondary" gutterBottom>
@@ -90,8 +99,8 @@ export default function UserCard({
 						}}
 					>
 						<Typography
-							variant="body1"
-							sx={{ color: "#f44336", fontSize: "1.1rem" }}
+							variant="h6"
+							sx={{ color: "#f44336" }}
 							align="center"
 						>
 							User never logged in
@@ -130,7 +139,11 @@ export default function UserCard({
 							}}
 						>
 							<Typography variant="body2">Completed quizzes</Typography>
-							<Tooltip title="Completed quizzes / Total quizzes" arrow>
+							<Tooltip
+								title="Completed quizzes / Total quizzes"
+								arrow
+								disableInteractive
+							>
 								<Typography
 									variant="body2"
 									sx={{
@@ -155,7 +168,11 @@ export default function UserCard({
 							}}
 						>
 							<Typography variant="body2">Completed modules</Typography>
-							<Tooltip title="Completed modules / Total modules" arrow>
+							<Tooltip
+								title="Completed modules / Total modules"
+								arrow
+								disableInteractive
+							>
 								<Typography
 									variant="body2"
 									sx={{
@@ -180,7 +197,11 @@ export default function UserCard({
 							}}
 						>
 							<Typography variant="body2">Phishing emails clicked</Typography>
-							<Tooltip title="Clicked emails / Sent emails" arrow>
+							<Tooltip
+								title="Clicked emails / Sent emails"
+								arrow
+								disableInteractive
+							>
 								<Typography
 									variant="body2"
 									sx={{
@@ -203,7 +224,7 @@ export default function UserCard({
 			<CardActions>
 				<Button
 					size="small"
-					variant="contained"
+					variant="outlined"
 					onClick={handleSendPhishingEmail}
 					disabled={user.id < 0}
 					fullWidth

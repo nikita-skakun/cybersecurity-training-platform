@@ -6,7 +6,8 @@ import { AdminUserInfo } from "@shared/types/user.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import CardContainer from "../util/CardContainer.tsx";
 import UserCardContainer from "../util/UserCardContainer.tsx";
-import { Box, Button, ButtonGroup, Container, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, Card, Typography } from "@mui/material";
+import PageContainer from "../util/PageContainer.tsx";
 
 export default function HomePage() {
 	const user = useUserData();
@@ -179,31 +180,30 @@ export default function HomePage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<Container maxWidth="xl">
+			<PageContainer>
 				<Box
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
 						textAlign: "center",
-						mt: 4,
+						mt: 8,
+						p: 3,
 					}}
 				>
-					<Typography variant="h4" gutterBottom>
-						Welcome Home!
-					</Typography>
-
 					{user?.role === "user" ? (
 						<>
 							<ButtonGroup variant="contained" sx={{ mb: 3 }}>
 								<Button
 									variant={activeTab === "available" ? "contained" : "outlined"}
+									sx={{ color: activeTab === "available" ? "#333" : "#ccc" }}
 									onClick={() => setActiveTab("available")}
 								>
 									Available
 								</Button>
 								<Button
 									variant={activeTab === "completed" ? "contained" : "outlined"}
+									sx={{ color: activeTab === "completed" ? "#333" : "#ccc" }}
 									onClick={() => setActiveTab("completed")}
 								>
 									Completed
@@ -228,9 +228,20 @@ export default function HomePage() {
 						</>
 					) : (
 						<>
-							<Typography variant="h5">
-								All Users - {user?.companyName ?? "Company"}
-							</Typography>
+							<Card
+								sx={{
+									mb: 2,
+									py: 2,
+									px: 4,
+									boxShadow: 3,
+									borderRadius: 2,
+									backdropFilter: "blur(40px)",
+								}}
+							>
+								<Typography variant="h5">
+									All Users - {user?.companyName ?? "Company"}
+								</Typography>
+							</Card>
 							{userList.length > 0 ? (
 								<UserCardContainer
 									users={userList}
@@ -245,7 +256,7 @@ export default function HomePage() {
 						</>
 					)}
 				</Box>
-			</Container>
+			</PageContainer>
 		</>
 	);
 }

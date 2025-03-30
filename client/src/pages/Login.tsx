@@ -8,6 +8,7 @@ import {
 	Button,
 	CircularProgress,
 } from "@mui/material";
+import PageContainer from "../util/PageContainer.tsx";
 
 export default function LoginPage() {
 	const [email, setEmail] = useState("");
@@ -38,24 +39,13 @@ export default function LoginPage() {
 	};
 
 	return (
-		<Box
-			sx={{
-				minHeight: "100vh",
-				backgroundImage: "url('/background.jpg')",
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-			}}
-		>
+		<PageContainer sx={{ alignItems: "center" }}>
 			<Paper
 				elevation={6}
 				sx={{
 					p: 4,
 					maxWidth: 400,
-					bgcolor: "rgba(255, 255, 255, 0.7)",
-					backdropFilter: "blur(12px)",
+					backdropFilter: "blur(6px)",
 					borderRadius: 4,
 				}}
 			>
@@ -93,21 +83,15 @@ export default function LoginPage() {
 					)}
 					<Button
 						type="submit"
-						variant="contained"
-						color="primary"
+						variant="outlined"
+						color="inherit"
 						fullWidth
-						disabled={!email || !password || loading}
-						sx={{
-							mt: 2,
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-						}}
+						sx={{ mt: 2 }}
 					>
 						{loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
 					</Button>
 				</Box>
 			</Paper>
-		</Box>
+		</PageContainer>
 	);
 }

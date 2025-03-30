@@ -4,13 +4,12 @@ import { useUserData } from "../util/ApiUtils.ts";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { Quiz } from "@shared/types/quiz.ts";
 import {
-	Container,
-	Paper,
 	Box,
-	Typography,
 	Button,
+	Chip,
 	CircularProgress,
-	LinearProgress,
+	Paper,
+	Typography,
 	Radio,
 	RadioGroup,
 	FormControlLabel,
@@ -22,15 +21,16 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeIcon from "@mui/icons-material/Home";
 import ReplayIcon from "@mui/icons-material/Replay";
+import PageContainer from "../util/PageContainer.tsx";
 
 export default function QuizPage() {
 	const { id } = useParams<{ id: string }>();
 	const user = useUserData();
+	const navigate = useNavigate();
 	const [quiz, setQuiz] = useState<Quiz | null>(null);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
 	const [score, setScore] = useState<number | null>(null);
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch(`/api/quiz/${id}`)
@@ -39,7 +39,7 @@ export default function QuizPage() {
 			.catch((err) => console.error("Failed to load quiz:", err));
 	}, [id]);
 
-	if (!quiz)
+	if (!quiz) {
 		return (
 			<Box
 				sx={{
@@ -52,17 +52,22 @@ export default function QuizPage() {
 				<CircularProgress />
 			</Box>
 		);
+	}
 
 	const currentQuestion = quiz.questions[currentQuestionIndex];
 
 	const handleNext = () => {
-		if (currentQuestionIndex < quiz.questions.length - 1)
+		if (currentQuestionIndex < quiz.questions.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
+		}
 	};
 
 	const handleBack = () => {
-		if (currentQuestionIndex > 0)
+		if (currentQuestionIndex === 0) {
+			navigate("/");
+		} else {
 			setCurrentQuestionIndex(currentQuestionIndex - 1);
+		}
 	};
 
 	const handleSubmit = () => {
@@ -97,63 +102,67 @@ export default function QuizPage() {
 		isAnswerSelected = (answers[currentQuestionIndex] as string[]).length > 0;
 	}
 
-	let progress = (currentQuestionIndex / quiz.questions.length) * 100;
-	if (score !== null) progress = 100;
-
 	return (
 		<>
 			<TitleBar user={user} />
-			<Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-				<Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-					{/* Progress Bar */}
-					<Box sx={{ width: "100%", mb: 3 }}>
-						<LinearProgress variant="determinate" value={progress} />
-					</Box>
-
-					<Typography variant="h4" align="center" gutterBottom>
-						{quiz.info.title}
-					</Typography>
-
+			<PageContainer sx={{ alignItems: "center", height: "100vh" }}>
+				<Paper
+					elevation={6}
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						mt: 8,
+						p: 4,
+						width: score !== null ? "auto" : "100%",
+						maxWidth: { xs: "90%", md: "1200px" },
+						backdropFilter: "blur(40px)",
+						borderRadius: 4,
+					}}
+				>
 					{score !== null ? (
-						<Box sx={{ textAlign: "center" }}>
+						<>
+							<Typography variant="h4" gutterBottom>
+								{quiz.info.title}
+							</Typography>
 							<Typography variant="h5" gutterBottom>
 								Quiz Completed!
 							</Typography>
-							<Typography variant="body1" gutterBottom>
+							<Typography variant="body1" sx={{ mb: 3 }}>
 								Your Score: <strong>{score}%</strong>
 							</Typography>
-							<Box
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									gap: 2,
-									mt: 3,
-								}}
-							>
+							<Box sx={{ flexGrow: 1 }} />
+							<Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
 								<Button
 									variant="outlined"
-									color="primary"
 									onClick={() => globalThis.location.reload()}
 									startIcon={<ReplayIcon />}
 								>
 									Try Again
 								</Button>
 								<Button
-									variant="contained"
-									color="primary"
+									variant="outlined"
 									onClick={() => navigate("/")}
 									startIcon={<HomeIcon />}
 								>
 									Home
 								</Button>
 							</Box>
-						</Box>
+						</>
 					) : (
 						<>
+							<Typography variant="h4" gutterBottom>
+								{quiz.info.title}
+							</Typography>
 							<Typography variant="h5" align="center" gutterBottom>
 								{currentQuestion.question}
 							</Typography>
-							<Box sx={{ mt: 3, mb: 3 }}>
+							{/* <Box sx={{ width: "100%", textAlign: "left", mb: 3 }}>
+								{currentQuestion.description && (
+									<ReactMarkdown>{currentQuestion.description}</ReactMarkdown>
+								)}
+							</Box> */}
+							<Box sx={{ mb: 3, width: "100%" }}>
 								{currentQuestion.type === "single" ? (
 									<FormControl component="fieldset">
 										<RadioGroup
@@ -194,18 +203,23 @@ export default function QuizPage() {
 									</FormControl>
 								)}
 							</Box>
-							<Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+							<Box sx={{ flexGrow: 1 }} />
+							<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 								<Button
-									variant="contained"
+									variant="outlined"
 									onClick={handleBack}
-									disabled={currentQuestionIndex === 0}
 									startIcon={<ChevronLeftIcon />}
 								>
-									Previous
+									{currentQuestionIndex === 0 ? "Home" : "Previous"}
 								</Button>
+								<Chip
+									label={`Question ${currentQuestionIndex + 1} of ${
+										quiz.questions.length
+									}`}
+								/>
 								{currentQuestionIndex < quiz.questions.length - 1 ? (
 									<Button
-										variant="contained"
+										variant="outlined"
 										onClick={handleNext}
 										disabled={!isAnswerSelected}
 										endIcon={<ChevronRightIcon />}
@@ -214,7 +228,7 @@ export default function QuizPage() {
 									</Button>
 								) : (
 									<Button
-										variant="contained"
+										variant="outlined"
 										onClick={handleSubmit}
 										disabled={!isAnswerSelected}
 										endIcon={<ChevronRightIcon />}
@@ -226,7 +240,7 @@ export default function QuizPage() {
 						</>
 					)}
 				</Paper>
-			</Container>
+			</PageContainer>
 		</>
 	);
 }

@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PageContainer from "../util/PageContainer.tsx";
 
 export default function PhishPage() {
 	const { uuid } = useParams<{ uuid: string }>();
@@ -18,28 +19,38 @@ export default function PhishPage() {
 	}, [uuid]);
 
 	return (
-		<Container maxWidth="sm" sx={{ mt: 4, textAlign: "center" }}>
-			<Box sx={{ mb: 3 }}>
-				<Typography variant="h3" component="h1" gutterBottom>
-					You Failed the Phishing Test
-				</Typography>
-			</Box>
-			<Box sx={{ mb: 4 }}>
-				<Typography variant="body1" color="error">
-					You have been caught in our phishing simulation! This exercise is
-					designed to help you recognize phishing attempts and improve your
-					cybersecurity awareness. Remember to always verify links and sender
-					information before clicking or providing sensitive information.
-				</Typography>
-			</Box>
-			<Button
-				variant="contained"
-				color="primary"
-				startIcon={<ArrowBackIcon />}
-				onClick={() => navigate("/")}
+		<PageContainer sx={{ alignItems: "center" }}>
+			<Paper
+				elevation={6}
+				sx={{
+					p: 4,
+					maxWidth: 800,
+					backdropFilter: "blur(6px)",
+					borderRadius: 4,
+					textAlign: "center",
+				}}
 			>
-				Landing Page
-			</Button>
-		</Container>
+				<Box sx={{ mb: 3 }}>
+					<Typography variant="h3" component="h1" color="error" gutterBottom>
+						You Failed the Phishing Test
+					</Typography>
+				</Box>
+				<Box sx={{ mb: 4 }}>
+					<Typography variant="h6">
+						You have been caught in our phishing simulation! This exercise is
+						designed to help you recognize phishing attempts and improve your
+						cybersecurity awareness. Remember to always verify links and sender
+						information before clicking or providing sensitive information.
+					</Typography>
+				</Box>
+				<Button
+					variant="outlined"
+					startIcon={<ArrowBackIcon />}
+					onClick={() => navigate("/")}
+				>
+					Landing Page
+				</Button>
+			</Paper>
+		</PageContainer>
 	);
 }
