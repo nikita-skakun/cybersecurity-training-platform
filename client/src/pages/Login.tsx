@@ -32,7 +32,7 @@ export default function LoginPage() {
 		setLoading(false);
 
 		if (result.success) {
-			navigate("/");
+			navigate("/home");
 		} else {
 			setError(result.message);
 		}

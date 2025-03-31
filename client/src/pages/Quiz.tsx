@@ -64,7 +64,7 @@ export default function QuizPage() {
 
 	const handleBack = () => {
 		if (currentQuestionIndex === 0) {
-			navigate("/");
+			navigate("/home");
 		} else {
 			setCurrentQuestionIndex(currentQuestionIndex - 1);
 		}
@@ -142,7 +142,7 @@ export default function QuizPage() {
 								</Button>
 								<Button
 									variant="outlined"
-									onClick={() => navigate("/")}
+									onClick={() => navigate("/home")}
 									startIcon={<HomeIcon />}
 								>
 									Home
@@ -157,11 +157,6 @@ export default function QuizPage() {
 							<Typography variant="h5" align="center" gutterBottom>
 								{currentQuestion.question}
 							</Typography>
-							{/* <Box sx={{ width: "100%", textAlign: "left", mb: 3 }}>
-								{currentQuestion.description && (
-									<ReactMarkdown>{currentQuestion.description}</ReactMarkdown>
-								)}
-							</Box> */}
 							<Box sx={{ mb: 3, width: "100%" }}>
 								{currentQuestion.type === "single" ? (
 									<FormControl component="fieldset">

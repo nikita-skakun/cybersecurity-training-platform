@@ -84,9 +84,9 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 						textOverflow: "ellipsis",
 						whiteSpace: "nowrap",
 					}}
-					onClick={() => navigate("/")}
+					onClick={() => navigate("/home")}
 				>
-					Cybersecurity Training Platform
+					EchoShield
 				</Typography>
 				<Box sx={{ flexGrow: 1 }} />
 				<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

@@ -128,7 +128,7 @@ export default function UserPage() {
 						variant="outlined"
 						fullWidth
 						startIcon={<ArrowBackIcon />}
-						onClick={() => navigate("/")}
+						onClick={() => navigate("/home")}
 						sx={{ mt: 3 }}
 					>
 						Home

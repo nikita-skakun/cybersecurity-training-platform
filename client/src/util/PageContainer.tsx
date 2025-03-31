@@ -14,6 +14,8 @@ export default function PageContainer({
 	const [backgroundId, setBackgroundId] = useState<number>(1);
 
 	useEffect(() => {
+		if (!user) return;
+
 		const savedBackground = localStorage.getItem("preferredBackground");
 		if (savedBackground) {
 			setBackgroundId(parseInt(savedBackground, 10));

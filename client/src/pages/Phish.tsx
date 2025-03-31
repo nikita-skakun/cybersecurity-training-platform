@@ -25,7 +25,7 @@ export default function PhishPage() {
 				sx={{
 					p: 4,
 					maxWidth: 800,
-					backdropFilter: "blur(6px)",
+					backdropFilter: "blur(40px)",
 					borderRadius: 4,
 					textAlign: "center",
 				}}

@@ -57,7 +57,7 @@ export default function ModulePage() {
 
 	const handleBack = () => {
 		if (currentPageIndex === 0) {
-			navigate("/");
+			navigate("/home");
 		} else {
 			setCurrentPageIndex(currentPageIndex - 1);
 		}
@@ -111,7 +111,7 @@ export default function ModulePage() {
 								</Button>
 								<Button
 									variant="outlined"
-									onClick={() => navigate("/")}
+									onClick={() => navigate("/home")}
 									startIcon={<HomeIcon />}
 								>
 									Home

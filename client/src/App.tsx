@@ -7,6 +7,7 @@ import QuizPage from "./pages/Quiz.tsx";
 import ModulePage from "./pages/Module.tsx";
 import PhishPage from "./pages/Phish.tsx";
 import CertificatePage from "./pages/Certificate.tsx";
+import LandingPage from "./pages/Landing.tsx";
 import theme from "./util/Theme.ts";
 import "./App.css";
 
@@ -31,7 +32,8 @@ function App() {
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
 							<Routes>
-								<Route path="/" element={<HomePage />} />
+								<Route path="/" element={<LandingPage />} />
+								<Route path="/home" element={<HomePage />} />
 								<Route path="/login" element={<LoginPage />} />
 								<Route path="/user" element={<UserPage />} />
 								<Route path="/quiz/:id/*" element={<QuizPage />} />

@@ -6,7 +6,7 @@ import { AdminUserInfo } from "@shared/types/user.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import CardContainer from "../util/CardContainer.tsx";
 import UserCardContainer from "../util/UserCardContainer.tsx";
-import { Box, Button, ButtonGroup, Card, Typography } from "@mui/material";
+import { Box, ButtonGroup, Card, Typography } from "@mui/material";
 import PageContainer from "../util/PageContainer.tsx";
 
 export default function HomePage() {
@@ -201,28 +201,46 @@ export default function HomePage() {
 					{user?.role === "user" ? (
 						<>
 							<ButtonGroup variant="contained" sx={{ mb: 3, borderRadius: 2 }}>
-								<Button
+								<Card
+									elevation={6}
 									sx={{
 										borderRadius: "8px 0 0 8px",
 										color: activeTab === "available" ? "#333" : "#ccc",
 										backgroundColor:
-											activeTab === "available" ? "#fff" : "#2b2f31",
+											activeTab === "available" ? "#fff" : "rgba(0, 0, 0, 0.6)",
+										backdropFilter:
+											activeTab === "available" ? "" : "blur(40px)",
+										alignItems: "center",
+										justifyContent: "center",
+										display: "flex",
+										px: 2,
+										py: 1,
+										":hover": { cursor: "pointer" },
 									}}
 									onClick={() => setActiveTab("available")}
 								>
-									Available
-								</Button>
-								<Button
+									AVAILABLE
+								</Card>
+								<Card
+									elevation={6}
 									sx={{
 										borderRadius: "0 8px 8px 0",
 										color: activeTab === "completed" ? "#333" : "#ccc",
 										backgroundColor:
-											activeTab === "completed" ? "#fff" : "#2b2f31",
+											activeTab === "completed" ? "#fff" : "rgba(0, 0, 0, 0.6)",
+										backdropFilter:
+											activeTab === "completed" ? "" : "blur(40px)",
+										alignItems: "center",
+										justifyContent: "center",
+										display: "flex",
+										px: 2,
+										py: 1,
+										":hover": { cursor: "pointer" },
 									}}
 									onClick={() => setActiveTab("completed")}
 								>
-									Completed
-								</Button>
+									COMPLETED
+								</Card>
 							</ButtonGroup>
 
 							{activeTab === "available" ? (
