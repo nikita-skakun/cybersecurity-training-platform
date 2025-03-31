@@ -14,7 +14,7 @@ export default function UserCardContainer(props: UserCardContainerProps) {
 			{props.users.map((user) => (
 				<Grid
 					size={{ xs: 12, sm: 6 }}
-					key={user.id}
+					key={user.id + "-" + user.username}
 					sx={{ display: "flex", justifyContent: "center" }}
 				>
 					<UserCard

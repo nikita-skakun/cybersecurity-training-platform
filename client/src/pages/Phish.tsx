@@ -19,7 +19,7 @@ export default function PhishPage() {
 	}, [uuid]);
 
 	return (
-		<PageContainer sx={{ alignItems: "center" }}>
+		<PageContainer sx={{ alignItems: "center" }} user={null}>
 			<Paper
 				elevation={4}
 				sx={{

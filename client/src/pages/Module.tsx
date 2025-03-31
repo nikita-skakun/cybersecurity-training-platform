@@ -73,7 +73,7 @@ export default function ModulePage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<PageContainer sx={{ alignItems: "center", height: "100vh" }}>
+			<PageContainer sx={{ alignItems: "center", height: "100vh" }} user={user}>
 				<Paper
 					elevation={4}
 					sx={{

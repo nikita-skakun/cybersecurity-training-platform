@@ -8,7 +8,9 @@ import {
 	getAverageScore,
 	getPhishingClickedCount,
 	getPhishingSentCount,
+	getUserBackground,
 	listCompletedRequirementsByType,
+	setUserBackground,
 	updatePhishingEmailClicked,
 } from "../util/db_utils.ts";
 import { sendPhishingEmail } from "../util/mail.ts";
@@ -276,6 +278,52 @@ userRouter.post("/api/phishCaught/:uuid", (context) => {
 	context.response.body = {
 		success: true,
 		message: "Phishing simulation caught",
+	};
+});
+
+userRouter.get("/api/users/background", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+	const backgroundId = getUserBackground(payload.id) ?? 1;
+
+	context.response.status = 200;
+	context.response.body = {
+		success: true,
+		backgroundId,
+	};
+});
+
+userRouter.post("/api/users/background", async (context) => {
+	const token = await context.cookies.get("jwtCyberTraining");
+	const payload = verifyToken<User>(token);
+	if (!payload) {
+		context.response.status = 403;
+		context.response.body = { success: false, message: "Invalid token" };
+		return;
+	}
+
+	const body = await context.request.body?.json();
+	const backgroundId = body?.backgroundId as number;
+	if (backgroundId === undefined) {
+		context.response.status = 400;
+		context.response.body = {
+			success: false,
+			message: "Background ID is required",
+		};
+		return;
+	}
+
+	setUserBackground(payload.id, backgroundId);
+
+	context.response.status = 200;
+	context.response.body = {
+		success: true,
+		message: "Background updated",
 	};
 });
 

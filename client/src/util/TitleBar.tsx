@@ -17,22 +17,27 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	const [countdown, setCountdown] = useState("");
 	const navigate = useNavigate();
 
+	function updateExpirationTime() {
+		if (!user?.exp) return;
+
+		const currentTime = Math.floor(Date.now() / 1000);
+		const remainingTime = user?.exp - currentTime;
+
+		if (remainingTime <= 0) {
+			navigate("/login");
+		} else {
+			const hours = Math.floor(remainingTime / 3600);
+			const minutes = Math.floor(remainingTime / 60) % 60;
+			const seconds = remainingTime % 60;
+			setCountdown(`${hours}h ${minutes}m ${seconds}s`);
+		}
+	}
+
 	useEffect(() => {
 		const exp = user?.exp;
 		if (exp) {
 			const interval = setInterval(() => {
-				const currentTime = Math.floor(Date.now() / 1000);
-				const remainingTime = exp - currentTime;
-
-				if (remainingTime <= 0) {
-					clearInterval(interval);
-					navigate("/login");
-				} else {
-					const hours = Math.floor(remainingTime / 3600);
-					const minutes = Math.floor(remainingTime / 60) % 60;
-					const seconds = remainingTime % 60;
-					setCountdown(`${hours}h ${minutes}m ${seconds}s`);
-				}
+				updateExpirationTime();
 			}, 1000);
 
 			return () => clearInterval(interval);
@@ -41,6 +46,14 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 
 	const handleLogout = async () => {
 		try {
+			// Clear local storage
+			localStorage.removeItem("userData");
+			localStorage.removeItem("preferredBackground");
+			localStorage.removeItem("activeHomeTab");
+			localStorage.removeItem("adminUserListCache");
+			localStorage.removeItem("quizCountCache");
+			localStorage.removeItem("moduleCountCache");
+
 			await fetch("/api/logout", {
 				method: "POST",
 				credentials: "include",
@@ -54,8 +67,11 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	return (
 		<AppBar
 			position="absolute"
-			elevation={3}
-			sx={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0, 0, 0, 0.6)", zIndex: 1000 }}
+			elevation={2}
+			sx={{
+				backdropFilter: "blur(6px)",
+				backgroundColor: "rgba(0, 0, 0, 0.6)",
+			}}
 		>
 			<Toolbar>
 				<Typography
@@ -78,6 +94,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 						title={`Session expires in: ${countdown ?? "???"}`}
 						arrow
 						disableInteractive
+						onOpen={updateExpirationTime}
 					>
 						<Button
 							variant="outlined"

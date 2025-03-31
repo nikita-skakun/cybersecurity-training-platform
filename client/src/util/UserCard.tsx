@@ -99,11 +99,7 @@ export default function UserCard({
 							minHeight: 135,
 						}}
 					>
-						<Typography
-							variant="h6"
-							sx={{ color: "#f44336" }}
-							align="center"
-						>
+						<Typography variant="h6" align="center">
 							User never logged in
 						</Typography>
 					</Box>

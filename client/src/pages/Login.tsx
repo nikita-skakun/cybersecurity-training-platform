@@ -39,7 +39,7 @@ export default function LoginPage() {
 	};
 
 	return (
-		<PageContainer sx={{ alignItems: "center" }}>
+		<PageContainer sx={{ alignItems: "center" }} user={null}>
 			<Paper
 				elevation={4}
 				sx={{

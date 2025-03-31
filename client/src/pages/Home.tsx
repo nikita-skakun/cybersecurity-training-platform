@@ -187,7 +187,7 @@ export default function HomePage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<PageContainer>
+			<PageContainer user={user}>
 				<Box
 					sx={{
 						display: "flex",
@@ -200,17 +200,25 @@ export default function HomePage() {
 				>
 					{user?.role === "user" ? (
 						<>
-							<ButtonGroup variant="contained" sx={{ mb: 3 }}>
+							<ButtonGroup variant="contained" sx={{ mb: 3, borderRadius: 2 }}>
 								<Button
-									variant={activeTab === "available" ? "contained" : "outlined"}
-									sx={{ color: activeTab === "available" ? "#333" : "#ccc" }}
+									sx={{
+										borderRadius: "8px 0 0 8px",
+										color: activeTab === "available" ? "#333" : "#ccc",
+										backgroundColor:
+											activeTab === "available" ? "#fff" : "#2b2f31",
+									}}
 									onClick={() => setActiveTab("available")}
 								>
 									Available
 								</Button>
 								<Button
-									variant={activeTab === "completed" ? "contained" : "outlined"}
-									sx={{ color: activeTab === "completed" ? "#333" : "#ccc" }}
+									sx={{
+										borderRadius: "0 8px 8px 0",
+										color: activeTab === "completed" ? "#333" : "#ccc",
+										backgroundColor:
+											activeTab === "completed" ? "#fff" : "#2b2f31",
+									}}
 									onClick={() => setActiveTab("completed")}
 								>
 									Completed

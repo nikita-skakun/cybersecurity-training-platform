@@ -10,6 +10,7 @@ export function loadOrCreateDatabase(): DB {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       domain TEXT NOT NULL,
       username TEXT NOT NULL,
+	  background INTEGER NOT NULL DEFAULT 1,
       UNIQUE(domain, username)
     );
   `);
@@ -281,6 +282,24 @@ export function getPhishingClickedCount(userId: number): number {
 	} else {
 		return 0;
 	}
+}
+
+export function getUserBackground(userId: number): number {
+	const rows = [
+		...db.query("SELECT background FROM users WHERE id = ?", [userId]),
+	];
+	if (rows.length > 0) {
+		return rows[0][0] as number;
+	} else {
+		return 1;
+	}
+}
+
+export function setUserBackground(userId: number, backgroundId: number): void {
+	db.query("UPDATE users SET background = ? WHERE id = ?", [
+		backgroundId,
+		userId,
+	]);
 }
 
 export function closeDatabase(): void {
