@@ -86,7 +86,7 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 					}}
 					onClick={() => navigate("/home")}
 				>
-					EchoShield
+					Echo Shield
 				</Typography>
 				<Box sx={{ flexGrow: 1 }} />
 				<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

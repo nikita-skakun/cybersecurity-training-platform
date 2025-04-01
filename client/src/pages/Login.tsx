@@ -50,7 +50,7 @@ export default function LoginPage() {
 				}}
 			>
 				<Typography variant="h4" align="center" gutterBottom>
-					Cybersecurity Training Platform
+					Echo Shield
 				</Typography>
 				<Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
 					<TextField

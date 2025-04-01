@@ -41,7 +41,7 @@ export default function UserCard({
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					alert(`Test email sent to ${user.username}`);
+					globalThis.location.reload();
 				} else {
 					alert(`Failed to send email: ${data.message}`);
 				}
