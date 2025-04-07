@@ -5,15 +5,16 @@ import { domainConfigs } from "@server/util/ldap.ts";
 import { Client } from "ldapts";
 import {
 	findUserId,
-	getAverageScore,
+	getAverageScoreForDateRange,
+	getUserAverageScore,
 	getPhishingClickedCount,
 	getPhishingSentCount,
-	getUserBackground,
 	listCompletedRequirementsByType,
-	setUserBackground,
 	updatePhishingEmailClicked,
+	getQuizResultsForDateRange,
 } from "../util/db_utils.ts";
 import { sendPhishingEmail } from "../util/mail.ts";
+import { getQuizName } from "@server/routes/quiz.ts";
 
 const userRouter = new Router();
 
@@ -57,7 +58,7 @@ async function getAdminUserInfo(
 	if (id >= 0) {
 		compQuizzes = listCompletedRequirementsByType(id, "quiz").length;
 		compModules = listCompletedRequirementsByType(id, "module").length;
-		avgScore = getAverageScore(id);
+		avgScore = getUserAverageScore(id);
 		phishingSent = getPhishingSentCount(id);
 		phishingClicked = getPhishingClickedCount(id);
 	}
@@ -281,49 +282,98 @@ userRouter.post("/api/phishCaught/:uuid", (context) => {
 	};
 });
 
-userRouter.get("/api/users/background", async (context) => {
+function calculateWeekRange(dateObj: Date) {
+	// Monday as the first day
+	const dayIndex = dateObj.getDay() === 0 ? 6 : dateObj.getDay() - 1;
+
+	const startOfWeek = new Date(dateObj);
+	startOfWeek.setDate(dateObj.getDate() - dayIndex);
+	startOfWeek.setHours(0, 0, 0, 0);
+
+	const endOfWeek = new Date(dateObj);
+	endOfWeek.setDate(dateObj.getDate() + (6 - dayIndex));
+	endOfWeek.setHours(23, 59, 59, 999);
+	return { startOfWeek, endOfWeek };
+}
+
+// Get Average Score for All Users for past 7 days
+userRouter.get("/api/averageScores/:date", async (context) => {
 	const token = await context.cookies.get("jwtCyberTraining");
 	const payload = verifyToken<User>(token);
-	if (!payload) {
+	if (!payload || payload.role !== "admin") {
 		context.response.status = 403;
+
 		context.response.body = { success: false, message: "Invalid token" };
 		return;
 	}
-	const backgroundId = getUserBackground(payload.id) ?? 1;
+
+	const dateParam = context.params.date;
+	if (!dateParam) {
+		context.response.status = 400;
+		context.response.body = { success: false, message: "Date is required" };
+		return;
+	}
+
+	const dateObj = new Date(parseInt(dateParam));
+	const { startOfWeek } = calculateWeekRange(dateObj);
+
+	const averageScores = [];
+	for (let i = 0; i < 7; i++) {
+		const date = new Date(startOfWeek);
+		date.setDate(startOfWeek.getDate() + i);
+
+		const score = getAverageScoreForDateRange(
+			new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+			new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+		);
+		averageScores.push({
+			dayName: date.toLocaleString("default", { weekday: "long" }),
+			score,
+		});
+	}
 
 	context.response.status = 200;
 	context.response.body = {
 		success: true,
-		backgroundId,
+		averageScores,
 	};
 });
 
-userRouter.post("/api/users/background", async (context) => {
+// Get All Scores for All Users for past 7 days
+userRouter.get("/api/userScores/:date", async (context) => {
 	const token = await context.cookies.get("jwtCyberTraining");
 	const payload = verifyToken<User>(token);
-	if (!payload) {
+	if (!payload || payload.role !== "admin") {
 		context.response.status = 403;
 		context.response.body = { success: false, message: "Invalid token" };
 		return;
 	}
 
-	const body = await context.request.body?.json();
-	const backgroundId = body?.backgroundId as number;
-	if (backgroundId === undefined) {
+	const dateParam = context.params.date;
+	if (!dateParam) {
 		context.response.status = 400;
-		context.response.body = {
-			success: false,
-			message: "Background ID is required",
-		};
+		context.response.body = { success: false, message: "Date is required" };
 		return;
 	}
 
-	setUserBackground(payload.id, backgroundId);
+	const dateObj = new Date(parseInt(dateParam));
+	const { startOfWeek, endOfWeek } = calculateWeekRange(dateObj);
+
+	const userScores = [];
+	const results = getQuizResultsForDateRange(startOfWeek, endOfWeek);
+	for (const result of results) {
+		userScores.push({
+			date: result.date,
+			score: result.score,
+			userName: result.userName,
+			quizName: getQuizName(result.quizId),
+		});
+	}
 
 	context.response.status = 200;
 	context.response.body = {
 		success: true,
-		message: "Background updated",
+		userScores: userScores,
 	};
 });
 

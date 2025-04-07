@@ -72,15 +72,10 @@ export default function UserCard({
 
 	return (
 		<Card
-			elevation={4}
 			sx={{
-				width: 360,
+				width: 400,
+				height: 300,
 				m: 1,
-				boxShadow: 3,
-				borderRadius: 2,
-				transition: "transform 0.2s ease-in-out",
-				"&:hover": { transform: "scale(1.02)" },
-				backdropFilter: "blur(40px)",
 			}}
 		>
 			<CardContent>
@@ -96,7 +91,7 @@ export default function UserCard({
 							display: "flex",
 							justifyContent: "center",
 							alignItems: "center",
-							minHeight: 135,
+							minHeight: 145,
 						}}
 					>
 						<Typography variant="h6" align="center">
@@ -116,12 +111,13 @@ export default function UserCard({
 							<Typography
 								variant="body2"
 								sx={{
-									backgroundColor: avgScoreColor,
-									color: "#fff",
+									borderColor: avgScoreColor,
+									borderWidth: "1px",
+									borderStyle: "solid",
 									px: 1,
 									py: 0.5,
-									borderRadius: 1,
-									minWidth: 50,
+									borderRadius: "4px",
+									width: "70px",
 									textAlign: "center",
 								}}
 							>
@@ -144,12 +140,13 @@ export default function UserCard({
 								<Typography
 									variant="body2"
 									sx={{
-										backgroundColor: compQuizColor,
-										color: "#fff",
+										borderColor: compQuizColor,
+										borderWidth: "1px",
+										borderStyle: "solid",
 										px: 1,
 										py: 0.5,
-										borderRadius: 1,
-										minWidth: 50,
+										borderRadius: "4px",
+										width: "70px",
 										textAlign: "center",
 									}}
 								>
@@ -173,12 +170,13 @@ export default function UserCard({
 								<Typography
 									variant="body2"
 									sx={{
-										backgroundColor: compModuleColor,
-										color: "#fff",
+										borderColor: compModuleColor,
+										borderWidth: "1px",
+										borderStyle: "solid",
 										px: 1,
 										py: 0.5,
-										borderRadius: 1,
-										minWidth: 50,
+										borderRadius: "4px",
+										width: "70px",
 										textAlign: "center",
 									}}
 								>
@@ -202,12 +200,13 @@ export default function UserCard({
 								<Typography
 									variant="body2"
 									sx={{
-										backgroundColor: phishingColor,
-										color: "#fff",
+										borderColor: phishingColor,
+										borderWidth: "1px",
+										borderStyle: "solid",
 										px: 1,
 										py: 0.5,
-										borderRadius: 1,
-										minWidth: 50,
+										borderRadius: "4px",
+										width: "70px",
 										textAlign: "center",
 									}}
 								>

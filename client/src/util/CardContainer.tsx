@@ -1,7 +1,7 @@
 import { ItemInfo } from "@shared/types/item.ts";
 import ItemCard from "./ItemCard.tsx";
 import { QuizResult } from "@shared/types/quiz.ts";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 interface CardContainerProps {
 	items: (ItemInfo & {
@@ -13,15 +13,21 @@ interface CardContainerProps {
 
 export default function CardContainer({ items }: CardContainerProps) {
 	return (
-		<Grid container spacing={2}>
+		<Box
+			component="section"
+			sx={{
+				display: "grid",
+				gap: 3,
+				gridTemplateColumns: {
+					xs: "1fr",
+					md: "repeat(2, 1fr)",
+					lg: "repeat(3, 1fr)",
+				},
+			}}
+		>
 			{items.map((item) => (
-				<Grid
-					size={{ sm: 12, md: 6, lg: 4 }}
-					key={`${item.itemType}-${item.id}`}
-				>
-					<ItemCard {...item} />
-				</Grid>
+				<ItemCard {...item} />
 			))}
-		</Grid>
+		</Box>
 	);
 }

@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import theme from "./Theme.ts";
 
 export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 	const [countdown, setCountdown] = useState("");
@@ -48,7 +47,6 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 		try {
 			// Clear local storage
 			localStorage.removeItem("userData");
-			localStorage.removeItem("preferredBackground");
 			localStorage.removeItem("activeHomeTab");
 			localStorage.removeItem("adminUserListCache");
 			localStorage.removeItem("quizCountCache");
@@ -66,11 +64,10 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 
 	return (
 		<AppBar
-			position="absolute"
-			elevation={2}
+			position="static"
 			sx={{
-				backdropFilter: "blur(6px)",
-				backgroundColor: "rgba(0, 0, 0, 0.6)",
+				background: "rgba(0, 0, 0, 0)",
+				boxShadow: "none",
 			}}
 		>
 			<Toolbar>
@@ -79,7 +76,8 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 					noWrap
 					sx={{
 						cursor: "pointer",
-						color: "white",
+						fontWeight: 700,
+						color: "primary.main",
 						overflow: "hidden",
 						textOverflow: "ellipsis",
 						whiteSpace: "nowrap",
@@ -90,32 +88,37 @@ export const TitleBar: React.FC<{ user: User | null }> = ({ user }) => {
 				</Typography>
 				<Box sx={{ flexGrow: 1 }} />
 				<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-					<Tooltip
-						title={`Session expires in: ${countdown ?? "???"}`}
-						arrow
-						disableInteractive
-						onOpen={updateExpirationTime}
-					>
-						<Button
-							variant="outlined"
-							sx={{ color: "white", borderColor: "white" }}
-							startIcon={<AccountCircleIcon />}
-							onClick={() => navigate("/user")}
-						>
+					{user ? (
+						<>
+							<Tooltip
+								title={`Session expires in: ${countdown ?? "???"}`}
+								arrow
+								disableInteractive
+								onOpen={updateExpirationTime}
+							>
+								<Button
+									variant="outlined"
+									startIcon={<AccountCircleIcon />}
+									onClick={() => navigate("/user")}
+								>
+									<Typography noWrap sx={{ overflow: "hidden" }}>
+										{user?.name ?? "???"}
+									</Typography>
+								</Button>
+							</Tooltip>
+							<Tooltip title="Logout" arrow disableInteractive>
+								<Button variant="outlined" onClick={handleLogout}>
+									<LogoutIcon />
+								</Button>
+							</Tooltip>
+						</>
+					) : (
+						<Button variant="outlined" onClick={() => navigate("/login")}>
 							<Typography noWrap sx={{ overflow: "hidden" }}>
-								{user?.name ?? "???"}
+								Login
 							</Typography>
 						</Button>
-					</Tooltip>
-					<Tooltip title="Logout" arrow disableInteractive>
-						<Button
-							sx={{ backgroundColor: theme.palette.error.dark }}
-							variant="contained"
-							onClick={handleLogout}
-						>
-							<LogoutIcon />
-						</Button>
-					</Tooltip>
+					)}
 				</Box>
 			</Toolbar>
 		</AppBar>

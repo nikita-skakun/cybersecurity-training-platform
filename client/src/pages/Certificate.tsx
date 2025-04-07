@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUserData } from "../util/ApiUtils.ts";
 import CertificateOfCompletion from "../util/Certificate.tsx";
 import { TitleBar } from "../util/TitleBar.tsx";
@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 
 export default function CertificatePage() {
 	const { id } = useParams<{ id: string }>();
+	const navigate = useNavigate();
 	const user = useUserData();
 
 	const [quizInfo, setQuizInfo] = useState<ItemInfo | null>(null);
@@ -41,13 +42,14 @@ export default function CertificatePage() {
 				const resultsData = await resultsResponse.json();
 				if (resultsData.success && resultsData.score) {
 					setQuizResults(resultsData.score);
+					setLoading(false);
 				} else {
 					console.error("Failed to fetch quiz results");
+					navigate("/home");
 				}
 			} catch (error) {
 				console.error("Error fetching quiz data:", error);
-			} finally {
-				setLoading(false);
+				navigate("/home");
 			}
 		}
 

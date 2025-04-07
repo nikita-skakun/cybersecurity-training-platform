@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@shared/types/user.ts";
 
-export function useUserData() {
+export function useUserData(logoutOnError = true): User | null {
 	const [user, setUser] = useState<User | null>(() => {
 		const cachedUser = localStorage.getItem("userData");
 		return cachedUser ? JSON.parse(cachedUser) : null;
@@ -23,7 +23,7 @@ export function useUserData() {
 			} catch (error) {
 				console.error("Error fetching data:", error);
 				localStorage.removeItem("userData");
-				navigate("/login");
+				if (logoutOnError) navigate("/login");
 			}
 		})();
 	}, [navigate]);

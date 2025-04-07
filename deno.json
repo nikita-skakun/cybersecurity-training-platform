@@ -11,6 +11,7 @@
     "@fontsource/roboto": "npm:@fontsource/roboto@^5.2.5",
     "@mui/icons-material": "npm:@mui/icons-material@^7.0.1",
     "@mui/material": "npm:@mui/material@^7.0.1",
+    "@mui/x-charts": "npm:@mui/x-charts@^7.28.0",
     "@shared/": "./shared/",
     "@server/": "./server/",
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.4",
@@ -20,8 +21,8 @@
     "@types/jsonwebtoken": "npm:@types/jsonwebtoken@^9.0.9",
     "@types/ldap-escape": "npm:@types/ldap-escape@^2.0.2",
     "@types/nodemailer": "npm:@types/nodemailer@^6.4.17",
-    "@types/react-dom": "npm:@types/react-dom@^19.0.4",
-    "@types/react": "npm:@types/react@^19.0.12",
+    "@types/react-dom": "npm:@types/react-dom@^19.1.1",
+    "@types/react": "npm:@types/react@^19.1.0",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.3.4",
     "handlebars": "npm:handlebars@^4.7.8",
     "jsonwebtoken": "npm:jsonwebtoken@^9.0.2",
@@ -30,10 +31,10 @@
     "nodemailer": "npm:nodemailer@^6.10.0",
     "react-dom": "npm:react-dom@^19.1.0",
     "react-markdown": "npm:react-markdown@^10.1.0",
-    "react-router-dom": "npm:react-router-dom@^7.4.1",
+    "react-router-dom": "npm:react-router-dom@^7.5.0",
     "react": "npm:react@^19.1.0",
     "react-to-print": "npm:react-to-print@^3.0.5",
-    "vite": "npm:vite@^6.2.4"
+    "vite": "npm:vite@^6.2.5"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {

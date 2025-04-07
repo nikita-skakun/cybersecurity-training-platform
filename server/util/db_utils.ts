@@ -10,7 +10,6 @@ export function loadOrCreateDatabase(): DB {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       domain TEXT NOT NULL,
       username TEXT NOT NULL,
-	  background INTEGER NOT NULL DEFAULT 1,
       UNIQUE(domain, username)
     );
   `);
@@ -155,7 +154,7 @@ export function markRequirementCompleted(
 }
 
 // Store a quiz result for a user
-export function storeQuizResult(
+export function storeUserQuizResult(
 	userId: number,
 	quizId: string,
 	score: number
@@ -169,7 +168,7 @@ export function storeQuizResult(
 }
 
 // Get most update quiz result for a user
-export function getQuizResult(
+export function getUserQuizResult(
 	userId: number,
 	quizId: string
 ): {
@@ -193,7 +192,7 @@ export function getQuizResult(
 }
 
 // Get average score for a user
-export function getAverageScore(userId: number): number {
+export function getUserAverageScore(userId: number): number {
 	const rows = [
 		...db.query("SELECT AVG(score) FROM results WHERE user_id = ?", [userId]),
 	];
@@ -203,6 +202,49 @@ export function getAverageScore(userId: number): number {
 	} else {
 		return 0;
 	}
+}
+
+// Get average score for all users for a specific date range
+export function getAverageScoreForDateRange(
+	startDate: Date,
+	endDate: Date
+): number | null {
+	const rows = [
+		...db.query(
+			"SELECT AVG(score) FROM results WHERE completed_at BETWEEN ? AND ?",
+			[startDate.toISOString(), endDate.toISOString()]
+		),
+	];
+	if (rows.length > 0) {
+		const avgScore = rows[0][0] as number | null;
+		return avgScore ?? null;
+	} else {
+		return null;
+	}
+}
+
+// Get all quiz results for a specific date range
+export function getQuizResultsForDateRange(
+	startDate: Date,
+	endDate: Date
+): {
+	date: Date;
+	score: number;
+	userName: string;
+	quizId: string;
+}[] {
+	const rows = [
+		...db.query(
+			"SELECT completed_at, score, username, quiz_id FROM results INNER JOIN users ON results.user_id = users.id WHERE completed_at BETWEEN ? AND ?",
+			[startDate.toISOString(), endDate.toISOString()]
+		),
+	];
+	return rows.map((row) => ({
+		date: new Date(row[0] as string),
+		score: row[1] as number,
+		userName: row[2] as string,
+		quizId: row[3] as string,
+	}));
 }
 
 // Create a phishing email entry
@@ -282,24 +324,6 @@ export function getPhishingClickedCount(userId: number): number {
 	} else {
 		return 0;
 	}
-}
-
-export function getUserBackground(userId: number): number {
-	const rows = [
-		...db.query("SELECT background FROM users WHERE id = ?", [userId]),
-	];
-	if (rows.length > 0) {
-		return rows[0][0] as number;
-	} else {
-		return 1;
-	}
-}
-
-export function setUserBackground(userId: number, backgroundId: number): void {
-	db.query("UPDATE users SET background = ? WHERE id = ?", [
-		backgroundId,
-		userId,
-	]);
 }
 
 export function closeDatabase(): void {

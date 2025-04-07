@@ -8,7 +8,7 @@ import {
 	Button,
 	Chip,
 	CircularProgress,
-	Paper,
+	Card,
 	Typography,
 	Radio,
 	RadioGroup,
@@ -46,7 +46,7 @@ export default function QuizPage() {
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
-					height: "100vh",
+					height: "90vh",
 				}}
 			>
 				<CircularProgress />
@@ -105,19 +105,15 @@ export default function QuizPage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<PageContainer sx={{ alignItems: "center", height: "100vh" }} user={user}>
-				<Paper
-					elevation={4}
+			<PageContainer sx={{ alignItems: "center" }}>
+				<Card
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						mt: 8,
 						p: 4,
 						width: score !== null ? "auto" : "100%",
 						maxWidth: { xs: "90%", md: "1200px" },
-						backdropFilter: "blur(40px)",
-						borderRadius: 4,
 					}}
 				>
 					{score !== null ? (
@@ -171,6 +167,7 @@ export default function QuizPage() {
 													value={option}
 													control={<Radio />}
 													label={option}
+													sx={{ paddingLeft: "1em" }}
 												/>
 											))}
 										</RadioGroup>
@@ -234,7 +231,7 @@ export default function QuizPage() {
 							</Box>
 						</>
 					)}
-				</Paper>
+				</Card>
 			</PageContainer>
 		</>
 	);

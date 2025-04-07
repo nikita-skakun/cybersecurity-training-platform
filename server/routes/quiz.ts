@@ -5,11 +5,11 @@ import { User } from "@shared/types/user.ts";
 import { verifyToken } from "@server/util/jwt_utils.ts";
 import { getJson } from "@server/util/fs_utils.ts";
 import {
-	getQuizResult,
+	getUserQuizResult,
 	listCompletedRequirementsByType,
 	listUnlockedRequirements,
 	markRequirementCompleted,
-	storeQuizResult,
+	storeUserQuizResult,
 } from "@server/util/db_utils.ts";
 
 const quizInfoCache: Record<string, ItemInfo> = {};
@@ -44,6 +44,13 @@ async function fetchQuizList(): Promise<Record<string, ItemInfo>> {
 		}
 	}
 	return quizInfoCache;
+}
+
+export function getQuizName(id: string): string {
+	if (quizInfoCache[id]) {
+		return quizInfoCache[id].title;
+	}
+	return id;
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -141,7 +148,7 @@ quizRouter.post("/api/quiz/:id/mark", async (context) => {
 		const userAnswers: UserAnswers = await context.request.body.json();
 		const score = checkAnswers(quiz, userAnswers);
 
-		storeQuizResult(userId, id, score);
+		storeUserQuizResult(userId, id, score);
 		if (score >= PASSING_SCORE) {
 			markRequirementCompleted(userId, id, "quiz");
 		}
@@ -240,7 +247,7 @@ quizRouter.get("/api/quiz/:id/score", async (context) => {
 	const userId = payload.id;
 	const quizId = context.params.id;
 
-	const score = getQuizResult(userId, quizId);
+	const score = getUserQuizResult(userId, quizId);
 
 	context.response.status = 200;
 	context.response.body = { success: true, score };

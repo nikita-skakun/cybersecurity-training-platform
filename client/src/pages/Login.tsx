@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
 	Box,
-	Paper,
+	Card,
 	Typography,
 	TextField,
 	Button,
@@ -39,14 +39,11 @@ export default function LoginPage() {
 	};
 
 	return (
-		<PageContainer sx={{ alignItems: "center" }} user={null}>
-			<Paper
-				elevation={4}
+		<PageContainer sx={{ alignItems: "center" }}>
+			<Card
 				sx={{
 					p: 4,
 					maxWidth: 400,
-					backdropFilter: "blur(40px)",
-					borderRadius: 4,
 				}}
 			>
 				<Typography variant="h4" align="center" gutterBottom>
@@ -91,7 +88,7 @@ export default function LoginPage() {
 						{loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
 					</Button>
 				</Box>
-			</Paper>
+			</Card>
 		</PageContainer>
 	);
 }

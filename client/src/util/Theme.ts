@@ -4,15 +4,18 @@ const theme = createTheme({
 	palette: {
 		mode: "dark",
 		primary: {
-			main: "#ffffff",
+			main: "rgb(250,250, 250)",
+		},
+		secondary: {
+			main: "rgba(250, 250, 250, 0.8)",
 		},
 		background: {
-			default: "#121212",
-			paper: "rgba(0, 0, 0, 0.6)",
+			default: "rgb(9, 9, 11)",
+			paper: "rgb(9, 9, 11)",
 		},
 		text: {
-			primary: "rgba(255, 255, 255, 0.8)",
-			secondary: "rgba(255, 255, 255, 0.6)",
+			primary: "rgb(250, 250, 250)",
+			secondary: "rgba(250, 250, 250, 0.8)",
 		},
 	},
 	components: {
@@ -21,25 +24,55 @@ const theme = createTheme({
 				root: {
 					color: "rgba(255, 255, 255, 0.8)",
 					"& .MuiInputLabel-root": {
-						color: "rgba(255, 255, 255, 0.8)",
+						borderColor: "rgb(39, 39, 42)",
 					},
 					"& fieldset": {
-						borderColor: "rgba(255, 255, 255, 0.8)",
+						borderColor: "rgb(39, 39, 42)",
 					},
-					"&:hover fieldset": {
-						borderColor: "rgba(255, 255, 255, 1)",
+					"&:hover .MuiOutlinedInput-notchedOutline": {
+						borderColor: "rgb(39, 39, 42)",
 					},
-					"&.Mui-focused fieldset": {
-						borderColor: "rgba(255, 255, 255, 1)",
+					"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+						borderColor: "rgb(250, 250, 250)",
+						borderWidth: "1px",
 					},
 				},
 			},
 		},
 		MuiButton: {
+			defaultProps: {
+				disableRipple: true,
+			},
 			styleOverrides: {
 				root: {
-					color: "rgba(255, 255, 255, 0.8)",
-					borderColor: "rgba(255, 255, 255, 0.8)",
+					color: "rgb(250, 250, 250)",
+					borderColor: "rgb(39, 39, 42)",
+					background: "rgb(39, 39, 42)",
+					borderRadius: "6px",
+				},
+				outlined: {
+					background: "rgb(9, 9, 11)",
+					"&:hover": {
+						background: "rgb(39, 39, 42)",
+						transition: "background 0.2s",
+					},
+				},
+				contained: {
+					"&:hover": {
+						transition: "opacity 0.2s",
+						opacity: 0.9,
+					},
+				},
+			},
+		},
+		MuiCard: {
+			styleOverrides: {
+				root: {
+					background: "rgb(9, 9, 11)",
+					borderRadius: "16px",
+					borderColor: "rgb(39, 39, 42)",
+					borderWidth: "1px",
+					borderStyle: "solid",
 				},
 			},
 		},

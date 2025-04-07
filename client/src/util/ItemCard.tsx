@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { CardContent, Typography, Chip, Box, Paper } from "@mui/material";
+import {
+	CardContent,
+	Typography,
+	Chip,
+	Box,
+	Card,
+	Button,
+	Tooltip,
+} from "@mui/material";
 import { ItemInfo } from "@shared/types/item.ts";
 import { QuizResult } from "@shared/types/quiz.ts";
 import theme from "./Theme.ts";
@@ -31,22 +39,22 @@ export default function ItemCard({
 			: theme.palette.warning.light;
 
 	return (
-		<Paper
+		<Card
 			onClick={handleClick}
-			elevation={4}
 			sx={{
 				cursor: "pointer",
-				boxShadow: 3,
-				borderRadius: 2,
 				overflow: "hidden",
-				transition: "transform 0.2s ease-in-out",
-				"&:hover": { transform: "scale(1.02)" },
+				"&:hover": {
+					background: "rgb(39, 39, 42)",
+					transition: "background 0.2s",
+				},
 				display: "flex",
 				flexDirection: "column",
-				height: 180,
-				backdropFilter: "blur(40px)",
+				height: 210,
+				width: "auto",
 			}}
 		>
+			<Box sx={{ width: 450 }} />
 			<Box
 				sx={{
 					px: 2,
@@ -55,52 +63,51 @@ export default function ItemCard({
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "space-between",
+					gap: 1,
 				}}
 			>
-				<Chip
-					label={itemType === "quiz" ? "Quiz" : "Module"}
-					size="small"
-					sx={{
-						backgroundColor: "#2b2f31",
-						color: barTextColor,
-						fontWeight: 700,
-						boxShadow: 1,
-					}}
-				/>
+				<Box sx={{ flex: 1, display: "flex", justifyContent: "left" }}>
+					<Chip
+						label={itemType === "quiz" ? "Quiz" : "Module"}
+						size="small"
+						variant="outlined"
+						sx={{
+							color: barTextColor,
+							fontWeight: 700,
+							textAlign: "center",
+						}}
+					/>
+				</Box>
 
 				{score != null && itemType === "quiz" && (
-					<Box
-						sx={{
-							position: "absolute",
-							left: 0,
-							right: 0,
-							display: "flex",
-							justifyContent: "center",
-						}}
-					>
+					<Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
 						<Chip
 							label={`Score: ${score.score}%`}
 							size="small"
-							sx={(theme) => ({
-								backgroundColor: "#2b2f31",
-								color: theme.palette.success.light,
+							variant="outlined"
+							sx={{
+								color: "success.main",
 								fontWeight: 700,
-								boxShadow: 1,
-							})}
+								textAlign: "center",
+							}}
 						/>
 					</Box>
 				)}
 
-				<Chip
-					label={`${itemCount} ${itemType === "quiz" ? "questions" : "pages"}`}
-					size="small"
-					sx={{
-						backgroundColor: "#2b2f31",
-						color: barTextColor,
-						fontWeight: 700,
-						boxShadow: 1,
-					}}
-				/>
+				<Box sx={{ flex: 1, display: "flex", justifyContent: "right" }}>
+					<Chip
+						label={`${itemCount} ${
+							itemType === "quiz" ? "questions" : "pages"
+						}`}
+						size="small"
+						variant="outlined"
+						sx={{
+							color: barTextColor,
+							fontWeight: 700,
+							textAlign: "center",
+						}}
+					/>
+				</Box>
 			</Box>
 
 			<CardContent
@@ -117,7 +124,7 @@ export default function ItemCard({
 				<Box
 					sx={{
 						overflowY: "auto",
-						maxHeight: "80px",
+						maxHeight: "66px",
 						"&::-webkit-scrollbar": {
 							width: "4px",
 							backgroundColor: "transparent",
@@ -141,40 +148,41 @@ export default function ItemCard({
 			{itemType === "quiz" && score !== null && (
 				<Box
 					sx={{
-						position: "absolute",
-						bottom: 8,
-						right: 8,
-						zIndex: 1,
+						mt: "auto",
+						display: "flex",
+						justifyContent: "flex-end",
+						pr: "8px",
+						pb: "8px",
 					}}
 				>
-					<Chip
-						icon={<DownloadIcon fontSize="small" />}
-						onClick={(e) => {
-							e.stopPropagation();
-							navigate(`/certificate/${id}`);
-						}}
-						sx={{
-							backgroundColor: "#2b2f31",
-							color: theme.palette.primary.light,
-							fontWeight: 700,
-							boxShadow: 1,
-							borderRadius: "50%",
-							height: 32,
-							width: 32,
-							"& .MuiChip-icon": {
-								margin: 0,
-								padding: 0,
-							},
-							"& .MuiChip-label": {
-								display: "none",
-							},
-							"&:hover": {
-								backgroundColor: "#3b4144",
-							},
-						}}
-					/>
+					<Tooltip title="Download Certificate" arrow disableInteractive>
+						<Button
+							onClick={(e) => {
+								e.stopPropagation();
+								navigate(`/certificate/${id}`);
+							}}
+							onMouseOver={(e) => e.stopPropagation()}
+							onMouseEnter={(e) => e.stopPropagation()}
+							variant="contained"
+							sx={{
+								backgroundColor: "rgb(250, 250, 250)",
+								color: "rgb(9, 9, 11)",
+								borderRadius: "50%",
+								minWidth: "32px",
+								width: "32px",
+								height: "32px",
+								position: "relative",
+								zIndex: 2,
+								"&:hover": {
+									backgroundColor: "rgb(230, 230, 230)",
+								},
+							}}
+						>
+							<DownloadIcon fontSize="small" />
+						</Button>
+					</Tooltip>
 				</Box>
 			)}
-		</Paper>
+		</Card>
 	);
 }

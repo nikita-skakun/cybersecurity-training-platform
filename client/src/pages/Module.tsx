@@ -7,9 +7,9 @@ import ReactMarkdown from "react-markdown";
 import {
 	Box,
 	Button,
+	Card,
 	Chip,
 	CircularProgress,
-	Paper,
 	Typography,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -41,7 +41,7 @@ export default function ModulePage() {
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
-					height: "100vh",
+					height: "90vh",
 				}}
 			>
 				<CircularProgress />
@@ -73,19 +73,15 @@ export default function ModulePage() {
 	return (
 		<>
 			<TitleBar user={user} />
-			<PageContainer sx={{ alignItems: "center", height: "100vh" }} user={user}>
-				<Paper
-					elevation={4}
+			<PageContainer sx={{ alignItems: "center" }}>
+				<Card
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						mt: 8,
 						p: 4,
 						width: completed ? "auto" : "100%",
 						maxWidth: { xs: "90%", md: "1200px" },
-						backdropFilter: "blur(40px)",
-						borderRadius: 4,
 					}}
 				>
 					{completed ? (
@@ -96,9 +92,9 @@ export default function ModulePage() {
 							<Typography variant="h5" gutterBottom>
 								Module Completed!
 							</Typography>
-							<Typography variant="body1" sx={{ mb: 3 }}>
+							<Typography variant="body1" sx={{ mb: 3, color: "secondary.main" }}>
 								Congratulations! You can now attempt the relevant quiz or
-								another module from the home screen.
+								another module from the home screen
 							</Typography>
 							<Box sx={{ flexGrow: 1 }} />
 							<Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
@@ -134,7 +130,10 @@ export default function ModulePage() {
 										mb: 3,
 										textAlign: "left",
 										width: "100%",
+										color: "secondary.main",
 										maxHeight: { xs: "300px", sm: "400px", md: "500px" },
+										lineHeight: 2,
+										fontSize: "1.15rem",
 										overflowY: "auto",
 										"&::-webkit-scrollbar": {
 											width: "4px",
@@ -145,8 +144,13 @@ export default function ModulePage() {
 											borderRadius: "4px",
 											transition: "background-color 0.2s",
 										},
+										"& ul": {
+											paddingLeft: "2em",
+										},
+										"& ol": {
+											paddingLeft: "2em",
+										},
 									}}
-									className="md-text"
 								>
 									<ReactMarkdown>{currentPage.content}</ReactMarkdown>
 								</Box>
@@ -223,7 +227,7 @@ export default function ModulePage() {
 							</Box>
 						</>
 					)}
-				</Paper>
+				</Card>
 			</PageContainer>
 		</>
 	);
