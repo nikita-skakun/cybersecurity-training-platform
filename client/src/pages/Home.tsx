@@ -599,7 +599,7 @@ export default function HomePage() {
 													},
 												}}
 												text={({ value, valueMax }) =>
-													value != null ? `${(value / valueMax) * 100}%` : "N/A"
+													value != null ? `${((value / valueMax) * 100).toFixed(2)}%` : "N/A"
 												}
 											/>
 										</Box>

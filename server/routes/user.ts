@@ -327,7 +327,7 @@ userRouter.get("/api/averageScores/:date", async (context) => {
 			new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
 		);
 		averageScores.push({
-			dayName: date.toLocaleString("default", { weekday: "long" }),
+			dayName: date.toLocaleString("default", { weekday: "short" }),
 			score,
 		});
 	}
