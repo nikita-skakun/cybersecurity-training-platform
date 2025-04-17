@@ -22,7 +22,6 @@ The platform helps bridge the gap between theory and practice by offering clear,
 
 - Backend served through Deno
 - SQLite database stores user progress and quiz data
-- Application and media hosted on a VPS, separate from phishing services
 
 #### Authentication and Access Control
 
@@ -41,7 +40,6 @@ The platform helps bridge the gap between theory and practice by offering clear,
 #### Phishing Simulation Engine
 
 - Sends realistic phishing emails using NodeMailer and Handlebars templates
-- Hosted on a dedicated AWS VM alongside LLDAP
 - Tests recognition skills in controlled scenarios
 
 #### Progress and Feedback
@@ -56,11 +54,6 @@ The platform helps bridge the gap between theory and practice by offering clear,
 
 - Provides access to user activity, quiz results, and training status
 - Helps IT staff or educators monitor group progress
-
-#### Project Tools and Workflow
-
-- Managed with Trello, versioned via GitHub, developed in VS Code
-- Agile methodology with sprint-based development and regular feedback
 
 #### Security, Compliance, and Extensibility
 
