@@ -17,12 +17,11 @@ import {
 	axisClasses,
 	ChartsAxis,
 	ChartsTooltip,
-	ChartsVoronoiHandler,
 	Gauge,
 	gaugeClasses,
 	LinePlot,
 	MarkPlot,
-	ResponsiveChartContainer,
+	ChartContainer,
 	ScatterPlot,
 } from "@mui/x-charts";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -477,7 +476,7 @@ export default function HomePage() {
 										</Typography>
 										<Box sx={{ width: 600 }} />
 										<Box sx={{ height: 300 }}>
-											<ResponsiveChartContainer
+											<ChartContainer
 												dataset={averageScoreList}
 												xAxis={[{ dataKey: "dayName", scaleType: "band" }]}
 												yAxis={[{ max: 100, min: 0 }]}
@@ -516,7 +515,7 @@ export default function HomePage() {
 												<MarkPlot />
 												<ChartsTooltip />
 												<ChartsAxis />
-											</ResponsiveChartContainer>
+											</ChartContainer>
 										</Box>
 									</Card>
 									<Card>
@@ -525,7 +524,7 @@ export default function HomePage() {
 										</Typography>
 										<Box sx={{ width: 600 }} />
 										<Box sx={{ height: 300 }}>
-											<ResponsiveChartContainer
+											<ChartContainer
 												dataset={userScoreList}
 												xAxis={[
 													{
@@ -547,8 +546,10 @@ export default function HomePage() {
 														},
 														color: "rgb(250,250,250)",
 														markerSize: 3,
-														valueFormatter: ({ id, y, z }) =>
-															`[${z}] ${id}: ${y}%`,
+														valueFormatter: (value) => {
+															if (!value) return "N/A";
+															return `[${value.z}] ${value.id}: ${value.y}%`;
+														},
 													},
 												]}
 												sx={{
@@ -562,12 +563,12 @@ export default function HomePage() {
 														},
 													},
 												}}
+												voronoiMaxRadius={60}
 											>
 												<ScatterPlot />
 												<ChartsTooltip trigger="item" />
 												<ChartsAxis />
-												<ChartsVoronoiHandler voronoiMaxRadius={60} />
-											</ResponsiveChartContainer>
+											</ChartContainer>
 										</Box>
 									</Card>
 									<Card>
@@ -599,7 +600,9 @@ export default function HomePage() {
 													},
 												}}
 												text={({ value, valueMax }) =>
-													value != null ? `${((value / valueMax) * 100).toFixed(2)}%` : "N/A"
+													value != null
+														? `${((value / valueMax) * 100).toFixed(2)}%`
+														: "N/A"
 												}
 											/>
 										</Box>

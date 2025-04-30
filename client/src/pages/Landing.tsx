@@ -61,11 +61,12 @@ export default function LandingPage() {
 					</Box>
 					<Button
 						variant="outlined"
-						href="mailto:admin@echo-shield.com?subject=EchoShield Inquiry"
+						href={`mailto:${
+							import.meta.env.VITE_CONTACT_EMAIL || "admin@echo-shield.com"
+						}?subject=EchoShield Inquiry`}
 					>
 						Get In Touch
 					</Button>
-
 				</Card>
 			</PageContainer>
 		</>

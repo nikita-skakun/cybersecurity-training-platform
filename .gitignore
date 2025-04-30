@@ -23,6 +23,7 @@ deno.lock
 *.njsproj
 *.sln
 *.sw?
+.env
 
 client/.vite
 client/public/videos
