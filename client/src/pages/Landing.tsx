@@ -2,6 +2,8 @@ import { Box, Typography, Button, Card } from "@mui/material";
 import PageContainer from "../util/PageContainer.tsx";
 import { TitleBar } from "../util/TitleBar.tsx";
 import { useUserData } from "../util/ApiUtils.ts";
+import GitHub from "@mui/icons-material/GitHub";
+import EmailIcon from "@mui/icons-material/Email";
 
 export default function LandingPage() {
 	const user = useUserData(false);
@@ -59,14 +61,24 @@ export default function LandingPage() {
 							access to the training modules.
 						</Typography>
 					</Box>
-					<Button
-						variant="outlined"
-						href={`mailto:${
-							import.meta.env.VITE_CONTACT_EMAIL || "admin@echo-shield.com"
-						}?subject=EchoShield Inquiry`}
-					>
-						Get In Touch
-					</Button>
+					<Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+						<Button
+							variant="outlined"
+							href={`mailto:${
+								import.meta.env.VITE_CONTACT_EMAIL || "admin@echo-shield.com"
+							}?subject=EchoShield Inquiry`}
+							startIcon={<EmailIcon />}
+						>
+							Get In Touch
+						</Button>
+						<Button
+							variant="outlined"
+							href="https://github.com/nikita-skakun/cybersecurity-training-platform"
+							startIcon={<GitHub />}
+						>
+							GitHub
+						</Button>
+					</Box>
 				</Card>
 			</PageContainer>
 		</>
