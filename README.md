@@ -8,6 +8,16 @@ Training modules combine written explanations and short videos that present key 
 
 The platform helps bridge the gap between theory and practice by offering clear, accessible content. The interface is simple, and the material suits learners with different levels of experience. While it does not rely heavily on interactive features, it offers a reliable way for employees and learners to complete cybersecurity training in a structured format.
 
+## Sample Images
+
+### Admin Panel
+
+![admin_panel](https://github.com/user-attachments/assets/387d468c-a3e8-4b7b-bd5f-e5fccc03ff12)
+
+### Employee Panel
+
+![completed_modules](https://github.com/user-attachments/assets/b5bc412f-d682-45d3-9a0c-322eec9716e9)
+
 ## Outline of Components
 
 ### Core System Architecture
